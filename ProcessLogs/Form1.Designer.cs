@@ -28,53 +28,146 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.sourceDirectoryTextBox = new System.Windows.Forms.TextBox();
+            this.sourceDirectoryLabel = new System.Windows.Forms.Label();
+            this.XMLDirectoryLabel = new System.Windows.Forms.Label();
+            this.filePathXMLTextBox = new System.Windows.Forms.TextBox();
+            this.sourceDirectoryButton = new System.Windows.Forms.Button();
+            this.filePathXMLButton = new System.Windows.Forms.Button();
+            this.importSettings = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.safebytesVerificationCheckbox = new System.Windows.Forms.CheckBox();
+            this.initiateButton = new System.Windows.Forms.Button();
+            this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // sourceDirectoryTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(61, 93);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(811, 29);
-            this.textBox1.TabIndex = 0;
+            this.sourceDirectoryTextBox.Location = new System.Drawing.Point(16, 42);
+            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
+            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(444, 20);
+            this.sourceDirectoryTextBox.TabIndex = 0;
             // 
-            // label1
+            // sourceDirectoryLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(59, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 25);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Zdrojový adresár";
+            this.sourceDirectoryLabel.AutoSize = true;
+            this.sourceDirectoryLabel.Location = new System.Drawing.Point(15, 18);
+            this.sourceDirectoryLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.sourceDirectoryLabel.Name = "sourceDirectoryLabel";
+            this.sourceDirectoryLabel.Size = new System.Drawing.Size(86, 13);
+            this.sourceDirectoryLabel.TabIndex = 1;
+            this.sourceDirectoryLabel.Text = "Zdrojový adresár";
             // 
-            // label2
+            // XMLDirectoryLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(61, 157);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(203, 25);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Agregátny XML súbor";
+            this.XMLDirectoryLabel.AutoSize = true;
+            this.XMLDirectoryLabel.Location = new System.Drawing.Point(16, 76);
+            this.XMLDirectoryLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.XMLDirectoryLabel.Name = "XMLDirectoryLabel";
+            this.XMLDirectoryLabel.Size = new System.Drawing.Size(109, 13);
+            this.XMLDirectoryLabel.TabIndex = 3;
+            this.XMLDirectoryLabel.Text = "Agregátny XML súbor";
             // 
-            // textBox2
+            // filePathXMLTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(63, 201);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(811, 29);
-            this.textBox2.TabIndex = 2;
+            this.filePathXMLTextBox.Location = new System.Drawing.Point(17, 100);
+            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLTextBox.Name = "filePathXMLTextBox";
+            this.filePathXMLTextBox.Size = new System.Drawing.Size(444, 20);
+            this.filePathXMLTextBox.TabIndex = 2;
+            // 
+            // sourceDirectoryButton
+            // 
+            this.sourceDirectoryButton.Location = new System.Drawing.Point(480, 39);
+            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryButton.Name = "sourceDirectoryButton";
+            this.sourceDirectoryButton.Size = new System.Drawing.Size(54, 20);
+            this.sourceDirectoryButton.TabIndex = 4;
+            this.sourceDirectoryButton.Text = "Vybrať";
+            this.sourceDirectoryButton.UseVisualStyleBackColor = true;
+            this.sourceDirectoryButton.Click += new System.EventHandler(this.sourceDirectoryButton_Click);
+            // 
+            // filePathXMLButton
+            // 
+            this.filePathXMLButton.Location = new System.Drawing.Point(480, 100);
+            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLButton.Name = "filePathXMLButton";
+            this.filePathXMLButton.Size = new System.Drawing.Size(54, 20);
+            this.filePathXMLButton.TabIndex = 5;
+            this.filePathXMLButton.Text = "Vybrať";
+            this.filePathXMLButton.UseVisualStyleBackColor = true;
+            this.filePathXMLButton.Click += new System.EventHandler(this.XMLDirectoryButton_Click);
+            // 
+            // importSettings
+            // 
+            this.importSettings.AutoSize = true;
+            this.importSettings.Location = new System.Drawing.Point(17, 134);
+            this.importSettings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.importSettings.Name = "importSettings";
+            this.importSettings.Size = new System.Drawing.Size(91, 13);
+            this.importSettings.TabIndex = 6;
+            this.importSettings.Text = "Import nastavenia";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(13, 238);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(517, 162);
+            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.Text = "";
+            // 
+            // safebytesVerificationCheckbox
+            // 
+            this.safebytesVerificationCheckbox.AutoSize = true;
+            this.safebytesVerificationCheckbox.Location = new System.Drawing.Point(17, 160);
+            this.safebytesVerificationCheckbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.safebytesVerificationCheckbox.Name = "safebytesVerificationCheckbox";
+            this.safebytesVerificationCheckbox.Size = new System.Drawing.Size(130, 21);
+            this.safebytesVerificationCheckbox.TabIndex = 8;
+            this.safebytesVerificationCheckbox.Text = "Verifikácia safebytes";
+            this.safebytesVerificationCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // initiateButton
+            // 
+            this.initiateButton.Location = new System.Drawing.Point(17, 195);
+            this.initiateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.initiateButton.Name = "initiateButton";
+            this.initiateButton.Size = new System.Drawing.Size(511, 22);
+            this.initiateButton.TabIndex = 9;
+            this.initiateButton.Text = "Spracovať";
+            this.initiateButton.UseVisualStyleBackColor = true;
+            this.initiateButton.Click += new System.EventHandler(this.initiateButton_Click);
+            // 
+            // verboseLogCheckBox
+            // 
+            this.verboseLogCheckBox.AutoSize = true;
+            this.verboseLogCheckBox.Location = new System.Drawing.Point(153, 160);
+            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.verboseLogCheckBox.Name = "verboseLogCheckBox";
+            this.verboseLogCheckBox.Size = new System.Drawing.Size(72, 21);
+            this.verboseLogCheckBox.TabIndex = 10;
+            this.verboseLogCheckBox.Text = "Verbose";
+            this.verboseLogCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1703, 615);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(551, 425);
+            this.Controls.Add(this.verboseLogCheckBox);
+            this.Controls.Add(this.initiateButton);
+            this.Controls.Add(this.safebytesVerificationCheckbox);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.importSettings);
+            this.Controls.Add(this.filePathXMLButton);
+            this.Controls.Add(this.sourceDirectoryButton);
+            this.Controls.Add(this.XMLDirectoryLabel);
+            this.Controls.Add(this.filePathXMLTextBox);
+            this.Controls.Add(this.sourceDirectoryLabel);
+            this.Controls.Add(this.sourceDirectoryTextBox);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -85,10 +178,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox sourceDirectoryTextBox;
+        private System.Windows.Forms.Label sourceDirectoryLabel;
+        private System.Windows.Forms.Label XMLDirectoryLabel;
+        private System.Windows.Forms.TextBox filePathXMLTextBox;
+        private System.Windows.Forms.Button sourceDirectoryButton;
+        private System.Windows.Forms.Button filePathXMLButton;
+        private System.Windows.Forms.Label importSettings;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.CheckBox safebytesVerificationCheckbox;
+        private System.Windows.Forms.Button initiateButton;
+        private System.Windows.Forms.CheckBox verboseLogCheckBox;
     }
 }
 
