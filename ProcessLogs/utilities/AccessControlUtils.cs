@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.Security.Policy;
+using System.Linq;
 
 
 namespace ProcessLogs.utilities
@@ -22,17 +24,17 @@ namespace ProcessLogs.utilities
             }
             catch(UnauthorizedAccessException)
             {
-                MessageBox.Show("Chyba 101: Pre adrsár " + dirPath + " nemáte dostatočné povolenia", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba 101: Pre adresár " + dirPath + " nemáte dostatočné povolenia, adresár bude preskočený.", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch(DirectoryNotFoundException)
             {
-                MessageBox.Show("Chyba 100: Adresár " + dirPath + " neexistuje", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba 100: Adresár " + dirPath + " neexistuje.", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch(Exception e)
             {
-                MessageBox.Show("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba "+e, "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba " + e + " .", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -51,17 +53,17 @@ namespace ProcessLogs.utilities
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Chyba 101: Pre súbor " + filepath + " nemáte dostatočné povolenia", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba 101: Pre súbor " + filepath + " nemáte dostatočné povolenia, súbor bude preskočený.", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Chyba 102: Súbor" + filepath + "neexistuje", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba 102: Súbor " + filepath + "neexistuje.", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch (Exception e)
             {
-                MessageBox.Show("Chyba: Pri overení prístupu k súboru " + filepath + " sa vyskytla neočakávaná chyba " + e, "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba: Pri overení prístupu k súboru " + filepath + " sa vyskytla neočakávaná chyba " + e + " ." , "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -71,26 +73,32 @@ namespace ProcessLogs.utilities
 
     internal static class IntegrityVerification
     {
+        //Checks that structure of leaf directories matches expected form
         internal static bool VerifyLeafDirectoriesIntegrity(List<string> Leafdirectories)
         {
-            //Checks that structure of leaf directories matches expected form
             string directoryStructureRegex = @".*\\20\d{2}\\\d{2}$";
             Regex regex = new Regex(directoryStructureRegex);
 
-            bool allMatch = true;
 
             foreach(string leafDirectory in Leafdirectories)
             {
                 MatchCollection matches = regex.Matches(leafDirectory);
                 if(matches.Count == 0)
                 {
-                    allMatch = false;
-                    MessageBox.Show("Chyba 103: Adresár" + leafDirectory+ " nespĺňa požadoovanú štruktúra", "Nesprávna štruktúra", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    DialogResult continueProcessing = MessageBox.Show("Chyba 103: Koreňový adresár"+ Process.rootDirectory+ " nespĺňa požadovanú štruktúru. Identifikovaný adresár: " +
+                        leafDirectory + ". Prajete si chybu ignorovať a pokračovať?", "Nesprávna štruktúra", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if(continueProcessing == DialogResult.No)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
 
             }
-            return allMatch;
+            return true;
         }
 
     }
@@ -100,8 +108,8 @@ namespace ProcessLogs.utilities
 
     internal static class Iterator
     {
-
-        private static List<string> GetSubdirectories(string dirPath)
+        //Get subdirectories(leaf directories) for given root directory
+        private static List<string> GetLeafDirectories(string dirPath)
         {
 
             List<string> Leafdirectories = new List<string>();
@@ -118,43 +126,54 @@ namespace ProcessLogs.utilities
             {
                 if (AccessControlUtils.VerifyDirReadPermission(subdir))
                 {
-                    Leafdirectories.AddRange(GetSubdirectories(subdir));
+                    Leafdirectories.AddRange(GetLeafDirectories(subdir));
                 }
             }
             return Leafdirectories;
         }
 
-        private static List<string> GetLogPathsFromLeafDirectories(List<string> Leafdirectories)
+        //Get path for log files from leaf directories
+        private static List<string> GetLogPathsFromRootDirectory(string dirPath)
         {
-            List<string> LogPaths = new List<string>();
-
-            foreach (string leafDirectory in Leafdirectories)
-            {
-                //Iterate over all files in each leaf directory
-                IEnumerable leafLogPaths = Directory.EnumerateFiles(leafDirectory, "*.txt;*.log", SearchOption.TopDirectoryOnly);
-                foreach (string leafLogPath in leafLogPaths)
-                {
-                    if (AccessControlUtils.VerifyFileReadPermission(leafLogPath))
-                    {
-                        LogPaths.Add(leafLogPath);
-                    }
-                }
-            }
+            //Iterate over all files in root directory
+            IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.log", SearchOption.AllDirectories);
+            List<string> LogPaths = NumerableLogPaths.ToList();
             return LogPaths;
 
         }
 
-        internal static List<string> GetLogPathsFromRoot(string dirPath)
-        {
-            List<string> Leafdirectories = GetSubdirectories(dirPath);
 
-            if (IntegrityVerification.VerifyLeafDirectoriesIntegrity(Leafdirectories))
+        //This method finds paths to all paths in leaf directories. It is later used to verify that all files in the directory are of .log type
+        private static List<string> GetAllFilesFromRootDirectory(string dirPath)
+        {
+            //Iterate over all files in root directory
+            IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.*", SearchOption.AllDirectories);
+            List<string> AllLogPaths = NumerableLogPaths.ToList();
+            return AllLogPaths;
+
+        }
+
+
+        internal static void GetLogPathsFromRoot(string dirPath)
+        {
+
+            //Read permission not granted for root directory
+            if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
             {
-                return new List<string>();
+                Process.LogPaths = new List<string>();
+                return;
             }
 
-            List<string> LogPaths = GetLogPathsFromLeafDirectories(Leafdirectories);
-            return LogPaths;
+            Process.LeafDirectories = GetLeafDirectories(dirPath);
+
+            if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(Process.LeafDirectories))
+            {
+                Process.LogPaths = new List<string>();
+                return;
+            }
+
+            Process.LogPaths = GetLogPathsFromRootDirectory(Process.rootDirectory);
+            Process.AllPaths = GetAllFilesFromRootDirectory(Process.rootDirectory);
         }
 
     }

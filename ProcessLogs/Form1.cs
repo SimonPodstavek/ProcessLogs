@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
+using System.Security.Cryptography;
+
+
+
 
 
 namespace ProcessLogs
@@ -18,8 +22,7 @@ namespace ProcessLogs
 
     public partial class Form1 : Form
     {
-        private string filePathXML = string.Empty;
-        private string sourceDirectory = string.Empty;
+
 
         public Form1()
         {
@@ -37,9 +40,9 @@ namespace ProcessLogs
             VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
             if(dialog.ShowDialog() == DialogResult.OK)
             {
-                sourceDirectory = dialog.SelectedPath;
-                sourceDirectory = sourceDirectory.Trim();
-                sourceDirectoryTextBox.Text = sourceDirectory;
+                Process.rootDirectory = dialog.SelectedPath;
+                Process.rootDirectory = Process.rootDirectory.Trim();
+                sourceDirectoryTextBox.Text = Process.rootDirectory;
             }
         }
         //Get path to aggregate XML file
@@ -50,31 +53,79 @@ namespace ProcessLogs
             dialog.Filter = "XML files (*.xml)|*.xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                filePathXML = dialog.FileName;
-                filePathXML = filePathXML.Trim();
-                filePathXMLTextBox.Text = filePathXML;
+                Process.filePathXML = dialog.FileName;
+                Process.filePathXML = Process.filePathXML.Trim();
+                filePathXMLTextBox.Text = Process.filePathXML;
             }
 
         }
+
+
 
         private void initiateButton_Click(object sender, EventArgs e)
         {
 
-            //Update global path variables to match the user's choice
-            filePathXML = filePathXMLTextBox.Text;
-            sourceDirectory = sourceDirectoryTextBox.Text;
-
-
-            Console.WriteLine(Directory.GetDirectories(sourceDirectory));
-
-
-            IEnumerable LogPaths = Iterator.GetLogPathsFromRoot(sourceDirectory);
-
-            foreach(string path in LogPaths)
-            {
-                Console.WriteLine(path);
-            }
+            ProcessLogs();
 
         }
+
+
+        static string ComputeSha1Hash(string input)
+        {
+            // Convert the input string to a byte array and compute the hash.
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+                string hexHash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+                return hexHash.ToUpper();
+            }
+        }
+
+
+        private void ProcessLogs()
+        {
+            //Update global path variables to match the user's choice
+            Process.filePathXML = filePathXMLTextBox.Text;
+            Process.rootDirectory = sourceDirectoryTextBox.Text;
+ 
+
+            statusBox.AppendTextWithNewLine("Inicializácia spracovania");
+
+            //Get Paths for .log files
+            Iterator.GetLogPathsFromRoot(Process.rootDirectory);
+
+            statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Process.AllPaths.Count);
+
+
+            statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Process.LogPaths.Count);
+            
+
+            foreach (string path in Process.LogPaths)
+            {
+                string logContent = File.ReadAllText(path);
+                statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
+            }
+
+
+            //Remove unused file paths from memory
+            Process.AllPaths = new List<string>();
+
+            if (Process.LogPaths.Count == 0)
+            {
+                statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
+                return;
+            }
+
+
+
+
+
+
+
+        }
+
     }
 }
+
