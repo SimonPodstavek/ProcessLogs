@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
@@ -22,7 +23,6 @@ namespace ProcessLogs
 
     public partial class Form1 : Form
     {
-
 
         public Form1()
         {
@@ -40,9 +40,9 @@ namespace ProcessLogs
             VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
             if(dialog.ShowDialog() == DialogResult.OK)
             {
-                Process.rootDirectory = dialog.SelectedPath;
-                Process.rootDirectory = Process.rootDirectory.Trim();
-                sourceDirectoryTextBox.Text = Process.rootDirectory;
+                Configuration.rootDirectory = dialog.SelectedPath;
+                Configuration.rootDirectory = Configuration.rootDirectory.Trim();
+                sourceDirectoryTextBox.Text = Configuration.rootDirectory;
             }
         }
         //Get path to aggregate XML file
@@ -53,66 +53,111 @@ namespace ProcessLogs
             dialog.Filter = "XML files (*.xml)|*.xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Process.filePathXML = dialog.FileName;
-                Process.filePathXML = Process.filePathXML.Trim();
-                filePathXMLTextBox.Text = Process.filePathXML;
+                Configuration.filePathXML = dialog.FileName;
+                Configuration.filePathXML = Configuration.filePathXML.Trim();
+                filePathXMLTextBox.Text = Configuration.filePathXML;
             }
 
         }
 
+        
 
 
-        private void initiateButton_Click(object sender, EventArgs e)
+        private async void initiateButton_Click(object sender, EventArgs e)
         {
 
-            ProcessLogs();
-
-        }
 
 
-        static string ComputeSha1Hash(string input)
-        {
-            // Convert the input string to a byte array and compute the hash.
-            using (SHA1 sha1 = SHA1.Create())
+            if (Configuration.IsRunning == true)
             {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = sha1.ComputeHash(inputBytes);
-
-                string hexHash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
-                return hexHash.ToUpper();
+                Configuration.iniProcess(initiateButton);
             }
-        }
+            else
+            {
+                Configuration.stopProcess(initiateButton);
+            }
 
+
+            try
+            {    
+                if( Configuration.IsRunning == true )
+                {
+                    await Task.Run(() => ProcessLogs());
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Chyba: Pri spracovaní sa vyskytla chyba" + err + " . Odstráňte závadu a skúste to opäť", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Configuration.IsRunning = false;
+                initiateButton.Text = "Spracovať";
+
+            }
+
+
+
+
+        }
 
         private void ProcessLogs()
         {
-            //Update global path variables to match the user's choice
-            Process.filePathXML = filePathXMLTextBox.Text;
-            Process.rootDirectory = sourceDirectoryTextBox.Text;
- 
 
-            statusBox.AppendTextWithNewLine("Inicializácia spracovania");
+            //Update global path variables to match the user's choice
+            Configuration.filePathXML = filePathXMLTextBox.Text;
+            Configuration.rootDirectory = sourceDirectoryTextBox.Text;
+
+            //Notify user about the missing parameters
+            if (Configuration.rootDirectory == String.Empty)
+            {
+                MessageBox.Show("Chyba 105: Zadajte prosím zdrojový adresár obsahujúci predpísanú štruktúru a súbory .log", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Uncomment in prod!!!
+            //if (Proces.filePathXML == String.Empty)
+            //{
+            //    MessageBox.Show("Chyba 106: Zadajte prosím cestu k agregátnemu XML súboru.", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+
+
+
+
+            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Inicializácia spracovania"));
 
             //Get Paths for .log files
-            Iterator.GetLogPathsFromRoot(Process.rootDirectory);
+            Iterator.GetLogPathsFromRoot(Configuration.rootDirectory);
+            statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
+            statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
 
-            statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Process.AllPaths.Count);
 
 
-            statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Process.LogPaths.Count);
-            
-
-            foreach (string path in Process.LogPaths)
+            foreach ((int logIndex, string path) in Configuration.LogPaths.Enumerate())
             {
-                string logContent = File.ReadAllText(path);
-                statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
+                if (!Configuration.IsRunning)
+                {
+                    return;
+                }
+
+                //string logContent = File.ReadAllText(path);
+                byte[] byteLogContent = File.ReadAllBytes(path);
+                List<byte[]> XMLSections = new List<byte[]>();
+
+                XMLSections = ProcessLog.ProcessLogBytes(byteLogContent);
+                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + logIndex + " " + XMLSections.Count));
+                //statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
             }
+            return;
+
 
 
             //Remove unused file paths from memory
-            Process.AllPaths = new List<string>();
+            Configuration.AllPaths = new List<string>();
 
-            if (Process.LogPaths.Count == 0)
+            if (Configuration.LogPaths.Count == 0)
             {
                 statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
                 return;
