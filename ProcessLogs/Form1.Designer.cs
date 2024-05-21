@@ -155,7 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(551, 425);
+            this.ClientSize = new System.Drawing.Size(547, 425);
             this.Controls.Add(this.verboseLogCheckBox);
             this.Controls.Add(this.initiateButton);
             this.Controls.Add(this.safebytesVerificationCheckbox);

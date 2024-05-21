@@ -145,10 +145,10 @@ namespace ProcessLogs
                     return;
                 }
 
-                if (Configuration.Settings.isVerbose)
-                {
-                    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Aktuálny log:" + logObject.filePath));
-                }
+                //if (Configuration.Settings.isVerbose)
+                //{
+                //    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Aktuálny adresár:" + logObject.filePath));
+                //}
                 
                 //If the log processing failed, output the reason into rich text box.
                 processStatus = LogHandler.ProcessLog(logObject);
