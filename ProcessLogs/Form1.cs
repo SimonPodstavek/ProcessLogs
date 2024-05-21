@@ -131,8 +131,10 @@ namespace ProcessLogs
 
             //Get Paths for .log files
             Iterator.GetLogPathsFromRoot(Configuration.rootDirectory);
-            statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
-            statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
+
+
+            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths()));
+            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths()));
 
 
 
@@ -158,7 +160,7 @@ namespace ProcessLogs
 
                 //string logContent = File.ReadAllText(path);
                 logObject.byteLogContent = File.ReadAllBytes(logObject.filePath);
-                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + index + " " + logObject.XMLByteSequences.Count));
+                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + index + " " + logObject.XMLByteSequences.Count()));
                 //statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
 
             }
@@ -172,7 +174,7 @@ namespace ProcessLogs
 
             if (Configuration.LogPaths.Count == 0)
             {
-                statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
+                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie."));
                 return;
             }
         

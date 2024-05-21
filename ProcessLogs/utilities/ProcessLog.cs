@@ -87,8 +87,7 @@ namespace ProcessLogs.utilities
                 //Select the only available byte sequence
                 byte[] dataBytes = dataBytesSequence[0];
 
-
-
+                IntegrityVerification.ComputeSha1Hash(dataBytes);
 
             }
                 return isValid;

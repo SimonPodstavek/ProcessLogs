@@ -6,6 +6,10 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using System.Security.Policy;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 
 namespace ProcessLogs.utilities
@@ -100,6 +104,19 @@ namespace ProcessLogs.utilities
             }
             return true;
         }
+        //This method computes SHA1 integrity hash for the given data section of XML bytes
+        internal static byte[] ComputeSha1Hash(byte[] input)
+        {
+            SHA1 sha1 = SHA1.Create();
+            return sha1.ComputeHash(input);           
+        }
+
+        //internal static string HexHashToString(byte[] input)
+        //{
+        //    string hexHash = BitConverter.ToString(input).Replace("-", String.Empty);
+        //    return hexHash.ToUpper();
+        //}
+
 
     }
 
