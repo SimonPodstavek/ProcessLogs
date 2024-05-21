@@ -28,7 +28,7 @@ namespace ProcessLogs.utilities
 
 
             //Sequences utilized to identify offset and end of XML data byte stream
-            internal static byte[] logXMLDataOpeningSequence = Encoding.UTF8.GetBytes("    <Data>");
+            internal static byte[] logXMLDataOpeningSequence = Encoding.UTF8.GetBytes("<Data>");
             internal static byte[] logXMLDataClosingSequence = Encoding.UTF8.GetBytes("</Data>");
 
             //Sequences utilized to identify offset and end of XML hash byte stream
