@@ -14,6 +14,7 @@ using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
 using System.Security.Cryptography;
 using ProcessLogs.logs;
+using System.Reflection.Emit;
 
 
 
@@ -108,6 +109,8 @@ namespace ProcessLogs
             //Update global path variables to match the user's choice
             Configuration.filePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
+            Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
+
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -123,10 +126,6 @@ namespace ProcessLogs
             //    return;
             //}
 
-
-
-
-
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Inicializácia spracovania"));
 
             //Get Paths for .log files
@@ -136,50 +135,47 @@ namespace ProcessLogs
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths()));
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths()));
 
-
-
-
-            List<Logs> tmpLogs = new List<Logs>();
-
-
-            foreach ((int logIndex, string path) in Configuration.LogPaths.Enumerate())
-            {
-                string fileName = Path.GetFileName(path);
-                tmpLogs.Add(new Logs(filePath: path,fileName: fileName));
-            }
-
-            Configuration.globalLogs = tmpLogs;
-            tmpLogs = new List<Logs>();
+            Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path))).ToList();
 
             foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
             {
+                bool processStatus = true;
                 if (!Configuration.IsRunning)
                 {
                     return;
                 }
 
-                //string logContent = File.ReadAllText(path);
-                logObject.byteLogContent = File.ReadAllBytes(logObject.filePath);
-                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + index + " " + logObject.XMLByteSequences.Count()));
-                //statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
+                if (Configuration.Settings.isVerbose)
+                {
+                    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Aktuálny log:" + logObject.filePath));
+                }
+                
+                //If the log processing failed, output the reason into rich text box.
+                processStatus = LogHandler.ProcessLog(logObject);
+                if (!processStatus)
+                {
+                    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Zlyhanie pri spracovaní log-u: " + logObject.filePath));
+                    return;
+                }
+
+
 
             }
 
+            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Spracovanie je ukončené." ));
             return;
 
 
 
-            //Remove unused file paths from memory
-            Configuration.AllPaths = new List<string>();
+            ////Remove unused file paths from memory
+            //Configuration.AllPaths = new List<string>();
 
-            if (Configuration.LogPaths.Count == 0)
-            {
-                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie."));
-                return;
-            }
-        
+            //if (Configuration.LogPaths.Count == 0)
+            //{
+            //    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie."));
+            //    return;
+            //}
         }
-
     }
 }
 

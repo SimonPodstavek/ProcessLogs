@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Net.NetworkInformation;
 
 
 namespace ProcessLogs.utilities
@@ -78,11 +79,10 @@ namespace ProcessLogs.utilities
     internal static class IntegrityVerification
     {
         //Checks that structure of leaf directories matches expected form
-        internal static bool VerifyLeafDirectoriesIntegrity(List<string> Leafdirectories)
+        internal static bool VerifyLeafDirectoriesIntegrity(string[] Leafdirectories)
         {
             string directoryStructureRegex = @".*\\20\d{2}\\\d{2}$";
             Regex regex = new Regex(directoryStructureRegex);
-
 
             foreach(string leafDirectory in Leafdirectories)
             {
@@ -107,16 +107,14 @@ namespace ProcessLogs.utilities
         //This method computes SHA1 integrity hash for the given data section of XML bytes
         internal static byte[] ComputeSha1Hash(byte[] input)
         {
+            string stringOutput = String.Empty;
+            byte[] output = new byte[20];
+
             SHA1 sha1 = SHA1.Create();
-            return sha1.ComputeHash(input);           
+            output = sha1.ComputeHash(input);
+            return output;
+
         }
-
-        //internal static string HexHashToString(byte[] input)
-        //{
-        //    string hexHash = BitConverter.ToString(input).Replace("-", String.Empty);
-        //    return hexHash.ToUpper();
-        //}
-
 
     }
 
@@ -126,7 +124,7 @@ namespace ProcessLogs.utilities
     internal static class Iterator
     {
         //Get subdirectories(leaf directories) for given root directory
-        private static List<string> GetLeafDirectories(string dirPath)
+        private static string[] GetLeafDirectories(string dirPath)
         {
 
             List<string> Leafdirectories = new List<string>();
@@ -136,7 +134,7 @@ namespace ProcessLogs.utilities
 
             if (subdirectories.Length == 0)
             {
-                return new List<string> { dirPath };
+                return new string[] { dirPath };
             }
 
             foreach (string subdir in subdirectories)
@@ -146,7 +144,7 @@ namespace ProcessLogs.utilities
                     Leafdirectories.AddRange(GetLeafDirectories(subdir));
                 }
             }
-            return Leafdirectories;
+            return Leafdirectories.ToArray();
         }
 
         //Get path for log files from leaf directories
@@ -176,7 +174,6 @@ namespace ProcessLogs.utilities
 
         internal static void GetLogPathsFromRoot(string dirPath)
         {
-            List<string> LeafDirectories = new List<string>();
 
             //Read permission not granted for root directory
             if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
@@ -185,7 +182,10 @@ namespace ProcessLogs.utilities
                 return;
             }
 
-            LeafDirectories = GetLeafDirectories(dirPath);
+            string[] LeafDirectories = GetLeafDirectories(dirPath);
+
+
+
 
             if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(LeafDirectories))
             {

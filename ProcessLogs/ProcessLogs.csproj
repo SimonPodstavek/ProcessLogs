@@ -78,7 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\AccessControlUtils.cs" />
     <Compile Include="utilities\Configuration.cs" />
-    <Compile Include="utilities\ProcessLog.cs" />
+    <Compile Include="utilities\LogHandler.cs" />
     <Compile Include="utilities\Extensions.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

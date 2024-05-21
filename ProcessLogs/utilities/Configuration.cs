@@ -15,50 +15,52 @@ namespace ProcessLogs.utilities
 
         internal static IEnumerable<Logs> globalLogs = new List<Logs>();
 
-        static internal class Settings
+        internal static class Settings
         {
-            static bool verboseLog = true;
+            internal static bool isVerbose = true;
         }
 
-        static internal class ByteSequences
+        internal static class ByteSequences
         {
-            //Sequence utilized to identify offset of XML byte stream
+            //Sequences utilized to identify offset and end of XML byte stream
             internal static byte[] logXMLOpeningSequence = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"UTF-8\"?><LogEntry>");
-
-            //Sequence utilized to identify end of XML byte stream
             internal static byte[] logXMLClosingSequence = Encoding.UTF8.GetBytes("</LogEntry>");
 
 
-            //Sequence utilized to identify start of XML data byte stream
+            //Sequences utilized to identify offset and end of XML data byte stream
             internal static byte[] logXMLDataOpeningSequence = Encoding.UTF8.GetBytes("<Data>");
-
-            //Sequence utilized to identify end of XML byte stream
             internal static byte[] logXMLDataClosingSequence = Encoding.UTF8.GetBytes("</Data>");
+
+            //Sequences utilized to identify offset and end of XML hash byte stream
+            internal static byte[] logXMLHashOpeningSequence = Encoding.UTF8.GetBytes("<Hash>");
+            internal static byte[] logXMLHashClosingSequence = Encoding.UTF8.GetBytes("</Hash>");
+
+
 
         }
 
 
-        static internal int CountAndRemoveAllPaths()
+        internal static int CountAndRemoveAllPaths()
         {
             int count = Configuration.AllPaths.Count;
             Configuration.AllPaths = new List<string>();
             return count;
         }
 
-        
-        static internal void iniProcess(Button initiateButton)
+
+        internal static void iniProcess(Button initiateButton)
         {
             Configuration.IsRunning = false;
             initiateButton.Text = "Spracovať";
         }
 
-        static internal void stopProcess(Button initiateButton)
+        internal static void stopProcess(Button initiateButton)
         {
             Configuration.IsRunning = true;
             initiateButton.Text = "Zastaviť";
         }
 
-        static internal int CountLogPaths()
+        internal static int CountLogPaths()
         {
             return Configuration.LogPaths.Count;
         }
@@ -70,6 +72,7 @@ namespace ProcessLogs.utilities
         internal static List<string> LogPaths = new List<string>();
         internal static List<string> AllPaths = new List<string>();
         internal static volatile bool IsRunning = false;
+
         
         
     

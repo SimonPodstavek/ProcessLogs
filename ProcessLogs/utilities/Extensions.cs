@@ -53,6 +53,7 @@ public static class Extensions
     }
 
 
+
     public static IEnumerable<(int Index, T Value)> Enumerate<T>(this IEnumerable<T> source)
     {
         if (source == null)
