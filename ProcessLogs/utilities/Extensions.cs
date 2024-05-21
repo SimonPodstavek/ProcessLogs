@@ -33,10 +33,10 @@ public static class Extensions
             if (forceSynchronous)
             {
                 Exception tmpException = null;
-                uiElement.Invoke((Action)delegate
+                uiElement.Invoke((Action)(()=> 
                 {
                     uiElement.RunUpdater(updater, checkHandleCreated);
-                });
+                }));
                 if (tmpException != null)
                     throw new InvalidOperationException("SafeInvoke", tmpException);
             }

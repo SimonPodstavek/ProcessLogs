@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
 using System.Security.Cryptography;
+using ProcessLogs.logs;
 
 
 
@@ -135,7 +136,20 @@ namespace ProcessLogs
 
 
 
+
+            List<Logs> tmpLogs = new List<Logs>();
+
+
             foreach ((int logIndex, string path) in Configuration.LogPaths.Enumerate())
+            {
+                string fileName = Path.GetFileName(path);
+                tmpLogs.Add(new Logs(filePath: path,fileName: fileName));
+            }
+
+            Configuration.globalLogs = tmpLogs;
+            tmpLogs = new List<Logs>();
+
+            foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
             {
                 if (!Configuration.IsRunning)
                 {
@@ -143,13 +157,12 @@ namespace ProcessLogs
                 }
 
                 //string logContent = File.ReadAllText(path);
-                byte[] byteLogContent = File.ReadAllBytes(path);
-                List<byte[]> XMLSections = new List<byte[]>();
-
-                XMLSections = ProcessLog.ProcessLogBytes(byteLogContent);
-                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + logIndex + " " + XMLSections.Count));
+                logObject.byteLogContent = File.ReadAllBytes(logObject.filePath);
+                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("XML sekcia pre dokument " + index + " " + logObject.XMLByteSequences.Count));
                 //statusBox.AppendTextWithNewLine(ComputeSha1Hash(logContent.Replace("\r", String.Empty)));
+
             }
+
             return;
 
 
@@ -162,13 +175,7 @@ namespace ProcessLogs
                 statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
                 return;
             }
-
-
-
-
-
-
-
+        
         }
 
     }

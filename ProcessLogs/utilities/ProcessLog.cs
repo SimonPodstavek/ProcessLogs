@@ -6,12 +6,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ProcessLogs.logs;
+
 
 namespace ProcessLogs.utilities
 {
     internal  static class ProcessLog
     {
-        private static List<byte[]> GetXMLByteSectionsFromLogBytes(byte[] logBytes, byte[] logXMLOpeningSequence, byte[] logXMLClosingSequence)
+        private static List<byte[]> GetEnclosedSequences(byte[] logBytes, byte[] logXMLOpeningSequence, byte[] logXMLClosingSequence)
         {
 
             List<byte[]> XMLByteSequences= new List<byte[]>();
@@ -53,10 +55,6 @@ namespace ProcessLogs.utilities
                         found = false;
                         break;
                     }
-                    if (i > 2)
-                    {
-                        Console.WriteLine(1);
-                    }
 
                 }
                 if (found)
@@ -68,22 +66,48 @@ namespace ProcessLogs.utilities
         }
 
 
-        private static bool VerifyIntegrity()
+        private static bool VerifyXMLSequencesIntegrity(Logs logObject)
         {
-            bool isValid = false;
 
-            return isValid;
+            bool isValid = true;
+            foreach((int index, byte[] XMLByteSequence) in logObject.XMLByteSequences.Enumerate())
+            {
+                List<byte[]> dataBytesSequence = new List<byte[]>();
+
+                dataBytesSequence = GetEnclosedSequences(XMLByteSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
+
+
+                //Return an error if there are multiple sequences of the same file 
+                if(dataBytesSequence.Count != 0)
+                {
+                    MessageBox.Show("Chyba 107: V súbore " + logObject.fileName + " v XML log-u č. " + index + " sa nenachádza element <Data> alebo sa v ňom nachádza viac ako raz" ,"Nesprávna štruktúra XML dát", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isValid = false;
+                }
+
+                //Select the only available byte sequence
+                byte[] dataBytes = dataBytesSequence[0];
+
+
+
+
+            }
+                return isValid;
         }
 
-        internal static List<byte[]> ProcessLogBytes(byte[] logBytes)
+        internal static void ProcessLogBytes(Logs logObject)
         {
-            List<byte[]> XMLByteSequences = GetXMLByteSectionsFromLogBytes(logBytes, 
+
+            logObject.XMLByteSequences = GetEnclosedSequences(logObject.byteLogContent, 
                 Configuration.ByteSequences.logXMLOpeningSequence, 
                 Configuration.ByteSequences.logXMLClosingSequence);
 
-            
-            
-            return XMLByteSequences;
+            VerifyXMLSequencesIntegrity(logObject);
+
+
+
+
+            return;
+            //return XMLByteSequences;
 
 
         }

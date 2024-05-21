@@ -1,17 +1,19 @@
-﻿using System;
+﻿using ProcessLogs.logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace ProcessLogs.utilities
 {
     //Singleton process class is used to store globally required variables.
     //It also provides data from logging and statistics
     internal static class Configuration
     {
+
+        internal static IEnumerable<Logs> globalLogs = new List<Logs>();
 
         static internal class Settings
         {
@@ -25,6 +27,13 @@ namespace ProcessLogs.utilities
 
             //Sequence utilized to identify end of XML byte stream
             internal static byte[] logXMLClosingSequence = Encoding.UTF8.GetBytes("</LogEntry>");
+
+
+            //Sequence utilized to identify start of XML data byte stream
+            internal static byte[] logXMLDataOpeningSequence = Encoding.UTF8.GetBytes("<Data>");
+
+            //Sequence utilized to identify end of XML byte stream
+            internal static byte[] logXMLDataClosingSequence = Encoding.UTF8.GetBytes("</Data>");
 
         }
 
