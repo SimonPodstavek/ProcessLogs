@@ -43,46 +43,51 @@
             // 
             // sourceDirectoryTextBox
             // 
-            this.sourceDirectoryTextBox.Location = new System.Drawing.Point(16, 42);
-            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.sourceDirectoryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sourceDirectoryTextBox.Location = new System.Drawing.Point(29, 78);
+            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
-            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(444, 20);
+            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(811, 29);
             this.sourceDirectoryTextBox.TabIndex = 0;
             // 
             // sourceDirectoryLabel
             // 
             this.sourceDirectoryLabel.AutoSize = true;
-            this.sourceDirectoryLabel.Location = new System.Drawing.Point(15, 18);
-            this.sourceDirectoryLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.sourceDirectoryLabel.Location = new System.Drawing.Point(28, 33);
+            this.sourceDirectoryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sourceDirectoryLabel.Name = "sourceDirectoryLabel";
-            this.sourceDirectoryLabel.Size = new System.Drawing.Size(86, 13);
+            this.sourceDirectoryLabel.Size = new System.Drawing.Size(158, 25);
             this.sourceDirectoryLabel.TabIndex = 1;
             this.sourceDirectoryLabel.Text = "Zdrojový adresár";
             // 
             // XMLDirectoryLabel
             // 
             this.XMLDirectoryLabel.AutoSize = true;
-            this.XMLDirectoryLabel.Location = new System.Drawing.Point(16, 76);
-            this.XMLDirectoryLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.XMLDirectoryLabel.Location = new System.Drawing.Point(29, 140);
+            this.XMLDirectoryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.XMLDirectoryLabel.Name = "XMLDirectoryLabel";
-            this.XMLDirectoryLabel.Size = new System.Drawing.Size(109, 13);
+            this.XMLDirectoryLabel.Size = new System.Drawing.Size(203, 25);
             this.XMLDirectoryLabel.TabIndex = 3;
             this.XMLDirectoryLabel.Text = "Agregátny XML súbor";
             // 
             // filePathXMLTextBox
             // 
-            this.filePathXMLTextBox.Location = new System.Drawing.Point(17, 100);
-            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.filePathXMLTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filePathXMLTextBox.Location = new System.Drawing.Point(31, 185);
+            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.filePathXMLTextBox.Name = "filePathXMLTextBox";
-            this.filePathXMLTextBox.Size = new System.Drawing.Size(444, 20);
+            this.filePathXMLTextBox.Size = new System.Drawing.Size(811, 29);
             this.filePathXMLTextBox.TabIndex = 2;
             // 
             // sourceDirectoryButton
             // 
-            this.sourceDirectoryButton.Location = new System.Drawing.Point(480, 39);
-            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2);
+            this.sourceDirectoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sourceDirectoryButton.Location = new System.Drawing.Point(880, 72);
+            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(4);
             this.sourceDirectoryButton.Name = "sourceDirectoryButton";
-            this.sourceDirectoryButton.Size = new System.Drawing.Size(54, 20);
+            this.sourceDirectoryButton.Size = new System.Drawing.Size(99, 37);
             this.sourceDirectoryButton.TabIndex = 4;
             this.sourceDirectoryButton.Text = "Vybrať";
             this.sourceDirectoryButton.UseVisualStyleBackColor = true;
@@ -90,10 +95,11 @@
             // 
             // filePathXMLButton
             // 
-            this.filePathXMLButton.Location = new System.Drawing.Point(480, 100);
-            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2);
+            this.filePathXMLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.filePathXMLButton.Location = new System.Drawing.Point(880, 176);
+            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(4);
             this.filePathXMLButton.Name = "filePathXMLButton";
-            this.filePathXMLButton.Size = new System.Drawing.Size(54, 20);
+            this.filePathXMLButton.Size = new System.Drawing.Size(99, 37);
             this.filePathXMLButton.TabIndex = 5;
             this.filePathXMLButton.Text = "Vybrať";
             this.filePathXMLButton.UseVisualStyleBackColor = true;
@@ -102,39 +108,44 @@
             // importSettings
             // 
             this.importSettings.AutoSize = true;
-            this.importSettings.Location = new System.Drawing.Point(17, 134);
-            this.importSettings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.importSettings.Location = new System.Drawing.Point(31, 247);
+            this.importSettings.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.importSettings.Name = "importSettings";
-            this.importSettings.Size = new System.Drawing.Size(91, 13);
+            this.importSettings.Size = new System.Drawing.Size(166, 25);
             this.importSettings.TabIndex = 6;
             this.importSettings.Text = "Import nastavenia";
             // 
             // statusBox
             // 
-            this.statusBox.Location = new System.Drawing.Point(13, 238);
-            this.statusBox.Margin = new System.Windows.Forms.Padding(2);
+            this.statusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.statusBox.Location = new System.Drawing.Point(40, 424);
+            this.statusBox.Margin = new System.Windows.Forms.Padding(4);
             this.statusBox.Name = "statusBox";
-            this.statusBox.Size = new System.Drawing.Size(517, 162);
+            this.statusBox.Size = new System.Drawing.Size(928, 296);
             this.statusBox.TabIndex = 7;
             this.statusBox.Text = "";
             // 
             // safebytesVerificationCheckbox
             // 
             this.safebytesVerificationCheckbox.AutoSize = true;
-            this.safebytesVerificationCheckbox.Location = new System.Drawing.Point(17, 160);
-            this.safebytesVerificationCheckbox.Margin = new System.Windows.Forms.Padding(2);
+            this.safebytesVerificationCheckbox.Location = new System.Drawing.Point(31, 295);
+            this.safebytesVerificationCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.safebytesVerificationCheckbox.Name = "safebytesVerificationCheckbox";
-            this.safebytesVerificationCheckbox.Size = new System.Drawing.Size(130, 21);
+            this.safebytesVerificationCheckbox.Size = new System.Drawing.Size(217, 29);
             this.safebytesVerificationCheckbox.TabIndex = 8;
             this.safebytesVerificationCheckbox.Text = "Verifikácia safebytes";
             this.safebytesVerificationCheckbox.UseVisualStyleBackColor = true;
             // 
             // initiateButton
             // 
-            this.initiateButton.Location = new System.Drawing.Point(17, 195);
-            this.initiateButton.Margin = new System.Windows.Forms.Padding(2);
+            this.initiateButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.initiateButton.Location = new System.Drawing.Point(31, 360);
+            this.initiateButton.Margin = new System.Windows.Forms.Padding(4);
             this.initiateButton.Name = "initiateButton";
-            this.initiateButton.Size = new System.Drawing.Size(511, 22);
+            this.initiateButton.Size = new System.Drawing.Size(937, 41);
             this.initiateButton.TabIndex = 9;
             this.initiateButton.Text = "Spracovať";
             this.initiateButton.UseVisualStyleBackColor = true;
@@ -143,31 +154,32 @@
             // verboseLogCheckBox
             // 
             this.verboseLogCheckBox.AutoSize = true;
-            this.verboseLogCheckBox.Location = new System.Drawing.Point(153, 160);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.verboseLogCheckBox.Location = new System.Drawing.Point(280, 295);
+            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.verboseLogCheckBox.Name = "verboseLogCheckBox";
-            this.verboseLogCheckBox.Size = new System.Drawing.Size(72, 21);
+            this.verboseLogCheckBox.Size = new System.Drawing.Size(112, 29);
             this.verboseLogCheckBox.TabIndex = 10;
             this.verboseLogCheckBox.Text = "Verbose";
             this.verboseLogCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 425);
+            this.ClientSize = new System.Drawing.Size(1003, 756);
+            this.Controls.Add(this.filePathXMLButton);
             this.Controls.Add(this.verboseLogCheckBox);
             this.Controls.Add(this.initiateButton);
             this.Controls.Add(this.safebytesVerificationCheckbox);
             this.Controls.Add(this.statusBox);
             this.Controls.Add(this.importSettings);
-            this.Controls.Add(this.filePathXMLButton);
             this.Controls.Add(this.sourceDirectoryButton);
             this.Controls.Add(this.XMLDirectoryLabel);
             this.Controls.Add(this.filePathXMLTextBox);
             this.Controls.Add(this.sourceDirectoryLabel);
             this.Controls.Add(this.sourceDirectoryTextBox);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(1027, 820);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -178,6 +190,7 @@
 
         #endregion
 
+        internal System.Windows.Forms.RichTextBox statusBox;
         private System.Windows.Forms.TextBox sourceDirectoryTextBox;
         private System.Windows.Forms.Label sourceDirectoryLabel;
         private System.Windows.Forms.Label XMLDirectoryLabel;
@@ -185,7 +198,6 @@
         private System.Windows.Forms.Button sourceDirectoryButton;
         private System.Windows.Forms.Button filePathXMLButton;
         private System.Windows.Forms.Label importSettings;
-        private System.Windows.Forms.RichTextBox statusBox;
         private System.Windows.Forms.CheckBox safebytesVerificationCheckbox;
         private System.Windows.Forms.Button initiateButton;
         private System.Windows.Forms.CheckBox verboseLogCheckBox;

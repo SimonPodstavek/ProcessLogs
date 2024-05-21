@@ -82,6 +82,7 @@ namespace ProcessLogs.utilities
         {
             List<byte> list = byteArray.ToList();
             int listLength = list.Count;
+
             if (newChar == null)
             {
                 bool lastRemoved = true;
@@ -129,7 +130,7 @@ namespace ProcessLogs.utilities
         }
 
 
-        private static void FindXMLHash(Logs logObject)
+        private static bool FindXMLHash(Logs logObject)
         {
             List<Logs.record> logRecords = logObject.logRecords;
 
@@ -145,6 +146,7 @@ namespace ProcessLogs.utilities
                 if (byteXMLHashes.Count != 1)
                 {
                     MessageBox.Show("Chyba 108: Pri čítaní hash integrity XML súboru" + logObject.filePath + "sa vyskytla chyba.", "Chyba čítania", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
 
                 hashString = Encoding.UTF8.GetString(byteXMLHashes[0]);
@@ -153,7 +155,7 @@ namespace ProcessLogs.utilities
                 logRecord.byteXMLHash = HexStringToByteArray(hashString);
             }
 
-            return;
+            return true;
         }
 
         private static bool VerifyXMLSequencesIntegrity(Logs logObject)
@@ -174,6 +176,7 @@ namespace ProcessLogs.utilities
                 if (dataBytesSequence.Count != 1)
                 {
                     MessageBox.Show("Chyba 107: V súbore " + logObject.fileName + " v XML log-u č. " + index + " sa nenachádza element <Data> alebo sa v ňom nachádza viac ako raz", "Nesprávna štruktúra XML dát", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
 
                 //Select the only available byte sequence
@@ -181,7 +184,7 @@ namespace ProcessLogs.utilities
 
                 if (!logRecord.computedHash.SequenceEqual(logRecord.byteXMLHash))
                 {
-                    Console.WriteLine("Nezhoda hash pri " + logObject.filePath + logRecord.computedHash + logRecord.byteXMLHash) ;
+                    Console.WriteLine("Nezhoda SHA1 hash pri " + logObject.filePath) ;
                     //return false;
                 }
             }
@@ -228,21 +231,14 @@ namespace ProcessLogs.utilities
             }
 
             //Get contents of <Hash> tag for every record
-            FindXMLHash(logObject);
+            if(!FindXMLHash(logObject))
+                return false;
 
-            VerifyXMLSequencesIntegrity(logObject);
+            //Verify hash located in logs with computed SHA1 hash
+            if (!VerifyXMLSequencesIntegrity(logObject)) 
+                return false;
 
             return true;
-
-            //foreach (Logs.record logRecord in logObject.logRecords)
-            //{
-            //    //Handle !!!
-            //    //if (!VerifyXMLSequencesIntegrity(logObject))
-            //    //{
-
-
-            //}
-
 
         }
     }

@@ -11,12 +11,27 @@ namespace ProcessLogs
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
+
+        static Form1 MainForm;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            MainForm =  new Form1();
+            Application.Run(MainForm);
+
         }
+        static void LogEvent(string message)
+        {
+            //Check if status box is not null
+            MainForm?.statusBox?.AppendTextWithNewLine(message);
+
+        }
+
+
+
     }
 }

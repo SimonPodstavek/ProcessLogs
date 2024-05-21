@@ -143,6 +143,8 @@ namespace ProcessLogs.utilities
                 {
                     Leafdirectories.AddRange(GetLeafDirectories(subdir));
                 }
+                Leafdirectories = new List<string>();
+                break;
             }
             return Leafdirectories.ToArray();
         }

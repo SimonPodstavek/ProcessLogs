@@ -97,11 +97,8 @@ namespace ProcessLogs
                 initiateButton.Text = "Spracovať";
 
             }
-
-
-
-
         }
+
 
         private void ProcessLogs()
         {
@@ -150,8 +147,11 @@ namespace ProcessLogs
                 //    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Aktuálny adresár:" + logObject.filePath));
                 //}
                 
+
                 //If the log processing failed, output the reason into rich text box.
                 processStatus = LogHandler.ProcessLog(logObject);
+
+
                 if (!processStatus)
                 {
                     statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Zlyhanie pri spracovaní log-u: " + logObject.filePath));
