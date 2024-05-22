@@ -11,6 +11,7 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
+using System.Linq.Expressions;
 
 
 namespace ProcessLogs.utilities
@@ -107,8 +108,7 @@ namespace ProcessLogs.utilities
         //This method computes SHA1 integrity hash for the given data section of XML bytes
         internal static byte[] ComputeSha1Hash(byte[] input)
         {
-            string stringOutput = String.Empty;
-            byte[] output = new byte[20];
+            byte[] output;
 
             SHA1 sha1 = SHA1.Create();
             output = sha1.ComputeHash(input);
@@ -137,50 +137,49 @@ namespace ProcessLogs.utilities
                 return new string[] { dirPath };
             }
 
+
             foreach (string subdir in subdirectories)
             {
                 if (AccessControlUtils.VerifyDirReadPermission(subdir))
                 {
                     Leafdirectories.AddRange(GetLeafDirectories(subdir));
                 }
-                Leafdirectories = new List<string>();
-                break;
+                else
+                {
+                    //Raise exception !!!!
+                    Console.WriteLine("NOT FINISHED YET!");
+                }
+                
             }
             return Leafdirectories.ToArray();
         }
 
         //Get path for log files from leaf directories
-        private static List<string> GetLogPathsFromRootDirectory(string dirPath)
+        private static IEnumerable<string> GetLogPathsFromRootDirectory(string dirPath)
         {
-            List<string> LogPaths = new List<string>();
             //Iterate over all files in root directory
             IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.log", SearchOption.AllDirectories);
-            LogPaths = NumerableLogPaths.ToList();
-            return LogPaths;
-
+            return NumerableLogPaths;
         }
 
 
         //This method finds paths to all paths in leaf directories. It is later used to verify that all files in the directory are of .log type
-        private static List<string> GetAllFilesFromRootDirectory(string dirPath)
+        private static IEnumerable<string> GetAllFilesFromRootDirectory(string dirPath)
         {
-            List<string> AllLogPaths = new List<string>();
-
             //Iterate over all files in root directory
             IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.*", SearchOption.AllDirectories);
-            AllLogPaths = NumerableLogPaths.ToList();
-            return AllLogPaths;
+            return NumerableLogPaths;
 
         }
 
 
-        internal static void GetLogPathsFromRoot(string dirPath)
+        internal static void GetPathsFromRoot(string dirPath)
         {
 
             //Read permission not granted for root directory
             if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
             {
-                Configuration.LogPaths = new List<string>();
+                Configuration.LogPaths = Enumerable.Empty<string>();
                 return;
             }
 
@@ -191,7 +190,7 @@ namespace ProcessLogs.utilities
 
             if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(LeafDirectories))
             {
-                Configuration.LogPaths = new List<string>();
+                Configuration.LogPaths = Enumerable.Empty<string>();
                 return;
             }
 

@@ -13,7 +13,7 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
-        internal static IEnumerable<Logs> globalLogs = new List<Logs>();
+        internal static IEnumerable<Logs> globalLogs;
 
         internal static class Settings
         {
@@ -34,43 +34,45 @@ namespace ProcessLogs.utilities
             //Sequences utilized to identify offset and end of XML hash byte stream
             internal static byte[] logXMLHashOpeningSequence = Encoding.UTF8.GetBytes("<Hash>");
             internal static byte[] logXMLHashClosingSequence = Encoding.UTF8.GetBytes("</Hash>");
-
-
-
         }
 
 
         internal static int CountAndRemoveAllPaths()
         {
-            int count = Configuration.AllPaths.Count;
-            Configuration.AllPaths = new List<string>();
+            int count = AllPaths.Count();
+            AllPaths = Enumerable.Empty<string>();
             return count;
         }
 
 
         internal static void iniProcess(Button initiateButton)
         {
-            Configuration.IsRunning = false;
+            NewMethod();
             initiateButton.Text = "Spracovať";
+        }
+
+        private static void NewMethod()
+        {
+            IsRunning = false;
         }
 
         internal static void stopProcess(Button initiateButton)
         {
-            Configuration.IsRunning = true;
+            IsRunning = true;
             initiateButton.Text = "Zastaviť";
         }
 
         internal static int CountLogPaths()
         {
-            return Configuration.LogPaths.Count;
+            return LogPaths.Count();
         }
 
         //Path of an aggregate XML file
         internal static string filePathXML = string.Empty;
         //Path to a directory with LeafDirectories cotaining logs
         internal static string rootDirectory = string.Empty;
-        internal static List<string> LogPaths = new List<string>();
-        internal static List<string> AllPaths = new List<string>();
+        internal static IEnumerable<string> LogPaths;
+        internal static IEnumerable<string> AllPaths;
         internal static volatile bool IsRunning = false;
 
         

@@ -15,6 +15,8 @@ using ProcessLogs.utilities;
 using System.Security.Cryptography;
 using ProcessLogs.logs;
 using System.Reflection.Emit;
+using System.CodeDom.Compiler;
+using System.Runtime.CompilerServices;
 
 
 
@@ -62,14 +64,8 @@ namespace ProcessLogs
 
         }
 
-        
-
-
         private async void initiateButton_Click(object sender, EventArgs e)
         {
-
-
-
             if (Configuration.IsRunning == true)
             {
                 Configuration.iniProcess(initiateButton);
@@ -78,7 +74,6 @@ namespace ProcessLogs
             {
                 Configuration.stopProcess(initiateButton);
             }
-
 
             try
             {    
@@ -100,6 +95,8 @@ namespace ProcessLogs
         }
 
 
+        //This function is called when user clicks initiation button.
+        //It takes setting and other information from the form, creates log object and calls Log handler.
         private void ProcessLogs()
         {
 
@@ -107,7 +104,6 @@ namespace ProcessLogs
             Configuration.filePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
-
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -123,16 +119,19 @@ namespace ProcessLogs
             //    return;
             //}
 
+            
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Inicializácia spracovania"));
 
-            //Get Paths for .log files
-            Iterator.GetLogPathsFromRoot(Configuration.rootDirectory);
+
+            //Get Paths for log files from root directory
+            Iterator.GetPathsFromRoot(Configuration.rootDirectory);
 
 
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths()));
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths()));
 
-            Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path))).ToList();
+            //Generate log object for every log path and add it to globalLogs IEnumerable.
+            Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path)));
 
             foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
             {
@@ -165,10 +164,6 @@ namespace ProcessLogs
             statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Spracovanie je ukončené." ));
             return;
 
-
-
-            ////Remove unused file paths from memory
-            //Configuration.AllPaths = new List<string>();
 
             //if (Configuration.LogPaths.Count == 0)
             //{
