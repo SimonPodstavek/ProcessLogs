@@ -20,8 +20,7 @@ namespace ProcessLogs.utilities
     internal static class LogHandler
     {
 
-
-        private static byte[][] GetEnclosedSequences(byte[] logBytes, byte[] logXMLOpeningSequence, byte[] logXMLClosingSequence)
+        internal static byte[][] GetEnclosedSequences(byte[] logBytes, byte[] logXMLOpeningSequence, byte[] logXMLClosingSequence)
         {
 
             List<byte[]> XMLByteSequences = new List<byte[]>();
@@ -74,8 +73,6 @@ namespace ProcessLogs.utilities
         }
 
 
-
-
         //This function takes a byte array and character to be replaced. Optionally it accepts replacement byte.
         //If the replacement a byte is empty, the occurence of old char will be removed from the byte array.
         internal static byte[] FindAndReplaceByte(byte[] byteArray, byte oldChar, byte? newChar = null)
@@ -86,7 +83,9 @@ namespace ProcessLogs.utilities
             if (newChar == null)
             {
                 return byteArray.Where(x => x != oldChar).ToArray();
+
             }
+
 
             resultAray = new byte[originalLength];
             foreach ((int index, byte value) in byteArray.Enumerate())
@@ -99,7 +98,8 @@ namespace ProcessLogs.utilities
             return resultAray;
         }
 
-        static byte[] HexStringToByteArray(string hex)
+        //This function converts hex frmo string to hex in bytes. E.g. string "0DFA3D" would be converted to bytes {0D,FA,3D}
+        internal static byte[] HexStringToByteArray(string hex)
         {
             try { 
                 byte[] bytes = new byte[hex.Length / 2];
@@ -108,92 +108,27 @@ namespace ProcessLogs.utilities
                     bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
                 }
                 return bytes;
-            }catch(Exception exc)
+            }catch(Exception ex)
             {
-                MessageBox.Show("Chyba 110: Pri konverzii Hash z reťazca sa vyskytla chyba.", "Chyba konverzie", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                byte[] errBytes = new byte[20];
-                for (int i = 0; i < 20; i++)
-                {
-                    errBytes[i] = 0xFF;
-                }
-                return errBytes;
+                throw new Exception("Chyba 110: Pri konverzii Hash z reťazca sa vyskytla chyba.", ex);
             }
         }
 
 
-        private static bool FindXMLHash(Logs logObject)
-        {
-            Logs.record[] logRecords = logObject.logRecords;
 
-            foreach (Logs.record logRecord in logRecords)
-            {
-
-                string hashString;
-                byte[] byteXMLContent = logRecord.byteXMLSequence;
-                byte[][] byteXMLHashes = GetEnclosedSequences(byteXMLContent,
-                    Configuration.ByteSequences.logXMLHashOpeningSequence,
-                    Configuration.ByteSequences.logXMLHashClosingSequence);
-
-                if (byteXMLHashes.Length != 1)
-                {
-                    MessageBox.Show("Chyba 108: Pri čítaní hash integrity XML súboru" + logObject.filePath + "sa vyskytla chyba.", "Chyba čítania", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-                //Convert hash(hex) from byte to UTF-8 string.
-                hashString = Encoding.UTF8.GetString(byteXMLHashes[0]);
-                hashString = hashString.Substring(6, 40);
-
-                //Split string and turn it into hash.
-                logRecord.XMLHash = HexStringToByteArray(hashString);
-            }
-
-            return true;
-        }
-
-        private static bool VerifyXMLSequencesIntegrity(Logs logObject)
-        {
-            Logs.record[] logRecords = logObject.logRecords;
-
-            foreach ((int index, Logs.record logRecord) in logRecords.Enumerate())
-            {
-
-                byte[][] dataBytesSequence = GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
-
-
-                //Return an error if there are multiple sequences of the same file 
-                if (dataBytesSequence.Length != 1)
-                {
-                    MessageBox.Show("Chyba 107: V súbore " + logObject.fileName + " v XML log-u č. " + index + " sa nenachádza element <Data> alebo sa v ňom nachádza viac ako raz", "Nesprávna štruktúra XML dát", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-                //Select the only available byte sequence
-                logRecord.computedHash = IntegrityVerification.ComputeSha1Hash(dataBytesSequence[0]);
-
-                if (!logRecord.computedHash.SequenceEqual(logRecord.XMLHash))
-                {
-                    Console.WriteLine("Nezhoda SHA1 hash pri " + logObject.filePath) ;
-                    //return false;
-                }
-            }
-            return true;
-        }
-
-        internal static bool ProcessLog(Logs logObject)
+        internal static void ProcessLog(Logs logObject)
         {
             if (logObject == null)
-                return false;
+                return;
 
             //Get byte content of a log
             try
             {
                 logObject.LogContent = File.ReadAllBytes(logObject.filePath);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                MessageBox.Show("Chyba 108: Pri čítaní bytov súboru" + logObject.filePath + " sa vyskytla chyba\r\n" + exc + ".", "Chyba čítania", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba 108: Pri čítaní bajtov sa vyskytla chyba.", ex);
             }
 
             //Get byte sequences of a log
@@ -201,25 +136,37 @@ namespace ProcessLogs.utilities
                 Configuration.ByteSequences.logXMLOpeningSequence,
                 Configuration.ByteSequences.logXMLClosingSequence);
 
-            //If there aren't any XML sections in a log, raise an error
+            //If there aren't any XML sections in a log, notify the user.
+            //Allow the user to bypass the error and skip the file.
             if (logObject.XMLSequences.Count() == 0)
             {
                 DialogResult continueProcessing = MessageBox.Show("Chyba 103: Log" + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť záznam a pokračovať?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (continueProcessing == DialogResult.No)
                 {
-                    return false;
+                    throw new Exception("Chyba 103: Log neobsahuje XML sekcie.");
                 }
             }
 
 
             List<Logs.record> tmpLogRecords = new List<Logs.record> ();
             //Create log record object and give it corresponding XML content
-            foreach (byte[] byteXMLSequence in logObject.XMLSequences)
+
+            foreach ((int index, byte[] byteXMLSequence) in logObject.XMLSequences.Enumerate())
             {
-                Logs.record currentRecord = new Logs.record();
-                currentRecord.byteXMLSequence = byteXMLSequence;
-                tmpLogRecords.Add(currentRecord);
+                try
+                {
+                    Logs.record currentRecord = new Logs.record();
+                    currentRecord.byteXMLSequence = byteXMLSequence;
+                    tmpLogRecords.Add(currentRecord);
+                    int nu = 0;
+                    Console.Write(0 / nu);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Chyba 108: Pri pridávaní {index+1}. XML sekcie v súbore sa vyskytla chyba.", ex);
+                }
             }
+
 
             //Convert tmp List to array and release it from memory
             logObject.logRecords = tmpLogRecords.ToArray();
@@ -228,14 +175,14 @@ namespace ProcessLogs.utilities
 
 
             //Get contents of <Hash> tag for every record
-            if(!FindXMLHash(logObject))
-                return false;
+            if (!Logs.FindXMLHash(logObject))
+                throw new Exception("Pri vyhľadávaní hash v XML sekcii nastala neočakávaná chyba.");
 
-            //Verify hash located in logs with computed SHA1 hash
-            if (!VerifyXMLSequencesIntegrity(logObject)) 
-                return false;
+            //Verify hash located in logs with computed SHA1 hash for every record
+            if (!Logs.VerifyXMLSequencesIntegrity(logObject))
+                throw new Exception("Pri overovaní hash nastala neočakávaná chyba.");
 
-            return true;
+            return;
 
         }
     }

@@ -1,12 +1,16 @@
 ﻿using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
+using ProcessLogs;
 
 public static class Extensions
 {
     //Method to add text along with new line to rich text box
     public static void AppendTextWithNewLine(this TextBoxBase textBox, string text)
     {
+
+        
+
         textBox.AppendText(text + Environment.NewLine);
     }
 
@@ -48,8 +52,6 @@ public static class Extensions
             return;
         }
         uiElement.RunUpdater(updater, checkHandleCreated);
-  
-
     }
 
 
@@ -68,8 +70,6 @@ public static class Extensions
             index++;
         }
     }
-
-
 
 }
 

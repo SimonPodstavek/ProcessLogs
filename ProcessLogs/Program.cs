@@ -19,16 +19,23 @@ namespace ProcessLogs
         static void Main()
         {
             Application.EnableVisualStyles();
+
             Application.SetCompatibleTextRenderingDefault(false);
-            MainForm =  new Form1();
+            MainForm = new Form1();
+           
             Application.Run(MainForm);
 
         }
-        static void LogEvent(string message)
+
+        internal static void LogEvent(string message)
         {
             //Check if status box is not null
-            MainForm?.statusBox?.AppendTextWithNewLine(message);
+            var statusBox  = MainForm?.statusBox;
 
+            if(statusBox != null)
+            {
+                statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine(message));
+            }
         }
 
 

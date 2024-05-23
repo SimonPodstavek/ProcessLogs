@@ -30,18 +30,15 @@ namespace ProcessLogs.utilities
             }
             catch(UnauthorizedAccessException)
             {
-                MessageBox.Show("Chyba 101: Pre adresár " + dirPath + " nemáte dostatočné povolenia, adresár bude preskočený.", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba 101: Pre adresár " + dirPath + " nemáte dostatočné povolenia.");
             }
             catch(DirectoryNotFoundException)
             {
-                MessageBox.Show("Chyba 100: Adresár " + dirPath + " neexistuje.", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba 100: Adresár " + dirPath + " neexistuje.");
             }
             catch(Exception err)
             {
-                MessageBox.Show("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba " + err + " .", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba " + err + " .");
             }
         }
 
@@ -59,18 +56,15 @@ namespace ProcessLogs.utilities
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Chyba 101: Pre súbor " + filepath + " nemáte dostatočné povolenia, súbor bude preskočený.", "Nedostatočné povolenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba 101: Pre súbor nemáte dostatočné povolenia, súbor bude preskočený.");
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Chyba 102: Súbor " + filepath + "neexistuje.", "Neplatná cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba 102: Súbor neexistuje.");
             }
             catch (Exception err)
             {
-                MessageBox.Show("Chyba: Pri overení prístupu k súboru " + filepath + " sa vyskytla neočakávaná chyba " + err + " ." , "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Chyba: Pri overení prístupu k súboru sa vyskytla neočakávaná chyba: " + err);
             }
 
         }

@@ -88,6 +88,7 @@ namespace ProcessLogs
             }
             finally
             {
+                Program.LogEvent("Spracovanie je ukončené.");
                 Configuration.IsRunning = false;
                 initiateButton.Text = "Spracovať";
 
@@ -120,48 +121,42 @@ namespace ProcessLogs
             //}
 
             
-            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Inicializácia spracovania"));
+            Program.LogEvent("Inicializácia spracovania");
 
 
             //Get Paths for log files from root directory
             Iterator.GetPathsFromRoot(Configuration.rootDirectory);
 
 
-            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths()));
-            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths()));
+            Program.LogEvent("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
+            Program.LogEvent("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
 
             //Generate log object for every log path and add it to globalLogs IEnumerable.
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path)));
 
             foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
             {
-                bool processStatus = true;
                 if (!Configuration.IsRunning)
                 {
                     return;
                 }
 
-                //if (Configuration.Settings.isVerbose)
-                //{
-                //    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Aktuálny adresár:" + logObject.filePath));
-                //}
-                
 
                 //If the log processing failed, output the reason into rich text box.
-                processStatus = LogHandler.ProcessLog(logObject);
-
-
-                if (!processStatus)
+                try
                 {
-                    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Zlyhanie pri spracovaní log-u: " + logObject.filePath));
+                    LogHandler.ProcessLog(logObject);
+                }catch(Exception ex)
+                {
+                    Program.LogEvent("Vyskytla sa chyba pri spracovaní: " + logObject.filePath);
+                    Program.LogEvent($"Popis: {ex.Message}");
+                    Program.LogEvent(ex.StackTrace);
                     return;
                 }
 
-
-
             }
 
-            statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Spracovanie je ukončené." ));
+            Program.LogEvent("Spracovanie je ukončené.");
             return;
 
 
