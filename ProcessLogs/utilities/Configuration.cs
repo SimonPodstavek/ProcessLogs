@@ -13,7 +13,7 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
-        internal static IEnumerable<Logs> globalLogs;
+        internal static IEnumerable<logs.logClass> globalLogs;
 
         internal static class Settings
         {

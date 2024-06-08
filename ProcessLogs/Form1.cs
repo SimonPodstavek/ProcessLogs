@@ -152,8 +152,8 @@ namespace ProcessLogs
             }
 
             //Generate log object for every log path and add it to globalLogs IEnumerable.
-            Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path)));
-            foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
+            Configuration.globalLogs = Configuration.LogPaths.Select(path => new logClass(filePath: path, fileName: Path.GetFileName(path)));
+            foreach ((int index, logs.logClass logObject) in Configuration.globalLogs.Enumerate())
             {
                 if (!Configuration.IsRunning)
                 {

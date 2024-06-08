@@ -139,7 +139,7 @@ namespace ProcessLogs.utilities
         }
 
         //This function creates instance of hashIntegrityBroken form and handles problematic records.
-        internal static bool BrokenIntegrityResolve(Logs.record logRecord, Logs logObject)
+        internal static bool BrokenIntegrityResolve(logs.logClass.record logRecord, logs.logClass logObject)
         {
             HashIntegrityBroken hashIntegrityBrokenForm = new HashIntegrityBroken(logRecord, logObject);
             hashIntegrityBrokenForm.ShowDialog();
@@ -148,7 +148,7 @@ namespace ProcessLogs.utilities
         }
 
 
-        internal static void ProcessLog(Logs logObject)
+        internal static void ProcessLog(logs.logClass logObject)
         {
             if (logObject == null)
                 return;
@@ -180,14 +180,14 @@ namespace ProcessLogs.utilities
             }
 
 
-            List<Logs.record> tmpLogRecords = new List<Logs.record> ();
+            List<logs.logClass.record> tmpLogRecords = new List<logs.logClass.record>();
             //Create log record object and give it corresponding XML content
 
             foreach ((int index, byte[] byteXMLSequence) in logObject.XMLSequences.Enumerate())
             {
                 try
                 {
-                    tmpLogRecords.Add(new Logs.record { byteXMLSequence = byteXMLSequence });
+                    tmpLogRecords.Add(new logClass.record { byteXMLSequence = byteXMLSequence });
                 }
                 catch (Exception ex)
                 {
@@ -203,13 +203,13 @@ namespace ProcessLogs.utilities
 
 
             //Get contents of <Hash> tag for every record
-            Logs.FindXMLHash(logObject);
+            logs.logClass.FindXMLHash(logObject);
 
             //Verify hash located in logs with computed SHA1 hash for every record
-            Logs.VerifyXMLSequencesIntegrity(logObject);
+            logs.logClass.VerifyXMLSequencesIntegrity(logObject);
 
             //If integrity of all log records is valid, convert XML content to UTF-8 string
-            Logs.ConvertRecordsToUtf8String(logObject);
+            logs.logClass.ConvertRecordsToUtf8String(logObject);
         }
     }
 }

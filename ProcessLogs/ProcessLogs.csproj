@@ -79,7 +79,7 @@
     <Compile Include="HashIntegrityBroken.Designer.cs">
       <DependentUpon>HashIntegrityBroken.cs</DependentUpon>
     </Compile>
-    <Compile Include="logs\Logs.cs" />
+    <Compile Include="structures\logClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\AccessControlUtils.cs" />

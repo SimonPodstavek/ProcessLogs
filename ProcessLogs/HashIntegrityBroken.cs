@@ -16,11 +16,11 @@ namespace ProcessLogs
 {
     public partial class HashIntegrityBroken : Form
     {
-        private Logs logObject;
-        private Logs.record logRecord;
+        private logs.logClass logObject;
+        private logs.logClass.record logRecord;
         public bool keepRecord;
 
-        internal HashIntegrityBroken(Logs.record _logRecord, Logs _logObject)
+        internal HashIntegrityBroken(logs.logClass.record _logRecord, logs.logClass _logObject)
         {
             InitializeComponent();
             logObject = _logObject;
