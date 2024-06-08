@@ -59,9 +59,9 @@ namespace ProcessLogs
             dialog.Filter = "XML files (*.xml)|*.xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Configuration.filePathXML = dialog.FileName;
-                Configuration.filePathXML = Configuration.filePathXML.Trim();
-                filePathXMLTextBox.Text = Configuration.filePathXML;
+                Configuration.originalfilePathXML = dialog.FileName;
+                Configuration.originalfilePathXML = Configuration.originalfilePathXML.Trim();
+                filePathXMLTextBox.Text = Configuration.originalfilePathXML;
             }
 
         }
@@ -106,11 +106,9 @@ namespace ProcessLogs
             
 
             //Update global path variables to match the user's choice
-            Configuration.filePathXML = filePathXMLTextBox.Text;
+            Configuration.originalfilePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
-
-            SaveLogs.DupplicateAggregateFile();
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -119,16 +117,28 @@ namespace ProcessLogs
                 return;
             }
 
-            if (Configuration.filePathXML == String.Empty)
+            if (Configuration.originalfilePathXML == String.Empty)
             {
                 MessageBox.Show("Chyba 106: Zadajte prosím cestu k agregátnemu XML súboru.", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-    
+
+
+            //Create duplicate of an aggregate XML file that will be later appended to.
+            try
+            {
+                SaveLogs.DupplicateAggregateFile();
+            }
+            catch (Exception ex)
+            {
+                Program.LogEvent($"Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
+                return;
+            }
+
+
 
 
             Program.LogEvent("Inicializácia spracovania");
-
 
             //Get Paths for log files from root directory
             Iterator.GetPathsFromRoot(Configuration.rootDirectory);
@@ -152,22 +162,23 @@ namespace ProcessLogs
             }
 
             //Generate log object for every log path and add it to globalLogs IEnumerable.
-            Configuration.globalLogs = Configuration.LogPaths.Select(path => new logClass(filePath: path, fileName: Path.GetFileName(path)));
-            foreach ((int index, logs.logClass logObject) in Configuration.globalLogs.Enumerate())
+            Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
+            for(int index = 0; index < Configuration.globalLogs.Count(); index++)
             {
                 if (!Configuration.IsRunning)
                 {
                     return;
                 }
 
-
                 //If the log processing failed, output the reason into rich text box.
+                LogClass logObject = Configuration.globalLogs[index];
                 try
                 {
                     LogHandler.ProcessLog(logObject);
+
                 }catch(Exception ex)
                 {
-                    Program.LogEvent("Vyskytla sa chyba pri spracovaní záynamu: " + logObject.filePath);
+                    Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
                     Program.LogEvent($"Popis: {ex}");
                     return;
                 }
@@ -175,7 +186,19 @@ namespace ProcessLogs
             }
 
 
-            //SaveLogs.DupplicateAggregateFile();
+
+            //Append all XML contents ot the aggregate file
+            try
+            {
+                SaveLogs.AppendLogsToTempAggregateFile();
+                SaveLogs.SaveTempFile();
+            }
+            catch (Exception ex)
+            {
+                Program.LogEvent($"Pri zapisovaní spracovaných súborov sa vyskytla chyba: {ex}");
+                return;
+            }
+      
 
             return;
 

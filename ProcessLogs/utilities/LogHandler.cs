@@ -139,7 +139,7 @@ namespace ProcessLogs.utilities
         }
 
         //This function creates instance of hashIntegrityBroken form and handles problematic records.
-        internal static bool BrokenIntegrityResolve(logs.logClass.record logRecord, logs.logClass logObject)
+        internal static bool BrokenIntegrityResolve(logs.LogClass.record logRecord, logs.LogClass logObject)
         {
             HashIntegrityBroken hashIntegrityBrokenForm = new HashIntegrityBroken(logRecord, logObject);
             hashIntegrityBrokenForm.ShowDialog();
@@ -148,7 +148,7 @@ namespace ProcessLogs.utilities
         }
 
 
-        internal static void ProcessLog(logs.logClass logObject)
+        internal static void ProcessLog(logs.LogClass logObject)
         {
             if (logObject == null)
                 return;
@@ -172,7 +172,7 @@ namespace ProcessLogs.utilities
             //Allow the user to bypass the error and skip the file.
             if (logObject.XMLSequences.Count() == 0)
             {
-                DialogResult continueProcessing = MessageBox.Show("Chyba 103: Log" + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť záznam a pokračovať?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult continueProcessing = MessageBox.Show("Chyba 103: Log" + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť záznam a pokračovať v spracovaní?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (continueProcessing == DialogResult.No)
                 {
                     throw new Exception("Chyba 103: Log neobsahuje XML sekcie.");
@@ -180,14 +180,14 @@ namespace ProcessLogs.utilities
             }
 
 
-            List<logs.logClass.record> tmpLogRecords = new List<logs.logClass.record>();
+            List<logs.LogClass.record> tmpLogRecords = new List<logs.LogClass.record>();
             //Create log record object and give it corresponding XML content
 
             foreach ((int index, byte[] byteXMLSequence) in logObject.XMLSequences.Enumerate())
             {
                 try
                 {
-                    tmpLogRecords.Add(new logClass.record { byteXMLSequence = byteXMLSequence });
+                    tmpLogRecords.Add(new LogClass.record { byteXMLSequence = byteXMLSequence });
                 }
                 catch (Exception ex)
                 {
@@ -203,13 +203,13 @@ namespace ProcessLogs.utilities
 
 
             //Get contents of <Hash> tag for every record
-            logs.logClass.FindXMLHash(logObject);
+            logs.LogClass.FindXMLHash(logObject);
 
             //Verify hash located in logs with computed SHA1 hash for every record
-            logs.logClass.VerifyXMLSequencesIntegrity(logObject);
+            logs.LogClass.VerifyXMLSequencesIntegrity(logObject);
 
-            //If integrity of all log records is valid, convert XML content to UTF-8 string
-            logs.logClass.ConvertRecordsToUtf8String(logObject);
+            ////If integrity of all log records is valid, convert XML content to UTF-8 string
+            //logs.LogClass.ConvertRecordsToUtf8String(logObject);
         }
     }
 }

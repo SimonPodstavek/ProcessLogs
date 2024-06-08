@@ -9,14 +9,14 @@ using System.Windows.Forms;
 
 namespace ProcessLogs.logs
 {
-    internal class logClass
+    internal class LogClass
     {
 
         internal string filePath, fileName;
         internal byte[][] XMLSequences;
         internal byte[] LogContent;
         internal record[] logRecords;
-        internal logClass(string filePath, string fileName)
+        internal LogClass(string filePath, string fileName)
         {
             this.filePath = filePath;
             this.fileName = fileName;
@@ -31,7 +31,7 @@ namespace ProcessLogs.logs
             internal bool isValid = true;
 
         }
-        internal static void FindXMLHash(logClass logObject)
+        internal static void FindXMLHash(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;
 
@@ -66,7 +66,7 @@ namespace ProcessLogs.logs
             return;
         }
 
-        internal static void VerifyXMLSequencesIntegrity(logClass logObject)
+        internal static void VerifyXMLSequencesIntegrity(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;
             HashSet<int> removeIndexes = new HashSet<int>();
@@ -105,11 +105,11 @@ namespace ProcessLogs.logs
         }
 
 
-        internal static void ConvertRecordsToUtf8String (logClass logObject)
+        internal static void ConvertRecordsToUtf8String (LogClass logObject)
         {
-            logClass.record[] LogRecords = logObject.logRecords;
+            LogClass.record[] LogRecords = logObject.logRecords;
 
-            foreach((int index, logClass.record record) in LogRecords.Enumerate())
+            foreach((int index, LogClass.record record) in LogRecords.Enumerate())
             {
                 record.logContent = System.Text.Encoding.UTF8.GetString(record.byteXMLSequence);
             }

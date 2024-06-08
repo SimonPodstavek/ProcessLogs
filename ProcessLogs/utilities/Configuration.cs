@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Schema;
 namespace ProcessLogs.utilities
 {
     //Singleton process class is used to store globally required variables.
@@ -13,7 +14,7 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
-        internal static IEnumerable<logs.logClass> globalLogs;
+        internal static List<logs.LogClass> globalLogs;
 
         internal static class Settings
         {
@@ -34,6 +35,11 @@ namespace ProcessLogs.utilities
             //Sequences utilized to identify offset and end of XML hash byte stream
             internal static byte[] logXMLHashOpeningSequence = Encoding.UTF8.GetBytes("<Hash>");
             internal static byte[] logXMLHashClosingSequence = Encoding.UTF8.GetBytes("</Hash>");
+
+            //Sequences utilized to identify start and end of an XML aggregate file
+            internal static byte[] aggregateXMLOpeningSequence = Encoding.UTF8.GetBytes("<AGGREGATEXML>");
+            internal static byte[] aggregateXMLClosingSequence = Encoding.UTF8.GetBytes("</AGGREGATEXML>");
+
         }
 
 
@@ -68,7 +74,8 @@ namespace ProcessLogs.utilities
         }
 
         //Path of an aggregate XML file
-        internal static string filePathXML = string.Empty;
+        internal static string originalfilePathXML = string.Empty;
+        internal static string duplicatefilePathXML = string.Empty;
         internal static string XMLDirectoryPath = string.Empty;
         //Path to a directory with LeafDirectories cotaining logs
         internal static string rootDirectory = string.Empty;
@@ -76,9 +83,13 @@ namespace ProcessLogs.utilities
         internal static IEnumerable<string> AllPaths;
         internal static volatile bool IsRunning = false;
 
-        
-        
-    
+        //Total length of appended XML contnet
+        internal static long addedLength = 0;
+
+
+
+
+
     }
 
 }
