@@ -125,6 +125,17 @@ namespace ProcessLogs
 
 
 
+            //Create duplicate of an aggregate XML file that will be later appended to.
+            try
+            {
+                SaveLogs.DupplicateAggregateFile();
+            }
+            catch (Exception ex)
+            {
+                Program.LogEvent($"Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
+                return;
+            }
+
 
 
 
@@ -176,16 +187,6 @@ namespace ProcessLogs
             }
 
 
-            //Create duplicate of an aggregate XML file that will be later appended to.
-            try
-            {
-                SaveLogs.DupplicateAggregateFile();
-            }
-            catch (Exception ex)
-            {
-                Program.LogEvent($"Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
-                return;
-            }
 
 
 
