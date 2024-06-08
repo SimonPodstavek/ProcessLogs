@@ -69,6 +69,7 @@ namespace ProcessLogs.utilities
 
         //Path of an aggregate XML file
         internal static string filePathXML = string.Empty;
+        internal static string XMLDirectoryPath = string.Empty;
         //Path to a directory with LeafDirectories cotaining logs
         internal static string rootDirectory = string.Empty;
         internal static IEnumerable<string> LogPaths;

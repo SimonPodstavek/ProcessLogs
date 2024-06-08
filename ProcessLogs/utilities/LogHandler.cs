@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Deployment.Internal;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using ProcessLogs.logs;
+using System.Xml;
+using System.Data.SqlTypes;
 
 
 namespace ProcessLogs.utilities
@@ -98,22 +91,61 @@ namespace ProcessLogs.utilities
             return resultAray;
         }
 
-        //This function converts hex frmo string to hex in bytes. E.g. string "0DFA3D" would be converted to bytes {0D,FA,3D}
+        //This function converts string to hex. E.g. string "0DFA3D" would be converted to bytes {0D,FA,3D}
         internal static byte[] HexStringToByteArray(string hex)
         {
-            try { 
-                byte[] bytes = new byte[hex.Length / 2];
-                for (int i = 0; i < hex.Length; i += 2)
-                {
-                    bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-                }
-                return bytes;
-            }catch(Exception ex)
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < hex.Length; i += 2)
             {
-                throw new Exception("Chyba 110: Pri konverzii Hash z reťazca sa vyskytla chyba.", ex);
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
+
+        //This function converts hex to string. E.g. bytes {0D,FA,3D} would be converted to string "0DFA3D".
+        internal static string HexByteToString(byte[] hex)
+        {
+            try
+            {
+                return BitConverter.ToString(hex).Replace("-", "").ToUpper();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Chyba 111: Pri konverzii z reťazca do poľa sa vyskytla chyba.", ex);
             }
         }
 
+        internal static string XMLStringPrettyPrint(string XMLString)
+        {
+            // Load the XML string into an XmlDocument
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(XMLString);
+
+            // Create settings for formatting
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t"; // Use tabs for indentation
+            settings.NewLineChars = "\n"; // Use new lines for better readability
+            settings.NewLineHandling = NewLineHandling.Replace;
+
+            StringWriter stringWriter = new StringWriter();
+            using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings))
+            {
+                xmlDoc.Save(xmlWriter);
+            }
+
+            return stringWriter.ToString();
+
+        }
+
+        //This function creates instance of hashIntegrityBroken form and handles problematic records.
+        internal static bool BrokenIntegrityResolve(Logs.record logRecord, Logs logObject)
+        {
+            HashIntegrityBroken hashIntegrityBrokenForm = new HashIntegrityBroken(logRecord, logObject);
+            hashIntegrityBrokenForm.ShowDialog();
+            
+            return hashIntegrityBrokenForm.keepRecord;
+        }
 
 
         internal static void ProcessLog(Logs logObject)
@@ -128,7 +160,7 @@ namespace ProcessLogs.utilities
             }
             catch (Exception ex)
             {
-                throw new Exception("Chyba 108: Pri čítaní bajtov sa vyskytla chyba.", ex);
+                throw new Exception("Chyba 108: Pri čítaní bytov sa vyskytla chyba.", ex);
             }
 
             //Get byte sequences of a log
@@ -155,15 +187,11 @@ namespace ProcessLogs.utilities
             {
                 try
                 {
-                    Logs.record currentRecord = new Logs.record();
-                    currentRecord.byteXMLSequence = byteXMLSequence;
-                    tmpLogRecords.Add(currentRecord);
-                    int nu = 0;
-                    Console.Write(0 / nu);
+                    tmpLogRecords.Add(new Logs.record { byteXMLSequence = byteXMLSequence });
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Chyba 108: Pri pridávaní {index+1}. XML sekcie v súbore sa vyskytla chyba.", ex);
+                    throw new Exception($"Chyba 108: Pri pridávaní { index + 1 }. XML sekcie v súbore sa vyskytla chyba.", ex);
                 }
             }
 
@@ -175,15 +203,13 @@ namespace ProcessLogs.utilities
 
 
             //Get contents of <Hash> tag for every record
-            if (!Logs.FindXMLHash(logObject))
-                throw new Exception("Pri vyhľadávaní hash v XML sekcii nastala neočakávaná chyba.");
+            Logs.FindXMLHash(logObject);
 
             //Verify hash located in logs with computed SHA1 hash for every record
-            if (!Logs.VerifyXMLSequencesIntegrity(logObject))
-                throw new Exception("Pri overovaní hash nastala neočakávaná chyba.");
+            Logs.VerifyXMLSequencesIntegrity(logObject);
 
-            return;
-
+            //If integrity of all log records is valid, convert XML content to UTF-8 string
+            Logs.ConvertRecordsToUtf8String(logObject);
         }
     }
 }

@@ -17,6 +17,7 @@ using ProcessLogs.logs;
 using System.Reflection.Emit;
 using System.CodeDom.Compiler;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 
 
@@ -27,6 +28,7 @@ namespace ProcessLogs
 
     public partial class Form1 : Form
     {
+        internal string delimeter = new string('-', 80);
 
         public Form1()
         {
@@ -88,6 +90,7 @@ namespace ProcessLogs
             }
             finally
             {
+                Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");
                 Configuration.IsRunning = false;
                 initiateButton.Text = "Spracovať";
@@ -100,11 +103,14 @@ namespace ProcessLogs
         //It takes setting and other information from the form, creates log object and calls Log handler.
         private void ProcessLogs()
         {
+            
 
             //Update global path variables to match the user's choice
             Configuration.filePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
+
+            SaveLogs.DupplicateAggregateFile();
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -113,27 +119,40 @@ namespace ProcessLogs
                 return;
             }
 
-            //Uncomment in prod!!!
-            //if (Proces.filePathXML == String.Empty)
-            //{
-            //    MessageBox.Show("Chyba 106: Zadajte prosím cestu k agregátnemu XML súboru.", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+            if (Configuration.filePathXML == String.Empty)
+            {
+                MessageBox.Show("Chyba 106: Zadajte prosím cestu k agregátnemu XML súboru.", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+    
 
-            
+
             Program.LogEvent("Inicializácia spracovania");
 
 
             //Get Paths for log files from root directory
             Iterator.GetPathsFromRoot(Configuration.rootDirectory);
 
+            Program.LogEvent(delimeter);
 
             Program.LogEvent("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
             Program.LogEvent("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
 
+            Program.LogEvent(delimeter);
+
+
+
+
+
+            //Notify user if the root directory doesn't contain any logs
+            if (Configuration.LogPaths.Count() == 0)
+            {
+                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
+                return;
+            }
+
             //Generate log object for every log path and add it to globalLogs IEnumerable.
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new Logs(filePath: path, fileName: Path.GetFileName(path)));
-
             foreach ((int index, Logs logObject) in Configuration.globalLogs.Enumerate())
             {
                 if (!Configuration.IsRunning)
@@ -148,23 +167,23 @@ namespace ProcessLogs
                     LogHandler.ProcessLog(logObject);
                 }catch(Exception ex)
                 {
-                    Program.LogEvent("Vyskytla sa chyba pri spracovaní: " + logObject.filePath);
-                    Program.LogEvent($"Popis: {ex.Message}");
-                    Program.LogEvent(ex.StackTrace);
+                    Program.LogEvent("Vyskytla sa chyba pri spracovaní záynamu: " + logObject.filePath);
+                    Program.LogEvent($"Popis: {ex}");
                     return;
                 }
 
             }
 
-            Program.LogEvent("Spracovanie je ukončené.");
+
+            //SaveLogs.DupplicateAggregateFile();
+
             return;
 
+        }
 
-            //if (Configuration.LogPaths.Count == 0)
-            //{
-            //    statusBox.SafeInvoke(() => statusBox.AppendTextWithNewLine("Chyba 104: V zadanom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie."));
-            //    return;
-            //}
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
