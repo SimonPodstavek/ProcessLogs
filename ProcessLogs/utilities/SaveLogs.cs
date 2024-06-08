@@ -20,7 +20,7 @@ namespace ProcessLogs.utilities
             int len = originalFileWithoutExt.Length -4 ;
 
             string originalFileName = originalFileWithoutExt.Substring(0, len);
-            string duplicateFile = originalDirectory + "\\" + originalFileName + "_tmp.xml";
+            string duplicateFile = originalDirectory + "\\" + originalFileName + ".tmp";
 
             AccessControlUtils.VerifyFileReadPermission(originalFile);
 
