@@ -58,43 +58,48 @@ namespace ProcessLogs.utilities
 
         }
 
-        internal static void AppendLogsToTempAggregateFile()
+        internal static void truncateAggregateXML()
         {
 
+            //Shorten the length of an aggregate XML file by the length of the closing sequence
             string filePath = Configuration.duplicatefilePathXML;
             int aggregateXMLClosingSequenceLength = Configuration.ByteSequences.aggregateXMLClosingSequence.Length;
 
-            //Shorten the length of an aggregate XML file by the length of the closing sequence
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
             {
-
                 long fileLength = fileStream.Length;
                 long truncatedFileLength = fileStream.Length - aggregateXMLClosingSequenceLength;
-
-
                 fileStream.SetLength(truncatedFileLength);
             }
+        }
 
-            using (var fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write))
+
+        internal static void AppendLogToTempAggregateFile(LogClass logObject, FileStream fileStream)
+        {
+            string filePath = Configuration.duplicatefilePathXML;
+            foreach((int recordIndex, LogClass.record logRecord) in logObject.logRecords.Enumerate())
             {
-                foreach ((int logIndex, LogClass logObject) in Configuration.globalLogs.Enumerate())
-                {
-                    foreach((int recordIndex, LogClass.record logRecord) in logObject.logRecords.Enumerate())
-                    {
-                        int byteXMLSequenceLength = logRecord.byteXMLSequence.Length;
-                        Configuration.addedLength += byteXMLSequenceLength;
-                        
-                        fileStream.Write(logRecord.byteXMLSequence, 0, byteXMLSequenceLength);
-                    }
-                    
-                }
-                fileStream.Write(Configuration.ByteSequences.aggregateXMLClosingSequence, 0, aggregateXMLClosingSequenceLength);
+                int byteXMLSequenceLength = logRecord.byteXMLSequence.Length;
+                Configuration.addedLength += byteXMLSequenceLength;  
+                fileStream.Write(logRecord.byteXMLSequence, 0, byteXMLSequenceLength);
             }
-
-
 
         }
 
+
+
+            //fileStream.Write(Configuration.ByteSequences.aggregateXMLClosingSequence, 0, aggregateXMLClosingSequenceLength);
+
+        internal static void AppendClosingSequence()
+        {
+            string filePath = Configuration.duplicatefilePathXML;
+            int aggregateXMLClosingSequenceLength = Configuration.ByteSequences.aggregateXMLClosingSequence.Length;
+
+            using (var fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write))
+            {
+                fileStream.Write(Configuration.ByteSequences.aggregateXMLClosingSequence, 0, aggregateXMLClosingSequenceLength);
+            }
+        }
 
 
         internal static void SaveTempFile()

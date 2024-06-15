@@ -139,7 +139,7 @@ namespace ProcessLogs.utilities
         }
 
         //This function creates instance of hashIntegrityBroken form and handles problematic records.
-        internal static bool BrokenIntegrityResolve(logs.LogClass.record logRecord, logs.LogClass logObject)
+        internal static bool BrokenIntegrityResolve(LogClass.record logRecord, LogClass logObject)
         {
             HashIntegrityBroken hashIntegrityBrokenForm = new HashIntegrityBroken(logRecord, logObject);
             hashIntegrityBrokenForm.ShowDialog();
@@ -148,7 +148,7 @@ namespace ProcessLogs.utilities
         }
 
 
-        internal static void ProcessLog(logs.LogClass logObject)
+        internal static void ProcessLog(LogClass logObject, FileStream fileStream)
         {
             if (logObject == null)
                 return;
@@ -203,13 +203,26 @@ namespace ProcessLogs.utilities
 
 
             //Get contents of <Hash> tag for every record
-            logs.LogClass.FindXMLHash(logObject);
+            LogClass.FindXMLHash(logObject);
 
             //Verify hash located in logs with computed SHA1 hash for every record
-            logs.LogClass.VerifyXMLSequencesIntegrity(logObject);
+            LogClass.VerifyXMLSequencesIntegrity(logObject);
 
             ////If integrity of all log records is valid, convert XML content to UTF-8 string
             //logs.LogClass.ConvertRecordsToUtf8String(logObject);
+
+
+
+            //Append all XML contents ot the aggregate file
+            try
+            {
+                SaveLogs.AppendLogToTempAggregateFile(logObject, fileStream);
+            }
+            catch (Exception ex)
+            {
+                Program.LogEvent($"Pri zapisovaní súboru sa vyskytla chyba: {ex}");
+                return;
+            }
         }
     }
 }

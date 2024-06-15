@@ -6,19 +6,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
-using System.Security.Cryptography;
 using ProcessLogs.logs;
-using System.Reflection.Emit;
-using System.CodeDom.Compiler;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
-
 
 
 
@@ -136,6 +129,9 @@ namespace ProcessLogs
                 return;
             }
 
+            //Remove the ending XML tag form duplicate
+            SaveLogs.truncateAggregateXML();
+
 
 
 
@@ -162,6 +158,10 @@ namespace ProcessLogs
                 return;
             }
 
+
+            //Initiate file stream to write to the aggregate file
+            FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write);
+
             //Generate log object for every log path and add it to globalLogs IEnumerable.
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
             for(int index = 0; index < Configuration.globalLogs.Count(); index++)
@@ -175,7 +175,7 @@ namespace ProcessLogs
                 LogClass logObject = Configuration.globalLogs[index];
                 try
                 {
-                    LogHandler.ProcessLog(logObject);
+                    LogHandler.ProcessLog(logObject, fileStream);
 
                 }catch(Exception ex)
                 {
@@ -183,25 +183,27 @@ namespace ProcessLogs
                     Program.LogEvent($"Popis: {ex}");
                     return;
                 }
+                finally
+                {
+                    Configuration.globalLogs[index] = null;
+                }
 
             }
 
+            fileStream.Close();
 
+            
 
-
-
-            //Append all XML contents ot the aggregate file
             try
             {
-                SaveLogs.AppendLogsToTempAggregateFile();
+                SaveLogs.AppendClosingSequence();
                 SaveLogs.SaveTempFile();
-            }
-            catch (Exception ex)
+            }catch(Exception ex)
             {
-                Program.LogEvent($"Pri zapisovaní spracovaných súborov sa vyskytla chyba: {ex}");
+                Program.LogEvent($"Pri ukladaní záznamu s logmi sa vyskytla chyba : {ex}");
                 return;
             }
-      
+
 
             return;
 
