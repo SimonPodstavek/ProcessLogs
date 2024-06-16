@@ -202,16 +202,17 @@ namespace ProcessLogs.utilities
 
 
 
-            //Get contents of <Hash> tag for every record
-            LogClass.FindXMLHash(logObject);
+            if (Configuration.Settings.verifyHash)
+            {
+                //Get contents of <Hash> tag for every record
+                LogClass.FindXMLHash(logObject);
+                //Verify hash located in logs with computed SHA1 hash for every record
+                LogClass.VerifyXMLSequencesIntegrity(logObject);
+            }
 
-            //Verify hash located in logs with computed SHA1 hash for every record
-            LogClass.VerifyXMLSequencesIntegrity(logObject);
 
             ////If integrity of all log records is valid, convert XML content to UTF-8 string
             //logs.LogClass.ConvertRecordsToUtf8String(logObject);
-
-
 
             //Append all XML contents ot the aggregate file
             try

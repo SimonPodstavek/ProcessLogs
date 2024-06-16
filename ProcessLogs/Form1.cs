@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
 using ProcessLogs.logs;
+using System.Reflection;
 
 
 
@@ -102,6 +103,8 @@ namespace ProcessLogs
             Configuration.originalfilePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
+            Configuration.Settings.verifyHash = hashVerificationCheckbox.Checked;
+            Configuration.Settings.verifyXMLStructure = XMLStructureVerification.Checked;
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -166,15 +169,21 @@ namespace ProcessLogs
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
             for(int index = 0; index < Configuration.globalLogs.Count(); index++)
             {
-                if (!Configuration.IsRunning)
+
+                //Inform the user about every 5th processed log, if the verbose setting is on
+                if(Configuration.Settings.isVerbose && (index+1)%5 == 0)
                 {
-                    return;
+                    Program.LogEvent($"Spracované záznamy: {index-3} - {index+1}");
                 }
 
                 //If the log processing failed, output the reason into rich text box.
                 LogClass logObject = Configuration.globalLogs[index];
                 try
                 {
+                    if (!Configuration.IsRunning)
+                    {
+                        return;
+                    }
                     LogHandler.ProcessLog(logObject, fileStream);
 
                 }catch(Exception ex)
@@ -190,9 +199,18 @@ namespace ProcessLogs
 
             }
 
+
+            //Inform the user about the total number of processed records.
+            if (Configuration.Settings.isVerbose)
+            {
+                Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} záznamov");
+                Program.LogEvent(delimeter);
+            }
+
+            //Close write file stream
             fileStream.Close();
 
-            
+
 
             try
             {
@@ -202,6 +220,11 @@ namespace ProcessLogs
             {
                 Program.LogEvent($"Pri ukladaní záznamu s logmi sa vyskytla chyba : {ex}");
                 return;
+            }
+            finally
+            {
+                Configuration.addedLength = 0;
+                Configuration.IsRunning = false;
             }
 
 

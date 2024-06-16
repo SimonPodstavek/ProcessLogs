@@ -36,7 +36,7 @@
             this.filePathXMLButton = new System.Windows.Forms.Button();
             this.importSettings = new System.Windows.Forms.Label();
             this.statusBox = new System.Windows.Forms.RichTextBox();
-            this.safebytesVerificationCheckbox = new System.Windows.Forms.CheckBox();
+            this.hashVerificationCheckbox = new System.Windows.Forms.CheckBox();
             this.initiateButton = new System.Windows.Forms.Button();
             this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -45,6 +45,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.XMLStructureVerification = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -58,7 +59,7 @@
             this.sourceDirectoryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sourceDirectoryTextBox.Location = new System.Drawing.Point(2, 19);
-            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
             this.sourceDirectoryTextBox.Size = new System.Drawing.Size(438, 20);
             this.sourceDirectoryTextBox.TabIndex = 0;
@@ -88,7 +89,7 @@
             this.filePathXMLTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathXMLTextBox.Location = new System.Drawing.Point(2, 19);
-            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.filePathXMLTextBox.Name = "filePathXMLTextBox";
             this.filePathXMLTextBox.Size = new System.Drawing.Size(438, 20);
             this.filePathXMLTextBox.TabIndex = 2;
@@ -97,7 +98,7 @@
             // 
             this.sourceDirectoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sourceDirectoryButton.Location = new System.Drawing.Point(11, 19);
-            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryButton.Name = "sourceDirectoryButton";
             this.sourceDirectoryButton.Size = new System.Drawing.Size(54, 20);
             this.sourceDirectoryButton.TabIndex = 4;
@@ -109,7 +110,7 @@
             // 
             this.filePathXMLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathXMLButton.Location = new System.Drawing.Point(11, 19);
-            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2);
             this.filePathXMLButton.Name = "filePathXMLButton";
             this.filePathXMLButton.Size = new System.Drawing.Size(54, 20);
             this.filePathXMLButton.TabIndex = 5;
@@ -134,23 +135,25 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
             this.statusBox.Location = new System.Drawing.Point(24, 202);
-            this.statusBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.statusBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
             this.statusBox.Size = new System.Drawing.Size(513, 202);
             this.statusBox.TabIndex = 7;
             this.statusBox.Text = "";
             // 
-            // safebytesVerificationCheckbox
+            // hashVerificationCheckbox
             // 
-            this.safebytesVerificationCheckbox.AutoSize = true;
-            this.safebytesVerificationCheckbox.Location = new System.Drawing.Point(2, 21);
-            this.safebytesVerificationCheckbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.safebytesVerificationCheckbox.Name = "safebytesVerificationCheckbox";
-            this.safebytesVerificationCheckbox.Size = new System.Drawing.Size(123, 16);
-            this.safebytesVerificationCheckbox.TabIndex = 8;
-            this.safebytesVerificationCheckbox.Text = "Verifikácia safebytes";
-            this.safebytesVerificationCheckbox.UseVisualStyleBackColor = true;
+            this.hashVerificationCheckbox.AutoSize = true;
+            this.hashVerificationCheckbox.Checked = true;
+            this.hashVerificationCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hashVerificationCheckbox.Location = new System.Drawing.Point(2, 21);
+            this.hashVerificationCheckbox.Margin = new System.Windows.Forms.Padding(2);
+            this.hashVerificationCheckbox.Name = "hashVerificationCheckbox";
+            this.hashVerificationCheckbox.Size = new System.Drawing.Size(101, 16);
+            this.hashVerificationCheckbox.TabIndex = 8;
+            this.hashVerificationCheckbox.Text = "Verifikácia hash";
+            this.hashVerificationCheckbox.UseVisualStyleBackColor = true;
             // 
             // initiateButton
             // 
@@ -159,7 +162,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.initiateButton, 2);
             this.initiateButton.Location = new System.Drawing.Point(24, 175);
-            this.initiateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.initiateButton.Margin = new System.Windows.Forms.Padding(2);
             this.initiateButton.Name = "initiateButton";
             this.initiateButton.Size = new System.Drawing.Size(513, 23);
             this.initiateButton.TabIndex = 9;
@@ -170,8 +173,8 @@
             // verboseLogCheckBox
             // 
             this.verboseLogCheckBox.AutoSize = true;
-            this.verboseLogCheckBox.Location = new System.Drawing.Point(166, 21);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.verboseLogCheckBox.Location = new System.Drawing.Point(310, 21);
+            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.verboseLogCheckBox.Name = "verboseLogCheckBox";
             this.verboseLogCheckBox.Size = new System.Drawing.Size(65, 16);
             this.verboseLogCheckBox.TabIndex = 10;
@@ -192,9 +195,9 @@
             this.tableLayoutPanel1.Controls.Add(this.initiateButton, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22, 22, 22, 22);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
@@ -210,14 +213,16 @@
             this.tableLayoutPanel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 164F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 280F));
+            this.tableLayoutPanel6.ColumnCount = 3;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel6.Controls.Add(this.importSettings, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.verboseLogCheckBox, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.safebytesVerificationCheckbox, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.hashVerificationCheckbox, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.verboseLogCheckBox, 2, 1);
+            this.tableLayoutPanel6.Controls.Add(this.XMLStructureVerification, 1, 1);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(24, 132);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -234,7 +239,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.filePathXMLButton, 0, 1);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(470, 78);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -252,7 +257,7 @@
             this.tableLayoutPanel3.Controls.Add(this.XMLDirectoryLabel, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.filePathXMLTextBox, 0, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(24, 78);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -270,7 +275,7 @@
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryTextBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryLabel, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(24, 24);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -287,7 +292,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.sourceDirectoryButton, 0, 1);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(470, 24);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -295,13 +300,26 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(67, 50);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
+            // XMLStructureVerification
+            // 
+            this.XMLStructureVerification.AutoSize = true;
+            this.XMLStructureVerification.Checked = true;
+            this.XMLStructureVerification.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.XMLStructureVerification.Location = new System.Drawing.Point(134, 21);
+            this.XMLStructureVerification.Margin = new System.Windows.Forms.Padding(2);
+            this.XMLStructureVerification.Name = "XMLStructureVerification";
+            this.XMLStructureVerification.Size = new System.Drawing.Size(143, 16);
+            this.XMLStructureVerification.TabIndex = 11;
+            this.XMLStructureVerification.Text = "Verifikácia XML štruktúry";
+            this.XMLStructureVerification.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 426);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(567, 462);
             this.Name = "Form1";
             this.Text = "Log parser";
@@ -329,7 +347,7 @@
         private System.Windows.Forms.Button sourceDirectoryButton;
         private System.Windows.Forms.Button filePathXMLButton;
         private System.Windows.Forms.Label importSettings;
-        private System.Windows.Forms.CheckBox safebytesVerificationCheckbox;
+        private System.Windows.Forms.CheckBox hashVerificationCheckbox;
         private System.Windows.Forms.Button initiateButton;
         private System.Windows.Forms.CheckBox verboseLogCheckBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -338,6 +356,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.CheckBox XMLStructureVerification;
     }
 }
 

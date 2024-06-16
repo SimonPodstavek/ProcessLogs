@@ -18,7 +18,9 @@ namespace ProcessLogs.utilities
 
         internal static class Settings
         {
-            internal static bool isVerbose = true;
+            internal static bool isVerbose = false;
+            internal static bool verifyHash = true;
+            internal static bool verifyXMLStructure = true;
         }
 
         internal static class ByteSequences
