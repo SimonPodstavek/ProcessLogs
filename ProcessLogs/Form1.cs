@@ -103,7 +103,7 @@ namespace ProcessLogs
             Configuration.originalfilePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
-            Configuration.Settings.verifyHash = hashVerificationCheckbox.Checked;
+            Configuration.Settings.verifyHash = XMLStrucutreAggregateImportCheck.Checked;
             Configuration.Settings.verifyXMLStructure = XMLStructureVerification.Checked;
 
             //Notify user about the missing parameters
@@ -160,7 +160,7 @@ namespace ProcessLogs
                 Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
                 return;
             }
-
+            
 
             //Initiate file stream to write to the aggregate file
             FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write);

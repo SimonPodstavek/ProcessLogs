@@ -36,22 +36,27 @@
             this.filePathXMLButton = new System.Windows.Forms.Button();
             this.importSettings = new System.Windows.Forms.Label();
             this.statusBox = new System.Windows.Forms.RichTextBox();
-            this.hashVerificationCheckbox = new System.Windows.Forms.CheckBox();
+            this.XMLStrucutreAggregateImportCheck = new System.Windows.Forms.CheckBox();
             this.initiateButton = new System.Windows.Forms.Button();
-            this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.XMLStructureVerification = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.XMLStructureVerification = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // sourceDirectoryTextBox
@@ -121,12 +126,13 @@
             // importSettings
             // 
             this.importSettings.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.importSettings, 2);
             this.importSettings.Location = new System.Drawing.Point(2, 0);
             this.importSettings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.importSettings.Name = "importSettings";
-            this.importSettings.Size = new System.Drawing.Size(91, 13);
+            this.importSettings.Size = new System.Drawing.Size(243, 13);
             this.importSettings.TabIndex = 6;
-            this.importSettings.Text = "Import nastavenia";
+            this.importSettings.Text = "Nastavenia verifikácie štruktúry agregátneho XML";
             // 
             // statusBox
             // 
@@ -134,26 +140,24 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
-            this.statusBox.Location = new System.Drawing.Point(24, 202);
+            this.statusBox.Location = new System.Drawing.Point(24, 245);
             this.statusBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
-            this.statusBox.Size = new System.Drawing.Size(513, 202);
+            this.statusBox.Size = new System.Drawing.Size(513, 283);
             this.statusBox.TabIndex = 7;
             this.statusBox.Text = "";
             // 
-            // hashVerificationCheckbox
+            // XMLStrucutreAggregateImportCheck
             // 
-            this.hashVerificationCheckbox.AutoSize = true;
-            this.hashVerificationCheckbox.Checked = true;
-            this.hashVerificationCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hashVerificationCheckbox.Location = new System.Drawing.Point(2, 21);
-            this.hashVerificationCheckbox.Margin = new System.Windows.Forms.Padding(2);
-            this.hashVerificationCheckbox.Name = "hashVerificationCheckbox";
-            this.hashVerificationCheckbox.Size = new System.Drawing.Size(101, 16);
-            this.hashVerificationCheckbox.TabIndex = 8;
-            this.hashVerificationCheckbox.Text = "Verifikácia hash";
-            this.hashVerificationCheckbox.UseVisualStyleBackColor = true;
+            this.XMLStrucutreAggregateImportCheck.AutoSize = true;
+            this.XMLStrucutreAggregateImportCheck.Location = new System.Drawing.Point(2, 21);
+            this.XMLStrucutreAggregateImportCheck.Margin = new System.Windows.Forms.Padding(2);
+            this.XMLStrucutreAggregateImportCheck.Name = "XMLStrucutreAggregateImportCheck";
+            this.XMLStrucutreAggregateImportCheck.Size = new System.Drawing.Size(81, 16);
+            this.XMLStrucutreAggregateImportCheck.TabIndex = 8;
+            this.XMLStrucutreAggregateImportCheck.Text = "Pri otvorení";
+            this.XMLStrucutreAggregateImportCheck.UseVisualStyleBackColor = true;
             // 
             // initiateButton
             // 
@@ -161,7 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.initiateButton, 2);
-            this.initiateButton.Location = new System.Drawing.Point(24, 175);
+            this.initiateButton.Location = new System.Drawing.Point(24, 218);
             this.initiateButton.Margin = new System.Windows.Forms.Padding(2);
             this.initiateButton.Name = "initiateButton";
             this.initiateButton.Size = new System.Drawing.Size(513, 23);
@@ -170,56 +174,43 @@
             this.initiateButton.UseVisualStyleBackColor = true;
             this.initiateButton.Click += new System.EventHandler(this.initiateButton_Click);
             // 
-            // verboseLogCheckBox
-            // 
-            this.verboseLogCheckBox.AutoSize = true;
-            this.verboseLogCheckBox.Location = new System.Drawing.Point(310, 21);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.verboseLogCheckBox.Name = "verboseLogCheckBox";
-            this.verboseLogCheckBox.Size = new System.Drawing.Size(65, 16);
-            this.verboseLogCheckBox.TabIndex = 10;
-            this.verboseLogCheckBox.Text = "Verbose";
-            this.verboseLogCheckBox.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.statusBox, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.statusBox, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.initiateButton, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.initiateButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel7, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(561, 426);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(561, 552);
             this.tableLayoutPanel1.TabIndex = 11;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel6
             // 
-            this.tableLayoutPanel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel6.ColumnCount = 3;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel6.Controls.Add(this.importSettings, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.hashVerificationCheckbox, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.verboseLogCheckBox, 2, 1);
+            this.tableLayoutPanel6.Controls.Add(this.XMLStrucutreAggregateImportCheck, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.XMLStructureVerification, 1, 1);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(24, 132);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
@@ -229,6 +220,19 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(442, 39);
             this.tableLayoutPanel6.TabIndex = 13;
+            // 
+            // XMLStructureVerification
+            // 
+            this.XMLStructureVerification.AutoSize = true;
+            this.XMLStructureVerification.Checked = true;
+            this.XMLStructureVerification.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.XMLStructureVerification.Location = new System.Drawing.Point(134, 21);
+            this.XMLStructureVerification.Margin = new System.Windows.Forms.Padding(2);
+            this.XMLStructureVerification.Name = "XMLStructureVerification";
+            this.XMLStructureVerification.Size = new System.Drawing.Size(71, 16);
+            this.XMLStructureVerification.TabIndex = 11;
+            this.XMLStructureVerification.Text = "Pri zápise";
+            this.XMLStructureVerification.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel5
             // 
@@ -300,24 +304,78 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(67, 50);
             this.tableLayoutPanel4.TabIndex = 13;
             // 
-            // XMLStructureVerification
+            // tableLayoutPanel7
             // 
-            this.XMLStructureVerification.AutoSize = true;
-            this.XMLStructureVerification.Checked = true;
-            this.XMLStructureVerification.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.XMLStructureVerification.Location = new System.Drawing.Point(134, 21);
-            this.XMLStructureVerification.Margin = new System.Windows.Forms.Padding(2);
-            this.XMLStructureVerification.Name = "XMLStructureVerification";
-            this.XMLStructureVerification.Size = new System.Drawing.Size(143, 16);
-            this.XMLStructureVerification.TabIndex = 11;
-            this.XMLStructureVerification.Text = "Verifikácia XML štruktúry";
-            this.XMLStructureVerification.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel7.ColumnCount = 3;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel7.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.checkBox1, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.checkBox2, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.checkBox3, 1, 1);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(24, 175);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 2;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(442, 39);
+            this.tableLayoutPanel7.TabIndex = 15;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.tableLayoutPanel7.SetColumnSpan(this.label1, 2);
+            this.label1.Location = new System.Drawing.Point(2, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Nastavenia spracovávaných logov";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(2, 21);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(101, 16);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "Verifikácia hash";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(310, 21);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(65, 16);
+            this.checkBox2.TabIndex = 10;
+            this.checkBox2.Text = "Verbose";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(134, 21);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(143, 16);
+            this.checkBox3.TabIndex = 11;
+            this.checkBox3.Text = "Verifikácia XML štruktúry";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 426);
+            this.ClientSize = new System.Drawing.Size(561, 552);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(567, 462);
@@ -333,6 +391,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -347,9 +407,8 @@
         private System.Windows.Forms.Button sourceDirectoryButton;
         private System.Windows.Forms.Button filePathXMLButton;
         private System.Windows.Forms.Label importSettings;
-        private System.Windows.Forms.CheckBox hashVerificationCheckbox;
+        private System.Windows.Forms.CheckBox XMLStrucutreAggregateImportCheck;
         private System.Windows.Forms.Button initiateButton;
-        private System.Windows.Forms.CheckBox verboseLogCheckBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -357,6 +416,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.CheckBox XMLStructureVerification;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 
