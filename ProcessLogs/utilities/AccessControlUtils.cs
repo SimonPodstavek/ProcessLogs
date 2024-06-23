@@ -174,6 +174,7 @@ namespace ProcessLogs.utilities
             if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
             {
                 Configuration.LogPaths = Enumerable.Empty<string>();
+                Configuration.AllPaths = Enumerable.Empty<string>();
                 return;
             }
 
@@ -185,6 +186,7 @@ namespace ProcessLogs.utilities
             if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(LeafDirectories))
             {
                 Configuration.LogPaths = Enumerable.Empty<string>();
+                Configuration.AllPaths = Enumerable.Empty<string>();
                 return;
             }
 

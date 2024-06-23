@@ -14,19 +14,21 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
-        internal static List<logs.LogClass> globalLogs;
+        internal static List<LogClass> globalLogs;
 
         internal static class Settings
         {
             internal static bool isVerbose = false;
             internal static bool verifyHash = true;
-            internal static bool verifyXMLStructure = true;
+            internal static bool verifyLogXMLStructure = true;
+            internal static bool verifyAggregateXMLStructureOnLoad = false;
+            internal static bool verifyAggregateXMLStructureOnClose = true;
         }
 
         internal static class ByteSequences
         {
             //Sequences utilized to identify offset and end of XML byte stream
-            internal static byte[] logXMLOpeningSequence = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"UTF-8\"?><LogEntry>");
+            internal static byte[] logXMLOpeningSequence = Encoding.UTF8.GetBytes("<LogEntry>");
             internal static byte[] logXMLClosingSequence = Encoding.UTF8.GetBytes("</LogEntry>");
 
 

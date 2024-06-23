@@ -13,6 +13,7 @@ using Ookii.Dialogs.WinForms;
 using ProcessLogs.utilities;
 using ProcessLogs.logs;
 using System.Reflection;
+using System.Xml;
 
 
 
@@ -86,6 +87,7 @@ namespace ProcessLogs
             {
                 Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");
+                Program.LogEvent(delimeter);
                 Configuration.IsRunning = false;
                 initiateButton.Text = "Spracovať";
 
@@ -93,18 +95,26 @@ namespace ProcessLogs
         }
 
 
+
+
         //This function is called when user clicks initiation button.
         //It takes setting and other information from the form, creates log object and calls Log handler.
         private void ProcessLogs()
         {
-            
+
+            Configuration.addedLength = 0;
 
             //Update global path variables to match the user's choice
             Configuration.originalfilePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
+                //Settings
+            Configuration.Settings.verifyAggregateXMLStructureOnLoad = verifyAggregateXMLStructureOnLoadCheck.Checked;
+            Configuration.Settings.verifyAggregateXMLStructureOnClose = verifyAggregateXMLStructureOnCloseCheck.Checked;
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
-            Configuration.Settings.verifyHash = XMLStrucutreAggregateImportCheck.Checked;
-            Configuration.Settings.verifyXMLStructure = XMLStructureVerification.Checked;
+            Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
+            Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
+
+
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -119,6 +129,49 @@ namespace ProcessLogs
                 return;
             }
 
+
+            //Verify the structure of aggregate XML file on read.(optional)
+            if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
+            {
+                try
+                {
+                    StructureVerification.ReadAndVerifyXMLStructure(Configuration.originalfilePathXML);
+                    Program.LogEvent("Štruktúra agregátneho XML bola overená pri čítaní");
+                }
+                catch(Exception ex)
+                {
+                    if(ex.InnerException is XmlException xmlEx)
+                    {
+                        Program.LogEvent("Štruktúra agregátneho XML je poškodená");
+                        Program.LogEvent($"Chyba: {xmlEx.Message}");
+                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
+                        Program.LogEvent($"Pozícia na riadku: {xmlEx.LinePosition}");
+                        return;
+                    }
+                }
+                
+            }
+
+
+            Program.LogEvent("Inicializácia spracovania");
+
+            //Get Paths for log files from root directory
+            Iterator.GetPathsFromRoot(Configuration.rootDirectory);
+            Program.LogEvent(delimeter);
+            Program.LogEvent("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
+            Program.LogEvent("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
+            Program.LogEvent(delimeter);
+
+
+
+
+
+            //Notify user if the root directory doesn't contain any logs
+            if (Configuration.LogPaths.Count() == 0)
+            {
+                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
+                return;
+            }
 
 
             //Create duplicate of an aggregate XML file that will be later appended to.
@@ -135,69 +188,47 @@ namespace ProcessLogs
             //Remove the ending XML tag form duplicate
             SaveLogs.truncateAggregateXML();
 
-
-
-
-            Program.LogEvent("Inicializácia spracovania");
-
-            //Get Paths for log files from root directory
-            Iterator.GetPathsFromRoot(Configuration.rootDirectory);
-
-            Program.LogEvent(delimeter);
-
-            Program.LogEvent("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
-            Program.LogEvent("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
-
-            Program.LogEvent(delimeter);
-
-
-
-
-
-            //Notify user if the root directory doesn't contain any logs
-            if (Configuration.LogPaths.Count() == 0)
-            {
-                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
-                return;
-            }
-            
-
-            //Initiate file stream to write to the aggregate file
-            FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write);
-
-            //Generate log object for every log path and add it to globalLogs IEnumerable.
+            //Get file name for each log 
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
-            for(int index = 0; index < Configuration.globalLogs.Count(); index++)
+            
+            //Initiate file stream to write to the aggregate file
+            using (FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write))
             {
-
-                //Inform the user about every 5th processed log, if the verbose setting is on
-                if(Configuration.Settings.isVerbose && (index+1)%5 == 0)
+                //Generate log object for every log path and add it to globalLogs IEnumerable.
+                for (int index = 0; index < Configuration.globalLogs.Count(); index++)
                 {
-                    Program.LogEvent($"Spracované záznamy: {index-3} - {index+1}");
-                }
 
-                //If the log processing failed, output the reason into rich text box.
-                LogClass logObject = Configuration.globalLogs[index];
-                try
-                {
-                    if (!Configuration.IsRunning)
+                    //Inform the user about every 5th processed log, if the verbose setting is on
+                    if (Configuration.Settings.isVerbose && (index + 1) % 5 == 0)
                     {
+                        Program.LogEvent($"Spracované záznamy: {index - 3} - {index + 1}");
+                    }
+
+                    //If the log processing failed, output the reason into rich text box.
+                    LogClass logObject = Configuration.globalLogs[index];
+                    try
+                    {
+                        if (!Configuration.IsRunning)
+                        {
+                            return;
+                        }
+                        LogHandler.ProcessLog(logObject, fileStream);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
+                        Program.LogEvent($"Popis: {ex}");
                         return;
                     }
-                    LogHandler.ProcessLog(logObject, fileStream);
+                    finally
+                    {
+                        Configuration.globalLogs[index] = null;
+                    }
 
-                }catch(Exception ex)
-                {
-                    Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
-                    Program.LogEvent($"Popis: {ex}");
-                    return;
                 }
-                finally
-                {
-                    Configuration.globalLogs[index] = null;
-                }
-
             }
+
 
 
             //Inform the user about the total number of processed records.
@@ -207,8 +238,6 @@ namespace ProcessLogs
                 Program.LogEvent(delimeter);
             }
 
-            //Close write file stream
-            fileStream.Close();
 
 
 
@@ -223,7 +252,6 @@ namespace ProcessLogs
             }
             finally
             {
-                Configuration.addedLength = 0;
                 Configuration.IsRunning = false;
             }
 

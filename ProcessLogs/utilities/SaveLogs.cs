@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ProcessLogs.utilities
 {
@@ -88,8 +89,7 @@ namespace ProcessLogs.utilities
 
 
 
-            //fileStream.Write(Configuration.ByteSequences.aggregateXMLClosingSequence, 0, aggregateXMLClosingSequenceLength);
-
+            
         internal static void AppendClosingSequence()
         {
             string filePath = Configuration.duplicatefilePathXML;
@@ -104,29 +104,57 @@ namespace ProcessLogs.utilities
 
         internal static void SaveTempFile()
         {
-            Program.LogEvent("Verifikácia zapísaných dát");
+
+           
             
             string originalFile = Configuration.originalfilePathXML;
             long originalFileLength = new FileInfo(originalFile).Length;
 
             string duplicateFile = Configuration.duplicatefilePathXML;
             long duplicateFileLength = new FileInfo(duplicateFile).Length;
-
-
-
             long expectedLength = originalFileLength + Configuration.addedLength;
 
-
+            //Verify that all bytes have been written to the duplicate file 
             if(expectedLength == duplicateFileLength)
             {
-                File.Delete(originalFile);
-                File.Move(duplicateFile, originalFile);
+                Program.LogEvent("Agregátny súbor má správnu dĺžku.");
             }
             else
             {
                 File.Delete(duplicateFile);
-                throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu");
+                throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
             }
+
+
+
+            //Verify the structure of duplicate (appended) aggregate XML file before rewriting the original (optional)
+            if (Configuration.Settings.verifyAggregateXMLStructureOnClose)
+            {
+                try
+                {
+                    StructureVerification.ReadAndVerifyXMLStructure(duplicateFile);
+                    Program.LogEvent("Štruktúra agregátneho XML po zápise logov bola overená.");
+
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException is XmlException xmlEx)
+                    {
+                        Program.LogEvent("Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!");
+                        Program.LogEvent($"Chyba: {xmlEx.Message}");
+                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
+                        Program.LogEvent($"Pozícia na riadku: {xmlEx.LinePosition}");
+                        return;
+                    }
+                }
+
+            }
+
+
+            File.Delete(originalFile);
+            File.Move(duplicateFile, originalFile);
+            Program.LogEvent("Súbory boli spracované a zmeny v agregátnom súbore uložené.");
+
             return;
 
             

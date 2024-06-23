@@ -153,6 +153,28 @@ namespace ProcessLogs.utilities
             if (logObject == null)
                 return;
 
+
+            //Verify XML structure of log 
+            if (Configuration.Settings.verifyLogXMLStructure)
+            {
+                try
+                {
+                    StructureVerification.ReadAndVerifyXMLStructure(logObject.filePath);
+                }
+                catch(Exception ex)
+                {
+                    if (ex.InnerException is XmlException xmlEx)
+                    {
+                        Program.LogEvent($"Štruktúra XML súboru log: {logObject} je poškodená");
+                        Program.LogEvent($"Chyba: {xmlEx.Message}");
+                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
+                        Program.LogEvent($"Pozícia na riadku: {xmlEx .LinePosition}");
+                        return;
+                    }
+                }
+            }
+
+
             //Get byte content of a log
             try
             {
@@ -180,9 +202,8 @@ namespace ProcessLogs.utilities
             }
 
 
-            List<logs.LogClass.record> tmpLogRecords = new List<logs.LogClass.record>();
+            List<LogClass.record> tmpLogRecords = new List<logs.LogClass.record>();
             //Create log record object and give it corresponding XML content
-
             foreach ((int index, byte[] byteXMLSequence) in logObject.XMLSequences.Enumerate())
             {
                 try
