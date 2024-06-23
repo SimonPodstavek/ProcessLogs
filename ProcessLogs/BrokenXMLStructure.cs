@@ -19,13 +19,20 @@ namespace ProcessLogs.structures
         public bool keepRecord;
 
 
-        internal BrokenXMLStructure(LogClass.record _logRecord, LogClass _logObject)
+        internal BrokenXMLStructure()
         {
             InitializeComponent();
-            logObject = _logObject;
-            logRecord = _logRecord;
             InitializeForm();
         }
+
+
+        //internal BrokenXMLStructure(LogClass.record _logRecord, LogClass _logObject)
+        //{
+        //    InitializeComponent();
+        //    logObject = _logObject;
+        //    logRecord = _logRecord;
+        //    InitializeForm();
+        //}
 
         private void InitializeForm()
         {

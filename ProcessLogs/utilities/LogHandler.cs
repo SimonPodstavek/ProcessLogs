@@ -149,13 +149,13 @@ namespace ProcessLogs.utilities
         }
 
         //This function creates instance of hashIntegrityBroken form and handles sequences with damaged XML structure.
-        internal static bool BrokenXMLStructure(LogClass.record logRecord, LogClass logObject)
-        {
-            BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
-            BrokenXMLStructureForm.ShowDialog();
+        //internal static bool BrokenXMLStructure(LogClass.record logRecord, LogClass logObject)
+        //{
+        //    BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
+        //    BrokenXMLStructureForm.ShowDialog();
 
-            return BrokenXMLStructureForm.keepRecord;
-        }
+        //    return BrokenXMLStructureForm.keepRecord;
+        //}
 
 
 

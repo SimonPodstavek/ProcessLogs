@@ -14,6 +14,7 @@ using ProcessLogs.utilities;
 using ProcessLogs.logs;
 using System.Reflection;
 using System.Xml;
+using ProcessLogs.structures;
 
 
 
@@ -113,6 +114,9 @@ namespace ProcessLogs
             Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
             Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
             Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
+
+            BrokenXMLStructure BrokenHashIntegrity = new BrokenXMLStructure();
+            BrokenHashIntegrity.ShowDialog();
 
 
 
