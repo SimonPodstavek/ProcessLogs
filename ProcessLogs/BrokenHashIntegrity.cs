@@ -14,20 +14,19 @@ using ProcessLogs.utilities;
 
 namespace ProcessLogs
 {
-    public partial class HashIntegrityBroken : Form
+    public partial class BrokenHashIntegrity : Form
     {
-        private logs.LogClass logObject;
-        private logs.LogClass.record logRecord;
+        private LogClass logObject;
+        private LogClass.record logRecord;
         public bool keepRecord;
 
-        internal HashIntegrityBroken(logs.LogClass.record _logRecord, logs.LogClass _logObject)
+        internal BrokenHashIntegrity(LogClass.record _logRecord, LogClass _logObject)
         {
             InitializeComponent();
             logObject = _logObject;
             logRecord = _logRecord;
             InitializeForm();
         }
-
 
 
         private void InitializeForm()

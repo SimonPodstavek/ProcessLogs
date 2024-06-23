@@ -73,11 +73,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="HashIntegrityBroken.cs">
+    <Compile Include="BrokenHashIntegrity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HashIntegrityBroken.Designer.cs">
-      <DependentUpon>HashIntegrityBroken.cs</DependentUpon>
+    <Compile Include="BrokenHashIntegrity.Designer.cs">
+      <DependentUpon>BrokenHashIntegrity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BrokenXMLStructure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BrokenXMLStructure.Designer.cs">
+      <DependentUpon>BrokenXMLStructure.cs</DependentUpon>
     </Compile>
     <Compile Include="structures\LogClass.cs" />
     <Compile Include="Program.cs" />
@@ -89,11 +95,14 @@
     <Compile Include="utilities\Extensions.cs" />
     <Compile Include="utilities\SaveLogs.cs" />
     <Compile Include="utilities\StructureVerification.cs" />
+    <EmbeddedResource Include="BrokenXMLStructure.resx">
+      <DependentUpon>BrokenXMLStructure.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HashIntegrityBroken.resx">
-      <DependentUpon>HashIntegrityBroken.cs</DependentUpon>
+    <EmbeddedResource Include="BrokenHashIntegrity.resx">
+      <DependentUpon>BrokenHashIntegrity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

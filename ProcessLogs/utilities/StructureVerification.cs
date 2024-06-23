@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ProcessLogs.utilities
 {
     internal class StructureVerification
     {
-        private static void VerifyXMLStructure(byte[] byteXMLContent)
+        internal static void VerifyXMLStructure(byte[] byteXMLContent)
         {
             using (MemoryStream memoryStream = new MemoryStream(byteXMLContent))
             {
@@ -34,7 +35,7 @@ namespace ProcessLogs.utilities
 
 
         }
-        internal static void ReadAndVerifyXMLStructure(string aggregateXMLPath)
+        private static void ReadAndVerifyXMLStructure(string aggregateXMLPath)
         {
             byte[] aggregateXML = File.ReadAllBytes(aggregateXMLPath);
             StructureVerification.VerifyXMLStructure(aggregateXML);
@@ -46,6 +47,25 @@ namespace ProcessLogs.utilities
             GC.Collect();
 
         }
+
+        internal static bool HasCorrectXMLStructure(string logXMLPath, string errorMessage)
+        {
+            try
+            {
+                ReadAndVerifyXMLStructure(logXMLPath);
+                return true;
+            }
+            catch (XmlException ex)
+            {
+                Program.LogEvent(errorMessage);
+                Program.LogEvent($"Cesta súboru: {logXMLPath}");
+                Program.LogEvent($"Chyba: {ex.Message}");
+                Program.LogEvent($"Riadok: {ex.LineNumber}");
+                Program.LogEvent($"Pozícia na riadku: {ex.LinePosition}");
+                return false;
+            }
+        }
+
     }
 
 }   

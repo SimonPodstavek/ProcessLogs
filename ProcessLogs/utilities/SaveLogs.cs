@@ -128,27 +128,18 @@ namespace ProcessLogs.utilities
 
 
             //Verify the structure of duplicate (appended) aggregate XML file before rewriting the original (optional)
-            if (Configuration.Settings.verifyAggregateXMLStructureOnClose)
+            if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
             {
-                try
+                //HasCorrectXMLStructure returns false if the structure is not valid
+                if (!StructureVerification.HasCorrectXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!"))
                 {
-                    StructureVerification.ReadAndVerifyXMLStructure(duplicateFile);
-                    Program.LogEvent("Štruktúra agregátneho XML po zápise logov bola overená.");
-
+                    File.Delete(duplicateFile);
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException is XmlException xmlEx)
-                    {
-                        Program.LogEvent("Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!");
-                        Program.LogEvent($"Chyba: {xmlEx.Message}");
-                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
-                        Program.LogEvent($"Pozícia na riadku: {xmlEx.LinePosition}");
-                        return;
-                    }
-                }
+                Program.LogEvent("Štruktúra agregátneho XML po zápise logov je platná.");
 
             }
+
 
 
             File.Delete(originalFile);

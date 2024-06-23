@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using ProcessLogs.logs;
 using System.Xml;
 using System.Data.SqlTypes;
+using ProcessLogs.structures;
 
 
 namespace ProcessLogs.utilities
@@ -138,14 +139,25 @@ namespace ProcessLogs.utilities
 
         }
 
-        //This function creates instance of hashIntegrityBroken form and handles problematic records.
+        //This function creates instance of hashIntegrityBroken form and handles sequences with broken integrity.
         internal static bool BrokenIntegrityResolve(LogClass.record logRecord, LogClass logObject)
         {
-            HashIntegrityBroken hashIntegrityBrokenForm = new HashIntegrityBroken(logRecord, logObject);
-            hashIntegrityBrokenForm.ShowDialog();
+            BrokenHashIntegrity BrokenHashIntegrity = new BrokenHashIntegrity(logRecord, logObject);
+            BrokenHashIntegrity.ShowDialog();
             
-            return hashIntegrityBrokenForm.keepRecord;
+            return BrokenHashIntegrity.keepRecord;
         }
+
+        //This function creates instance of hashIntegrityBroken form and handles sequences with damaged XML structure.
+        internal static bool BrokenXMLStructure(LogClass.record logRecord, LogClass logObject)
+        {
+            BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
+            BrokenXMLStructureForm.ShowDialog();
+
+            return BrokenXMLStructureForm.keepRecord;
+        }
+
+
 
 
         internal static void ProcessLog(LogClass logObject, FileStream fileStream)
@@ -153,26 +165,6 @@ namespace ProcessLogs.utilities
             if (logObject == null)
                 return;
 
-
-            //Verify XML structure of log 
-            if (Configuration.Settings.verifyLogXMLStructure)
-            {
-                try
-                {
-                    StructureVerification.ReadAndVerifyXMLStructure(logObject.filePath);
-                }
-                catch(Exception ex)
-                {
-                    if (ex.InnerException is XmlException xmlEx)
-                    {
-                        Program.LogEvent($"Štruktúra XML súboru log: {logObject} je poškodená");
-                        Program.LogEvent($"Chyba: {xmlEx.Message}");
-                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
-                        Program.LogEvent($"Pozícia na riadku: {xmlEx .LinePosition}");
-                        return;
-                    }
-                }
-            }
 
 
             //Get byte content of a log
@@ -222,21 +214,32 @@ namespace ProcessLogs.utilities
             tmpLogRecords = null;
 
 
+            //Verify that each Log XML section has a valid XML structure (optional)
+            if (Configuration.Settings.verifyLogXMLStructure)
+            {
+                //HasCorrectXMLStructure returns false if the structure is not valid
+                if (!StructureVerification.HasCorrectXMLStructure(logObject.filePath, "Log súbor nemá správnu štruktúru."))
+                {
+                    return;
+                }
 
+            }
+
+
+            //Verify XML structure of each sequence (optional) and verify hash in the sequence(optional)
             if (Configuration.Settings.verifyHash)
             {
                 //Get contents of <Hash> tag for every record
                 LogClass.FindXMLHash(logObject);
                 //Verify hash located in logs with computed SHA1 hash for every record
-                LogClass.VerifyXMLSequencesIntegrity(logObject);
+                LogClass.VerifySequencesIntegrity(logObject);
             }
 
 
-            ////If integrity of all log records is valid, convert XML content to UTF-8 string
-            //logs.LogClass.ConvertRecordsToUtf8String(logObject);
+
 
             //Append all XML contents ot the aggregate file
-            try
+                try
             {
                 SaveLogs.AppendLogToTempAggregateFile(logObject, fileStream);
             }

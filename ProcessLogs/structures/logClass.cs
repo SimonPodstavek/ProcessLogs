@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -66,8 +67,24 @@ namespace ProcessLogs.logs
             return;
         }
 
-        internal static void VerifyXMLSequencesIntegrity(LogClass logObject)
+        public static record[] RemoveSectionsFromRecord(record[] originalArray, HashSet<int> removeList)
         {
+            int len = originalArray.Length - removeList.Count();
+            record[] res = new record[len];
+            int pos =0;   
+            foreach((int index, record item) in originalArray.Enumerate())
+            {
+                if (!removeList.Contains(index)) 
+                {
+                    res[pos] = item;
+                }
+            }
+            return res;
+
+        }
+
+        internal static void VerifySequencesIntegrity(LogClass logObject)
+        {   
             record[] logRecords = logObject.logRecords;
             HashSet<int> removeIndexes = new HashSet<int>();
 
@@ -94,26 +111,61 @@ namespace ProcessLogs.logs
                     {
                         //Remove the record !!!
                         removeIndexes.Add(index);
-                        return;
+                        continue;
                     }
                     Program.LogEvent($"Záznam č. { index + 1 }. súboru { logObject.filePath } s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
                 }
             }
-
-
+            
+            logObject.logRecords = RemoveSectionsFromRecord(logRecords, removeIndexes); 
             return;
         }
 
 
-        internal static void ConvertRecordsToUtf8String (LogClass logObject)
+        //This method verifies whether the sequences in a log file have the right XML structure
+        internal static void VerifyXMLSequencesStructure(LogClass logObject)
         {
-            LogClass.record[] LogRecords = logObject.logRecords;
+            record[] logRecords = logObject.logRecords;
+            HashSet<int> removeIndexes = new HashSet<int>();
 
-            foreach((int index, LogClass.record record) in LogRecords.Enumerate())
+            foreach ((int index, record logRecord) in logRecords.Enumerate())
             {
-                record.logContent = System.Text.Encoding.UTF8.GetString(record.byteXMLSequence);
+
+                byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
+
+                //Select the only available byte sequence
+                //Verify structure and resolve potential issues.
+                try
+                {
+                    StructureVerification.VerifyXMLStructure(dataBytesSequence[0]);
+                }
+                catch (Exception ex)
+                {
+                    bool keepRecord = LogHandler.BrokenIntegrityResolve(logRecord, logObject);
+                    if (!keepRecord)
+                    {
+                        //Remove the record !!!
+                        removeIndexes.Add(index);
+                        continue;
+                    }
+                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
+                }
+
             }
+            return;
         }
+
+
+
+        //internal static void ConvertRecordsToUtf8String (LogClass logObject)
+        //{
+        //    record[] LogRecords = logObject.logRecords;
+
+        //    foreach((int index, record record) in LogRecords.Enumerate())
+        //    {
+        //        record.logContent = Encoding.UTF8.GetString(record.byteXMLSequence);
+        //    }
+        //}
 
     }
 }

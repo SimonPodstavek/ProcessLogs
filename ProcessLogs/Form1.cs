@@ -130,27 +130,21 @@ namespace ProcessLogs
             }
 
 
+
+
+
             //Verify the structure of aggregate XML file on read.(optional)
             if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
             {
-                try
+                //HasCorrectXMLStructure returns false if the structure is not valid
+                if (!StructureVerification.HasCorrectXMLStructure(Configuration.originalfilePathXML, "Agregátny Log súbor nemá správnu XML štruktúru."))
                 {
-                    StructureVerification.ReadAndVerifyXMLStructure(Configuration.originalfilePathXML);
-                    Program.LogEvent("Štruktúra agregátneho XML bola overená pri čítaní");
+                    return;
                 }
-                catch(Exception ex)
-                {
-                    if(ex.InnerException is XmlException xmlEx)
-                    {
-                        Program.LogEvent("Štruktúra agregátneho XML je poškodená");
-                        Program.LogEvent($"Chyba: {xmlEx.Message}");
-                        Program.LogEvent($"Riadok: {xmlEx.LineNumber}");
-                        Program.LogEvent($"Pozícia na riadku: {xmlEx.LinePosition}");
-                        return;
-                    }
-                }
-                
+                Program.LogEvent("Štruktúra agregátneho XML pred zápisom logov je platná.");
             }
+
+
 
 
             Program.LogEvent("Inicializácia spracovania");
@@ -204,8 +198,11 @@ namespace ProcessLogs
                         Program.LogEvent($"Spracované záznamy: {index - 3} - {index + 1}");
                     }
 
-                    //If the log processing failed, output the reason into rich text box.
+
+
+                    //If the log processing failed, output the reason into status box.
                     LogClass logObject = Configuration.globalLogs[index];
+
                     try
                     {
                         if (!Configuration.IsRunning)
