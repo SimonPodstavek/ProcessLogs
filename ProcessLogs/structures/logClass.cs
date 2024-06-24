@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 
 namespace ProcessLogs.logs
@@ -67,7 +68,7 @@ namespace ProcessLogs.logs
             return;
         }
 
-        public static record[] RemoveSectionsFromRecord(record[] originalArray, HashSet<int> removeList)
+        public static record[] RemoveRecordsFromLog(record[] originalArray, HashSet<int> removeList)
         {
             int len = originalArray.Length - removeList.Count();
             record[] res = new record[len];
@@ -83,7 +84,7 @@ namespace ProcessLogs.logs
 
         }
 
-        internal static void VerifySequencesIntegrity(LogClass logObject)
+        internal static void VerifyRecordsIntegrity(LogClass logObject)
         {   
             record[] logRecords = logObject.logRecords;
             HashSet<int> removeIndexes = new HashSet<int>();
@@ -109,7 +110,7 @@ namespace ProcessLogs.logs
                     bool keepRecord = LogHandler.BrokenIntegrityResolve(logRecord, logObject);
                     if (!keepRecord)
                     {
-                        //Remove the record !!!
+                        Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou nebude uložený.");
                         removeIndexes.Add(index);
                         continue;
                     }
@@ -117,13 +118,17 @@ namespace ProcessLogs.logs
                 }
             }
             
-            logObject.logRecords = RemoveSectionsFromRecord(logRecords, removeIndexes); 
+            //If there are any records to be removed, remove them
+            if(removeIndexes.Count() != 0)
+            {
+                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes); 
+            }
             return;
         }
 
 
         //This method verifies whether the sequences in a log file have the right XML structure  UNFINISHED
-        internal static void VerifyXMLSequencesStructure(LogClass logObject)
+        internal static void VerifyXMLRecordsStructure(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;
             HashSet<int> removeIndexes = new HashSet<int>();
@@ -131,7 +136,7 @@ namespace ProcessLogs.logs
             foreach ((int index, record logRecord) in logRecords.Enumerate())
             {
 
-                byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
+                byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logRecordOpeningSequence, Configuration.ByteSequences.logXMLClosingSequence);
 
                 //Select the only available byte sequence
                 //Return an error if there are multiple sequences of the same file 
@@ -147,17 +152,30 @@ namespace ProcessLogs.logs
                 }
                 catch (Exception ex)
                 {
-                    bool keepRecord = LogHandler.BrokenIntegrityResolve(logRecord, logObject);
+                    //if the error is of other nature than broken XML structure
+                    if (!(ex.InnerException is XmlException))
+                    {
+                        throw;
+                    }
+
+                    bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
                     if (!keepRecord)
                     {
-                        //Remove the record !!!
+                        Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou štruktúrov nebude uložený");
                         removeIndexes.Add(index);
                         continue;
                     }
-                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
+                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou štruktúrov bude uložený.");
                 }
 
             }
+
+            //If there are any records to be removed, remove them
+            if (removeIndexes.Count() != 0)
+            {
+                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
+            }
+
             return;
         }
 

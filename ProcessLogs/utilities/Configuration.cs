@@ -44,6 +44,9 @@ namespace ProcessLogs.utilities
             internal static byte[] aggregateXMLOpeningSequence = Encoding.UTF8.GetBytes("<AGGREGATEXML>");
             internal static byte[] aggregateXMLClosingSequence = Encoding.UTF8.GetBytes("</AGGREGATEXML>");
 
+            //Sequences utilized to identify beginning of entire XML record
+            internal static byte[] logRecordOpeningSequence = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
         }
 
 

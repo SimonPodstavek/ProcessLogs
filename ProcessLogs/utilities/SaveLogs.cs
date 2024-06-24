@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ProcessLogs.utilities
@@ -16,7 +17,7 @@ namespace ProcessLogs.utilities
     {
 
 
-        internal static void RemoveAggregateFile()
+        internal static void RemoveDuplicateAggregateFile()
         {
             string duplicateFilePathXML = Configuration.duplicatefilePathXML;
 
@@ -100,14 +101,24 @@ namespace ProcessLogs.utilities
         }
 
 
-        internal static void AppendLogToTempAggregateFile(LogClass logObject, FileStream fileStream)
+        internal static void AppendLogToDuplicateAggregateFile(LogClass logObject, FileStream fileStream)
         {
             string filePath = Configuration.duplicatefilePathXML;
             foreach((int recordIndex, LogClass.record logRecord) in logObject.logRecords.Enumerate())
             {
-                int byteXMLSequenceLength = logRecord.byteXMLSequence.Length;
-                Configuration.addedLength += byteXMLSequenceLength;  
-                fileStream.Write(logRecord.byteXMLSequence, 0, byteXMLSequenceLength);
+                //Copy only XML path excluding the XML definition (<?xml version="1.0" encoding="UTF-8"?>)
+                int InitialByteXMLSequenceLength = logRecord.byteXMLSequence.Length;
+
+                int XMLDefinitionLength = Configuration.ByteSequences.logRecordOpeningSequence.Length;
+                int SavedByteXMLSequenceLength = InitialByteXMLSequenceLength - XMLDefinitionLength;
+
+                byte[] savedSequence = new byte[SavedByteXMLSequenceLength];
+                //Create array that is about to be saved from the array with XML definition
+                Array.Copy(logRecord.byteXMLSequence,XMLDefinitionLength, savedSequence,0 ,SavedByteXMLSequenceLength);
+
+                //Save the shortened array
+                Configuration.addedLength += SavedByteXMLSequenceLength;  
+                fileStream.Write(savedSequence, 0, SavedByteXMLSequenceLength);
             }
 
         }
@@ -146,7 +157,7 @@ namespace ProcessLogs.utilities
             }
             else
             {
-                File.Delete(duplicateFile);
+                RemoveDuplicateAggregateFile();
                 throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
             }
 
@@ -158,7 +169,7 @@ namespace ProcessLogs.utilities
                 //HasCorrectXMLStructure returns false if the structure is not valid
                 if (!StructureVerification.HasCorrectXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!"))
                 {
-                    File.Delete(duplicateFile);
+                    RemoveDuplicateAggregateFile();
                     return;
                 }
                 Program.LogEvent("Štruktúra agregátneho XML po zápise logov je platná.");

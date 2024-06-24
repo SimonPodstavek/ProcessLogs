@@ -42,6 +42,7 @@
             this.skipButton = new System.Windows.Forms.Button();
             this.keepButton = new System.Windows.Forms.Button();
             this.XMLStructureIntegrityLabel = new System.Windows.Forms.Label();
+            this.errorMessageLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -62,11 +63,11 @@
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(831, 542);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(831, 583);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // infoTitle
@@ -94,12 +95,14 @@
             this.tableLayoutPanel2.Controls.Add(this.label4, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.errorLineTextBox, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.errorPositionTextBox, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.errorMessageLabel, 0, 2);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(25, 55);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.83333F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.16667F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(781, 48);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(781, 69);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // label2
@@ -113,7 +116,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 21);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Lokalita chyby";
+            this.label2.Text = "Chyba";
             // 
             // label3
             // 
@@ -124,7 +127,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.Location = new System.Drawing.Point(3, 21);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 27);
+            this.label3.Size = new System.Drawing.Size(79, 26);
             this.label3.TabIndex = 1;
             this.label3.Text = "Riadok:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -138,7 +141,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.Location = new System.Drawing.Point(165, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 27);
+            this.label4.Size = new System.Drawing.Size(98, 26);
             this.label4.TabIndex = 2;
             this.label4.Text = "Pozícia na riadku:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -171,9 +174,9 @@
             this.XMLRecordContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.XMLRecordContent.Location = new System.Drawing.Point(25, 109);
+            this.XMLRecordContent.Location = new System.Drawing.Point(25, 130);
             this.XMLRecordContent.Name = "XMLRecordContent";
-            this.XMLRecordContent.Size = new System.Drawing.Size(781, 353);
+            this.XMLRecordContent.Size = new System.Drawing.Size(781, 373);
             this.XMLRecordContent.TabIndex = 2;
             this.XMLRecordContent.Text = "";
             // 
@@ -190,7 +193,7 @@
             this.tableLayoutPanel3.Controls.Add(this.checkXMLStructureButton, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.skipButton, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.keepButton, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(25, 488);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(25, 529);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -236,18 +239,34 @@
             this.XMLStructureIntegrityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.XMLStructureIntegrityLabel.AutoSize = true;
-            this.XMLStructureIntegrityLabel.Location = new System.Drawing.Point(25, 465);
+            this.XMLStructureIntegrityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.XMLStructureIntegrityLabel.Location = new System.Drawing.Point(25, 506);
             this.XMLStructureIntegrityLabel.Name = "XMLStructureIntegrityLabel";
-            this.XMLStructureIntegrityLabel.Size = new System.Drawing.Size(163, 20);
+            this.XMLStructureIntegrityLabel.Size = new System.Drawing.Size(230, 20);
             this.XMLStructureIntegrityLabel.TabIndex = 4;
             this.XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
             this.XMLStructureIntegrityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errorMessageLabel
+            // 
+            this.errorMessageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.errorMessageLabel.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.errorMessageLabel, 4);
+            this.errorMessageLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errorMessageLabel.Location = new System.Drawing.Point(3, 47);
+            this.errorMessageLabel.Name = "errorMessageLabel";
+            this.errorMessageLabel.Size = new System.Drawing.Size(775, 22);
+            this.errorMessageLabel.TabIndex = 5;
+            this.errorMessageLabel.Text = "-";
+            this.errorMessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // BrokenXMLStructure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 542);
+            this.ClientSize = new System.Drawing.Size(831, 583);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(847, 505);
             this.Name = "BrokenXMLStructure";
@@ -277,5 +296,6 @@
         private System.Windows.Forms.Button keepButton;
         private System.Windows.Forms.Button skipButton;
         private System.Windows.Forms.Label XMLStructureIntegrityLabel;
+        private System.Windows.Forms.Label errorMessageLabel;
     }
 }

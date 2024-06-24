@@ -7,6 +7,9 @@ using ProcessLogs.logs;
 using System.Xml;
 using System.Data.SqlTypes;
 using ProcessLogs.structures;
+using static System.Windows.Forms.Design.AxImporter;
+using System.ComponentModel;
+using System.Text;
 
 
 namespace ProcessLogs.utilities
@@ -34,6 +37,14 @@ namespace ProcessLogs.utilities
                 }
 
                 int sequenceLength = endingPos + logXMLClosingSequence.Length - startingPos;
+
+                //Verify that the sequence length is positive <=> the opening element is preceding the closing one
+                if (sequenceLength <= 0)
+                {
+                    
+                    throw new Exception($"Záznam nemá správne otvorené alebo ukončené elementy: {Encoding.UTF8.GetString(logXMLOpeningSequence)} a {Encoding.UTF8.GetString(logXMLClosingSequence)}.");
+                }
+
                 byte[] XMLByteSequence = new byte[sequenceLength];
 
                 Array.Copy(logBytes, startingPos, XMLByteSequence, 0, sequenceLength);
@@ -148,14 +159,16 @@ namespace ProcessLogs.utilities
             return BrokenHashIntegrity.keepRecord;
         }
 
-        //This function creates instance of hashIntegrityBroken form and handles sequences with damaged XML structure.
-        //internal static bool BrokenXMLStructure(LogClass.record logRecord, LogClass logObject)
-        //{
-        //    BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
-        //    BrokenXMLStructureForm.ShowDialog();
 
-        //    return BrokenXMLStructureForm.keepRecord;
-        //}
+
+        //This function creates instance of hashIntegrityBroken form and handles sequences with damaged XML structure.
+        internal static bool BrokenXMLStructureResolve(LogClass.record logRecord, LogClass logObject)
+        {
+            BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
+            BrokenXMLStructureForm.ShowDialog();
+
+            return BrokenXMLStructureForm.keepRecord;
+        }
 
 
 
@@ -179,7 +192,7 @@ namespace ProcessLogs.utilities
 
             //Get byte sequences of a log
             logObject.XMLSequences = GetEnclosedSequences(logObject.LogContent,
-                Configuration.ByteSequences.logXMLOpeningSequence,
+                Configuration.ByteSequences.logRecordOpeningSequence,
                 Configuration.ByteSequences.logXMLClosingSequence);
 
             //If there aren't any XML sections in a log, notify the user.
@@ -214,25 +227,19 @@ namespace ProcessLogs.utilities
             tmpLogRecords = null;
 
 
-            //Verify that each Log XML section has a valid XML structure (optional)
+            //Verify XML structure of each record (optional)
             if (Configuration.Settings.verifyLogXMLStructure)
             {
-                //HasCorrectXMLStructure returns false if the structure is not valid
-                if (!StructureVerification.HasCorrectXMLStructure(logObject.filePath, "Log súbor nemá správnu štruktúru."))
-                {
-                    return;
-                }
-
+                LogClass.VerifyXMLRecordsStructure(logObject);
             }
 
-
-            //Verify XML structure of each sequence (optional) and verify hash in the sequence(optional)
+            //Verify hash in each of the records (optional)
             if (Configuration.Settings.verifyHash)
             {
                 //Get contents of <Hash> tag for every record
                 LogClass.FindXMLHash(logObject);
                 //Verify hash located in logs with computed SHA1 hash for every record
-                LogClass.VerifySequencesIntegrity(logObject);
+                LogClass.VerifyRecordsIntegrity(logObject);
             }
 
 
@@ -241,7 +248,7 @@ namespace ProcessLogs.utilities
             //Append all XML contents ot the aggregate file
                 try
             {
-                SaveLogs.AppendLogToTempAggregateFile(logObject, fileStream);
+                SaveLogs.AppendLogToDuplicateAggregateFile(logObject, fileStream);
             }
             catch (Exception ex)
             {

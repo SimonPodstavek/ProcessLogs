@@ -115,10 +115,6 @@ namespace ProcessLogs
             Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
             Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
 
-            BrokenXMLStructure BrokenHashIntegrity = new BrokenXMLStructure();
-            BrokenHashIntegrity.ShowDialog();
-
-
 
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
@@ -220,7 +216,8 @@ namespace ProcessLogs
                     {
                         Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
                         Program.LogEvent($"Popis: {ex}");
-                        File.Delete();
+                        fileStream.Close();
+                        SaveLogs.RemoveDuplicateAggregateFile();
                         return;
                     }
                     finally
