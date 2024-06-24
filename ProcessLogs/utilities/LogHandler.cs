@@ -166,7 +166,7 @@ namespace ProcessLogs.utilities
         {
             BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
             BrokenXMLStructureForm.ShowDialog();
-
+            logRecord.byteXMLSequence = BrokenXMLStructureForm.XMLByteRepresentation;
             return BrokenXMLStructureForm.keepRecord;
         }
 

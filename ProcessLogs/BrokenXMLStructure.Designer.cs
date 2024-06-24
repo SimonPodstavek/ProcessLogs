@@ -36,13 +36,18 @@
             this.label4 = new System.Windows.Forms.Label();
             this.errorLineTextBox = new System.Windows.Forms.TextBox();
             this.errorPositionTextBox = new System.Windows.Forms.TextBox();
+            this.errorMessageLabel = new System.Windows.Forms.Label();
             this.XMLRecordContent = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.checkXMLStructureButton = new System.Windows.Forms.Button();
             this.skipButton = new System.Windows.Forms.Button();
             this.keepButton = new System.Windows.Forms.Button();
             this.XMLStructureIntegrityLabel = new System.Windows.Forms.Label();
-            this.errorMessageLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cursorLineTextBox = new System.Windows.Forms.TextBox();
+            this.cursorPositionTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -85,17 +90,27 @@
             this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnCount = 8;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 515F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 89F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 166F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label4, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.errorLineTextBox, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.errorPositionTextBox, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.errorMessageLabel, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label1, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label5, 4, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label6, 6, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cursorLineTextBox, 5, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cursorPositionTextBox, 7, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(25, 55);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
@@ -116,7 +131,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 21);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Chyba";
+            this.label2.Text = "Chyba:";
             // 
             // label3
             // 
@@ -141,7 +156,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.Location = new System.Drawing.Point(165, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 26);
+            this.label4.Size = new System.Drawing.Size(94, 26);
             this.label4.TabIndex = 2;
             this.label4.Text = "Pozícia na riadku:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -162,12 +177,27 @@
             // errorPositionTextBox
             // 
             this.errorPositionTextBox.Enabled = false;
-            this.errorPositionTextBox.Location = new System.Drawing.Point(269, 24);
+            this.errorPositionTextBox.Location = new System.Drawing.Point(265, 24);
             this.errorPositionTextBox.Name = "errorPositionTextBox";
             this.errorPositionTextBox.ReadOnly = true;
             this.errorPositionTextBox.Size = new System.Drawing.Size(75, 20);
             this.errorPositionTextBox.TabIndex = 4;
             this.errorPositionTextBox.TabStop = false;
+            // 
+            // errorMessageLabel
+            // 
+            this.errorMessageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.errorMessageLabel.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.errorMessageLabel, 8);
+            this.errorMessageLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errorMessageLabel.Location = new System.Drawing.Point(3, 47);
+            this.errorMessageLabel.Name = "errorMessageLabel";
+            this.errorMessageLabel.Size = new System.Drawing.Size(775, 22);
+            this.errorMessageLabel.TabIndex = 5;
+            this.errorMessageLabel.Text = "-";
+            this.errorMessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // XMLRecordContent
             // 
@@ -247,20 +277,70 @@
             this.XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
             this.XMLStructureIntegrityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // errorMessageLabel
+            // label1
             // 
-            this.errorMessageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.errorMessageLabel.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.errorMessageLabel, 4);
-            this.errorMessageLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.errorMessageLabel.Location = new System.Drawing.Point(3, 47);
-            this.errorMessageLabel.Name = "errorMessageLabel";
-            this.errorMessageLabel.Size = new System.Drawing.Size(775, 22);
-            this.errorMessageLabel.TabIndex = 5;
-            this.errorMessageLabel.Text = "-";
-            this.errorMessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(354, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 21);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Pozícia v editore";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.Location = new System.Drawing.Point(354, 21);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(93, 26);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Riadok:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(538, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 26);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Pozícia na riadku:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cursorLineTextBox
+            // 
+            this.cursorLineTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cursorLineTextBox.Enabled = false;
+            this.cursorLineTextBox.Location = new System.Drawing.Point(453, 24);
+            this.cursorLineTextBox.Name = "cursorLineTextBox";
+            this.cursorLineTextBox.ReadOnly = true;
+            this.cursorLineTextBox.Size = new System.Drawing.Size(79, 20);
+            this.cursorLineTextBox.TabIndex = 9;
+            this.cursorLineTextBox.TabStop = false;
+            this.cursorLineTextBox.Text = "1";
+            // 
+            // cursorPositionTextBox
+            // 
+            this.cursorPositionTextBox.Enabled = false;
+            this.cursorPositionTextBox.Location = new System.Drawing.Point(618, 24);
+            this.cursorPositionTextBox.Name = "cursorPositionTextBox";
+            this.cursorPositionTextBox.ReadOnly = true;
+            this.cursorPositionTextBox.Size = new System.Drawing.Size(75, 20);
+            this.cursorPositionTextBox.TabIndex = 10;
+            this.cursorPositionTextBox.TabStop = false;
             // 
             // BrokenXMLStructure
             // 
@@ -297,5 +377,10 @@
         private System.Windows.Forms.Button skipButton;
         private System.Windows.Forms.Label XMLStructureIntegrityLabel;
         private System.Windows.Forms.Label errorMessageLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox cursorLineTextBox;
+        private System.Windows.Forms.TextBox cursorPositionTextBox;
     }
 }

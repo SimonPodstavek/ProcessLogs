@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,6 +26,13 @@ namespace ProcessLogs.structures
         public bool keepRecord = false;
 
 
+        public byte[] XMLByteRepresentation
+        {
+            
+            get { return Encoding.UTF8.GetBytes(XMLRecordContent.Text); }
+        }
+
+
 
         internal BrokenXMLStructure(LogClass.record _logRecord, LogClass _logObject)
         {
@@ -42,8 +50,29 @@ namespace ProcessLogs.structures
 
             string XMLStringRepresentation = Encoding.UTF8.GetString(logRecord.byteXMLSequence);
             XMLRecordContent.Text = XMLStringRepresentation;
+            //Show the user change in cursour position
+            XMLRecordContent.SelectionChanged += UpdateCursorPosition;
+            //Disable acceptance eligibility on change in text
+            XMLRecordContent.TextChanged += DisableAcceptanceEligibility;
 
         }
+
+        //Update text boxes for user to know their current position
+        private void UpdateCursorPosition(object sender, EventArgs e)
+        {
+            int cursorPositionTextBox = XMLRecordContent.SelectionStart;
+            this.cursorPositionTextBox.Text = cursorPositionTextBox.ToString();
+
+        }
+
+        //Disable accepting on change in the text
+        private void DisableAcceptanceEligibility(object sender, EventArgs e)
+        {
+            XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
+            hasValidXMLStructure = false;
+            keepButton.Enabled = false;
+        }
+
 
         private void checkXMLStructureButton_Click(object sender, EventArgs e)
         {
@@ -78,6 +107,7 @@ namespace ProcessLogs.structures
                 errorLineTextBox.Text = innerEx.LineNumber.ToString();
                 errorPositionTextBox.Text = innerEx.LinePosition.ToString();
                 errorMessageLabel.Text = innerEx.Message;
+
 
 
             }
