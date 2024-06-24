@@ -58,15 +58,16 @@ namespace ProcessLogs.structures
             try
             {
                 StructureVerification.VerifyXMLStructure(XMLByteRepresentation);
-                XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
-                hasValidXMLStructure = false;
-                keepButton.Enabled = false;
-            }
-            catch(Exception ex)
-            {
                 XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Platná";
                 hasValidXMLStructure = true;
                 keepButton.Enabled = true;
+
+            }
+            catch(Exception)
+            {
+                XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
+                hasValidXMLStructure = false;
+                keepButton.Enabled = false;
             }
         }
 
