@@ -32,13 +32,13 @@ namespace ProcessLogs
         private void InitializeForm()
         {
             // Use the parameters to initialize form controls
-            string infoTitleStr = $"Integrita záznamu súboru: {logObject.filePath} je porušená.";
+            string infoTitleStr = $"Integrita záznamu súboru: {logObject.filePath} je porušená";
             infoTitle.Text = infoTitleStr;
             computedHashTextBox.Text = LogHandler.HexByteToString(logRecord.computedHash);
             XMLHashTextBox.Text = LogHandler.HexByteToString(logRecord.XMLHash);
 
             string XMLStringRepresentation = Encoding.UTF8.GetString(logRecord.byteXMLSequence);
-            XMLRecordContent.Text = LogHandler.XMLStringPrettyPrint(XMLStringRepresentation); ;
+            XMLRecordContent.Text = LogHandler.XMLStringPrettyPrint(XMLStringRepresentation);
         }
 
         private void keepButton_Click(object sender, EventArgs e)

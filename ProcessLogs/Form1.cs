@@ -137,7 +137,7 @@ namespace ProcessLogs
 
 
 
-            //Verify the structure of aggregate XML file on read.(optional)
+            //Verify the structure of aggregate XML file on read (optional)
             if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
             {
                 //HasCorrectXMLStructure returns false if the structure is not valid

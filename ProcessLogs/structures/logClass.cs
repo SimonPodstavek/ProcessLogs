@@ -28,7 +28,7 @@ namespace ProcessLogs.logs
             internal byte[] computedHash;
             internal byte[] byteXMLSequence;
             internal byte[] byteLogContent;
-            internal string logContent;
+            //internal string logContent;
             internal bool isValid = true;
 
         }
@@ -122,7 +122,7 @@ namespace ProcessLogs.logs
         }
 
 
-        //This method verifies whether the sequences in a log file have the right XML structure
+        //This method verifies whether the sequences in a log file have the right XML structure  UNFINISHED
         internal static void VerifyXMLSequencesStructure(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;

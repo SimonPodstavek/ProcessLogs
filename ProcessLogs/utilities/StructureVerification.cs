@@ -35,9 +35,9 @@ namespace ProcessLogs.utilities
 
 
         }
-        private static void ReadAndVerifyXMLStructure(string aggregateXMLPath)
+        private static void ReadAndVerifyXMLStructure(string XMLFilePath)
         {
-            byte[] aggregateXML = File.ReadAllBytes(aggregateXMLPath);
+            byte[] aggregateXML = File.ReadAllBytes(XMLFilePath);
             StructureVerification.VerifyXMLStructure(aggregateXML);
             Array.Clear(aggregateXML, 0, aggregateXML.Length);
             aggregateXML = null;
