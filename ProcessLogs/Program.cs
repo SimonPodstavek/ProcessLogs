@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProcessLogs.utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,10 +28,16 @@ namespace ProcessLogs
 
         }
 
-        internal static void LogEvent(string message)
+        internal static void LogEvent(string message, bool onlyVerbose = false)
         {
             //Check if status box is not null
             var statusBox  = MainForm?.statusBox;
+
+            if(onlyVerbose && !Configuration.Settings.isVerbose)
+            {
+                return;
+            }
+
 
             if(statusBox != null)
             {

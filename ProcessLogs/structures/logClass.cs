@@ -94,7 +94,7 @@ namespace ProcessLogs.logs
                 byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
 
 
-                //Return an error if there are multiple sequences of the same file 
+                //Throw an error if there are multiple sequences of the same file 
                 if (dataBytesSequence.Length != 1)
                 {
                     throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. { index + 1 } sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
@@ -134,6 +134,12 @@ namespace ProcessLogs.logs
                 byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
 
                 //Select the only available byte sequence
+                //Return an error if there are multiple sequences of the same file 
+                if (dataBytesSequence.Length != 1)
+                {
+                    throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                }
+
                 //Verify structure and resolve potential issues.
                 try
                 {
@@ -156,16 +162,6 @@ namespace ProcessLogs.logs
         }
 
 
-
-        //internal static void ConvertRecordsToUtf8String (LogClass logObject)
-        //{
-        //    record[] LogRecords = logObject.logRecords;
-
-        //    foreach((int index, record record) in LogRecords.Enumerate())
-        //    {
-        //        record.logContent = Encoding.UTF8.GetString(record.byteXMLSequence);
-        //    }
-        //}
 
     }
 }

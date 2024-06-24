@@ -220,6 +220,7 @@ namespace ProcessLogs
                     {
                         Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
                         Program.LogEvent($"Popis: {ex}");
+                        File.Delete();
                         return;
                     }
                     finally
@@ -233,11 +234,8 @@ namespace ProcessLogs
 
 
             //Inform the user about the total number of processed records.
-            if (Configuration.Settings.isVerbose)
-            {
-                Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} záznamov");
-                Program.LogEvent(delimeter);
-            }
+            Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} záznamov", onlyVerbose: true);
+            Program.LogEvent(delimeter, onlyVerbose: true);
 
 
 

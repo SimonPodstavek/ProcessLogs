@@ -5,6 +5,7 @@ using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -13,6 +14,30 @@ namespace ProcessLogs.utilities
 {
     internal class SaveLogs
     {
+
+
+        internal static void RemoveAggregateFile()
+        {
+            string duplicateFilePathXML = Configuration.duplicatefilePathXML;
+
+            if (duplicateFilePathXML == String.Empty)
+            {
+                Program.LogEvent("Duplikát agregátneho súboru neexistuje, nebol odstránený.", onlyVerbose:true);
+                return;
+            }
+
+            try
+            {
+                File.Delete(duplicateFilePathXML);
+            Program.LogEvent("Duplikát agregátneho súboru bol úspešne odstránený.", onlyVerbose: true);
+            }
+            catch(Exception ex)
+            {
+                Program.LogEvent($"Odstraňovanie duplikátu agregátneho súboru zlyhalo, odstráňte ho prosím manuálne. Cesta: {duplicateFilePathXML}");
+                Program.LogEvent(ex.Message);
+            }
+        }
+
         internal static void DupplicateAggregateFile()
         {
             string originalFile = Configuration.originalfilePathXML;
@@ -25,7 +50,7 @@ namespace ProcessLogs.utilities
 
             AccessControlUtils.VerifyFileReadPermission(originalFile);
 
-            Program.LogEvent("Vytváranie dočasného agregátného súboru");
+            Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
 
             Configuration.XMLDirectoryPath = Path.GetDirectoryName(Configuration.originalfilePathXML);
 
