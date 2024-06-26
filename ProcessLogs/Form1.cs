@@ -15,6 +15,8 @@ using ProcessLogs.logs;
 using System.Reflection;
 using System.Xml;
 using ProcessLogs.structures;
+using System.Web.UI.Design.WebControls;
+using System.IO.Pipes;
 
 
 
@@ -80,9 +82,9 @@ namespace ProcessLogs
                     await Task.Run(() => ProcessLogs());
                 }
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                MessageBox.Show("Chyba: Pri spracovaní sa vyskytla chyba" + err + " . Odstráňte závadu a skúste to opäť", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba: Pri spracovaní sa vyskytla chyba" + ex + " . Odstráňte závadu a skúste to opäť", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -137,11 +139,10 @@ namespace ProcessLogs
             if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
             {
                 //HasCorrectXMLStructure returns false if the structure is not valid
-                if (!StructureVerification.HasCorrectXMLStructure(Configuration.originalfilePathXML, "Agregátny Log súbor nemá správnu XML štruktúru."))
+                if (!StructureVerification.XMLValidator.ValidateXMLStructure(Configuration.originalfilePathXML, "Agregátny Log súbor nemá správnu XML štruktúru.", checkAggregateFileStructure:true))
                 {
                     return;
                 }
-                Program.LogEvent("Štruktúra agregátneho XML pred zápisom logov je platná.");
             }
 
 
@@ -184,10 +185,14 @@ namespace ProcessLogs
 
             //Get file name for each log 
             Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
-            
+
+            //Store information about total nmber of processed records
+            int processedRecords = 0;
+
             //Initiate file stream to write to the aggregate file
             using (FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write))
             {
+
                 //Generate log object for every log path and add it to globalLogs IEnumerable.
                 for (int index = 0; index < Configuration.globalLogs.Count(); index++)
                 {
@@ -210,6 +215,7 @@ namespace ProcessLogs
                             return;
                         }
                         LogHandler.ProcessLog(logObject, fileStream);
+                        processedRecords += logObject.CountRecords();
 
                     }
                     catch (Exception ex)
@@ -226,13 +232,15 @@ namespace ProcessLogs
                     }
 
                 }
+                fileStream.Close();
             }
 
 
 
-            //Inform the user about the total number of processed records.
-            Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} záznamov", onlyVerbose: true);
-            Program.LogEvent(delimeter, onlyVerbose: true);
+            //Inform the user about the total number of processed logs and records.
+
+            Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} súborov ({processedRecords} záznamov)", onlyVerbose: false);
+            Program.LogEvent(delimeter, onlyVerbose: false);
 
 
 

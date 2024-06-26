@@ -37,17 +37,17 @@
             this.errorLineTextBox = new System.Windows.Forms.TextBox();
             this.errorPositionTextBox = new System.Windows.Forms.TextBox();
             this.errorMessageLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cursorLineTextBox = new System.Windows.Forms.TextBox();
+            this.cursorPositionTextBox = new System.Windows.Forms.TextBox();
             this.XMLRecordContent = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.checkXMLStructureButton = new System.Windows.Forms.Button();
             this.skipButton = new System.Windows.Forms.Button();
             this.keepButton = new System.Windows.Forms.Button();
             this.XMLStructureIntegrityLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cursorLineTextBox = new System.Windows.Forms.TextBox();
-            this.cursorPositionTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -67,12 +67,12 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
             this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(831, 583);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(831, 613);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // infoTitle
@@ -111,7 +111,7 @@
             this.tableLayoutPanel2.Controls.Add(this.label6, 6, 1);
             this.tableLayoutPanel2.Controls.Add(this.cursorLineTextBox, 5, 1);
             this.tableLayoutPanel2.Controls.Add(this.cursorPositionTextBox, 7, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(25, 55);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(25, 85);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.83333F));
@@ -199,84 +199,6 @@
             this.errorMessageLabel.Text = "-";
             this.errorMessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // XMLRecordContent
-            // 
-            this.XMLRecordContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.XMLRecordContent.Location = new System.Drawing.Point(25, 130);
-            this.XMLRecordContent.Name = "XMLRecordContent";
-            this.XMLRecordContent.Size = new System.Drawing.Size(781, 373);
-            this.XMLRecordContent.TabIndex = 2;
-            this.XMLRecordContent.Text = "";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.checkXMLStructureButton, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.skipButton, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.keepButton, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(25, 529);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(781, 29);
-            this.tableLayoutPanel3.TabIndex = 3;
-            // 
-            // checkXMLStructureButton
-            // 
-            this.checkXMLStructureButton.Location = new System.Drawing.Point(3, 3);
-            this.checkXMLStructureButton.Name = "checkXMLStructureButton";
-            this.checkXMLStructureButton.Size = new System.Drawing.Size(149, 23);
-            this.checkXMLStructureButton.TabIndex = 0;
-            this.checkXMLStructureButton.Text = "Skontrolovať štruktúru XML";
-            this.checkXMLStructureButton.UseVisualStyleBackColor = true;
-            this.checkXMLStructureButton.Click += new System.EventHandler(this.checkXMLStructureButton_Click);
-            // 
-            // skipButton
-            // 
-            this.skipButton.Location = new System.Drawing.Point(251, 3);
-            this.skipButton.Name = "skipButton";
-            this.skipButton.Size = new System.Drawing.Size(75, 23);
-            this.skipButton.TabIndex = 2;
-            this.skipButton.Text = "Preskočiť";
-            this.skipButton.UseVisualStyleBackColor = true;
-            this.skipButton.Click += new System.EventHandler(this.skipButton_Click);
-            // 
-            // keepButton
-            // 
-            this.keepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepButton.Enabled = false;
-            this.keepButton.Location = new System.Drawing.Point(161, 3);
-            this.keepButton.Name = "keepButton";
-            this.keepButton.Size = new System.Drawing.Size(84, 23);
-            this.keepButton.TabIndex = 1;
-            this.keepButton.Text = "Uložiť";
-            this.keepButton.UseVisualStyleBackColor = true;
-            this.keepButton.Click += new System.EventHandler(this.keepButton_Click);
-            // 
-            // XMLStructureIntegrityLabel
-            // 
-            this.XMLStructureIntegrityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.XMLStructureIntegrityLabel.AutoSize = true;
-            this.XMLStructureIntegrityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.XMLStructureIntegrityLabel.Location = new System.Drawing.Point(25, 506);
-            this.XMLStructureIntegrityLabel.Name = "XMLStructureIntegrityLabel";
-            this.XMLStructureIntegrityLabel.Size = new System.Drawing.Size(230, 20);
-            this.XMLStructureIntegrityLabel.TabIndex = 4;
-            this.XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
-            this.XMLStructureIntegrityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -342,11 +264,89 @@
             this.cursorPositionTextBox.TabIndex = 10;
             this.cursorPositionTextBox.TabStop = false;
             // 
+            // XMLRecordContent
+            // 
+            this.XMLRecordContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.XMLRecordContent.Location = new System.Drawing.Point(25, 160);
+            this.XMLRecordContent.Name = "XMLRecordContent";
+            this.XMLRecordContent.Size = new System.Drawing.Size(781, 373);
+            this.XMLRecordContent.TabIndex = 2;
+            this.XMLRecordContent.Text = "";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.checkXMLStructureButton, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.skipButton, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.keepButton, 1, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(25, 559);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(781, 29);
+            this.tableLayoutPanel3.TabIndex = 3;
+            // 
+            // checkXMLStructureButton
+            // 
+            this.checkXMLStructureButton.Location = new System.Drawing.Point(3, 3);
+            this.checkXMLStructureButton.Name = "checkXMLStructureButton";
+            this.checkXMLStructureButton.Size = new System.Drawing.Size(149, 23);
+            this.checkXMLStructureButton.TabIndex = 0;
+            this.checkXMLStructureButton.Text = "Skontrolovať štruktúru XML";
+            this.checkXMLStructureButton.UseVisualStyleBackColor = true;
+            this.checkXMLStructureButton.Click += new System.EventHandler(this.checkXMLStructureButton_Click);
+            // 
+            // skipButton
+            // 
+            this.skipButton.Location = new System.Drawing.Point(251, 3);
+            this.skipButton.Name = "skipButton";
+            this.skipButton.Size = new System.Drawing.Size(75, 23);
+            this.skipButton.TabIndex = 2;
+            this.skipButton.Text = "Preskočiť";
+            this.skipButton.UseVisualStyleBackColor = true;
+            this.skipButton.Click += new System.EventHandler(this.skipButton_Click);
+            // 
+            // keepButton
+            // 
+            this.keepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.keepButton.Enabled = false;
+            this.keepButton.Location = new System.Drawing.Point(161, 3);
+            this.keepButton.Name = "keepButton";
+            this.keepButton.Size = new System.Drawing.Size(84, 23);
+            this.keepButton.TabIndex = 1;
+            this.keepButton.Text = "Uložiť";
+            this.keepButton.UseVisualStyleBackColor = true;
+            this.keepButton.Click += new System.EventHandler(this.keepButton_Click);
+            // 
+            // XMLStructureIntegrityLabel
+            // 
+            this.XMLStructureIntegrityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.XMLStructureIntegrityLabel.AutoSize = true;
+            this.XMLStructureIntegrityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.XMLStructureIntegrityLabel.Location = new System.Drawing.Point(25, 536);
+            this.XMLStructureIntegrityLabel.Name = "XMLStructureIntegrityLabel";
+            this.XMLStructureIntegrityLabel.Size = new System.Drawing.Size(230, 20);
+            this.XMLStructureIntegrityLabel.TabIndex = 4;
+            this.XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
+            this.XMLStructureIntegrityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // BrokenXMLStructure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 583);
+            this.ClientSize = new System.Drawing.Size(831, 613);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(847, 505);
             this.Name = "BrokenXMLStructure";

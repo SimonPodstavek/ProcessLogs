@@ -81,12 +81,13 @@ namespace ProcessLogs.structures
             
         }
 
-        //Check whether the XML file is valid and change the form's behaviour accordingly.
+        //Check whether the XML file is valid and change the form's behavior accordingly.
         private void CheckXMLStructure(byte[] checkedBytes)
         {
             try
             {
-                StructureVerification.VerifyXMLStructure(checkedBytes);
+                StructureVerification.VerifyByteXMLStructure verificator = new StructureVerification.VerifyByteXMLStructure();
+                verificator.ValidateXMLStructure(checkedBytes);
                 XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Platná";
                 hasValidXMLStructure = true;
                 keepButton.Enabled = true;
@@ -95,21 +96,14 @@ namespace ProcessLogs.structures
                 errorMessageLabel.Text = String.Empty;
 
             }
-            catch (Exception ex)
+            catch (XmlException ex)
             {
-                if(!(ex.InnerException is XmlException innerEx))
-                {
-                    throw;
-                }
                 XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
                 hasValidXMLStructure = false;
                 keepButton.Enabled = false;
-                errorLineTextBox.Text = innerEx.LineNumber.ToString();
-                errorPositionTextBox.Text = innerEx.LinePosition.ToString();
-                errorMessageLabel.Text = innerEx.Message;
-
-
-
+                errorLineTextBox.Text = ex.LineNumber.ToString();
+                errorPositionTextBox.Text = ex.LinePosition.ToString();
+                errorMessageLabel.Text = ex.Message;
             }
 
         }

@@ -18,11 +18,25 @@ namespace ProcessLogs.logs
         internal byte[][] XMLSequences;
         internal byte[] LogContent;
         internal record[] logRecords;
+
+        internal int CountRecords()
+        {
+            if (this.logRecords == null)
+            {
+                return 0;
+            }
+
+            return this.logRecords.Length;
+        }
+
+
         internal LogClass(string filePath, string fileName)
         {
             this.filePath = filePath;
             this.fileName = fileName;
         }
+
+
         internal class record
         {
             internal byte[] XMLHash;
@@ -31,7 +45,10 @@ namespace ProcessLogs.logs
             internal byte[] byteLogContent;
             internal bool isValid = true;
 
+
         }
+
+        //This method locates Hash sequence in each record by sequences defined in Configuration.ByteSequences
         internal static void FindXMLHash(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;
@@ -67,6 +84,7 @@ namespace ProcessLogs.logs
             return;
         }
 
+        //This method removes records with IDs in removeList from an array
         public static record[] RemoveRecordsFromLog(record[] originalArray, HashSet<int> removeList)
         {
             int len = originalArray.Length - removeList.Count();
@@ -145,32 +163,27 @@ namespace ProcessLogs.logs
                     throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
                 }
 
-                //Verify structure and resolve potential issues.
-                try
-                {
-                    StructureVerification.VerifyXMLStructure(dataBytesSequence[0]);
-                }
-                catch (Exception ex)
-                {
-                    //if the error is of other nature than broken XML structure
-                    if (!(ex.InnerException is XmlException))
-                    {
-                        throw;
-                    }
+                //Verify structure, if it is valid go to the following record
+                bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index +1} je poškodená");
 
-                    bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
-                    if (!keepRecord)
-                    {
-                        Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou štruktúrov nebude uložený");
-                        removeIndexes.Add(index);
-                        continue;
-                    }
-                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou štruktúrov bude uložený.");
+                if (isValid)
+                {
+                    continue;
                 }
+                    
+                //if the structure is not valid, ask the user to validate
+                bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
+                if (!keepRecord)
+                {
+                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov nebude uložený");
+                    removeIndexes.Add(index);
+                    continue;
+                }
+                Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov bude uložený.");
 
             }
 
-            //If there are any records to be removed, remove them
+            //If there are any records with broken XML structure to be removed, remove them
             if (removeIndexes.Count() != 0)
             {
                 logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);

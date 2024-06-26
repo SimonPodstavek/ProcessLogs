@@ -91,6 +91,7 @@
     <Compile Include="structures\LogStructureBroken.cs" />
     <Compile Include="utilities\AccessControlUtils.cs" />
     <Compile Include="utilities\Configuration.cs" />
+    <Compile Include="utilities\Exceptions.cs" />
     <Compile Include="utilities\LogHandler.cs" />
     <Compile Include="utilities\Extensions.cs" />
     <Compile Include="utilities\SaveLogs.cs" />

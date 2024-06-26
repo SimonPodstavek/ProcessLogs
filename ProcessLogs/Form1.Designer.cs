@@ -1,4 +1,6 @@
-﻿namespace ProcessLogs
+﻿using ProcessLogs.utilities;
+
+namespace ProcessLogs
 {
     partial class Form1
     {
@@ -28,6 +30,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+
+
             this.sourceDirectoryTextBox = new System.Windows.Forms.TextBox();
             this.sourceDirectoryLabel = new System.Windows.Forms.Label();
             this.XMLDirectoryLabel = new System.Windows.Forms.Label();

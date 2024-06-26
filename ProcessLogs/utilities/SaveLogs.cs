@@ -153,7 +153,7 @@ namespace ProcessLogs.utilities
             //Verify that all bytes have been written to the duplicate file 
             if(expectedLength == duplicateFileLength)
             {
-                Program.LogEvent("Agregátny súbor má správnu dĺžku.");
+                Program.LogEvent("Duplikát agregátneho súboru má správnu dĺžku.");
             }
             else
             {
@@ -164,10 +164,10 @@ namespace ProcessLogs.utilities
 
 
             //Verify the structure of duplicate (appended) aggregate XML file before rewriting the original (optional)
-            if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
+            if (Configuration.Settings.verifyAggregateXMLStructureOnClose)
             {
                 //HasCorrectXMLStructure returns false if the structure is not valid
-                if (!StructureVerification.HasCorrectXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!"))
+                if (!StructureVerification.XMLValidator.ValidateXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!", checkAggregateFileStructure: true))
                 {
                     RemoveDuplicateAggregateFile();
                     return;
