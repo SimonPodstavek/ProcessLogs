@@ -29,7 +29,6 @@ namespace ProcessLogs.logs
             internal byte[] computedHash;
             internal byte[] byteXMLSequence;
             internal byte[] byteLogContent;
-            //internal string logContent;
             internal bool isValid = true;
 
         }
@@ -78,6 +77,7 @@ namespace ProcessLogs.logs
                 if (!removeList.Contains(index)) 
                 {
                     res[pos] = item;
+                    pos += 1;
                 }
             }
             return res;
