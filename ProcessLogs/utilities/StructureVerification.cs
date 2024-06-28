@@ -51,8 +51,8 @@ namespace ProcessLogs.utilities
                         //Locate the first element and verify that it's AGGREGATEXML
                         xmlReader.MoveToContent();
 
-                        // Check if the first element is <AGREGATEXML>
-                        if (xmlReader.NodeType != XmlNodeType.Element || xmlReader.Name != "AGREGATEXML")
+                        // Check if the first element is <AGGREGATEXML>
+                        if (xmlReader.NodeType != XmlNodeType.Element || xmlReader.Name != "AGGREGATEXML")
                         {
                             throw new AggregateFileIncorrectStructure();
                         }
@@ -61,14 +61,14 @@ namespace ProcessLogs.utilities
                         string lastElementName = null;
                         while (xmlReader.Read())
                         {
-                            if (xmlReader.NodeType == XmlNodeType.Element)
+                            if (xmlReader.NodeType == XmlNodeType.EndElement)
                             {
                                 lastElementName = xmlReader.Name;
                             }
                         }
 
-                        // Check if the last element is <AGREGATEXML> if verifying aggregate file
-                        if (lastElementName != "AGREGATEXML")
+                        // Check if the last element is <AGGREGATEXML> if verifying aggregate file
+                        if (lastElementName != "AGGREGATEXML")
                         {
                             throw new AggregateFileIncorrectStructure();
                         }
