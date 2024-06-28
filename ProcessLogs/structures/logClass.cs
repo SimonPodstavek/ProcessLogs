@@ -48,9 +48,42 @@ namespace ProcessLogs.logs
 
         }
 
+        /// <summary>
+        /// This module appends Addition element after first occurance of Lookup element
+        /// <param name="originalBytes">Original sequence that will be extended with additionElement</param>
+        /// <param name="additionElement">The element with value (optional) to be inserted</param>
+        /// <param name="lookupElement">The element to insert addition element after</param>
+        /// </summary>
+
+        internal static byte[] InsertElementAfterLookup(byte[] originalBytes, byte[] additionElement, byte[] lookupElement)
+        {
+
+            int additionLen = additionElement.Length;
+            int lookupLen = lookupElement.Length;
+            int originalLen = originalBytes.Length;
+
+
+            int insertBytePosition = Array.IndexOf(originalBytes, additionElement);
+
+            if (insertBytePosition == -1) {
+                throw new XMLElementNotFound($"Chyba 112: XML element {Encoding.UTF8.GetString(lookupElement)} neexistuje.");
+            }
+
+
+            byte [] resultBytes = new byte[originalLen + additionLen];
+
+            Array.Copy(originalBytes, resultBytes, originalLen);
+
+            Array.Copy(additionElement, 0, resultBytes, insertBytePosition, lookupLen);
+
+            return resultBytes;
+        }
+
         //This method locates Hash sequence in each record by sequences defined in Configuration.ByteSequences
         internal static void FindXMLHash(LogClass logObject)
         {
+
+
             record[] logRecords = logObject.logRecords;
 
             foreach ((int index, record logRecord) in logRecords.Enumerate())
@@ -102,6 +135,8 @@ namespace ProcessLogs.logs
 
         }
 
+
+        //This method verifies whether the sequences in a log file has a right hash
         internal static void VerifyRecordsIntegrity(LogClass logObject)
         {   
             record[] logRecords = logObject.logRecords;
@@ -145,7 +180,7 @@ namespace ProcessLogs.logs
         }
 
 
-        //This method verifies whether the sequences in a log file have the right XML structure  UNFINISHED
+        //This method verifies whether the sequences in a log file has a valid XML structure 
         internal static void VerifyXMLRecordsStructure(LogClass logObject)
         {
             record[] logRecords = logObject.logRecords;

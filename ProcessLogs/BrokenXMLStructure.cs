@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using static ProcessLogs.utilities.Configuration;
 
 namespace ProcessLogs.structures
 {
@@ -23,7 +24,12 @@ namespace ProcessLogs.structures
         private LogClass.record logRecord;
         private XmlException ex;
         private volatile bool hasValidXMLStructure = false;
-        public bool keepRecord = false;
+        public bool keepRecord { get; set; }
+        public byte[] savedByteSequence { get; set; }
+
+        private string XMLStatusStringValid = "Platnosť štruktúry XML: Platná";
+        private string XMLStatusStringInvalid = "Platnosť štruktúry XML: Neplatná";
+
 
 
         public byte[] XMLByteRepresentation
@@ -36,6 +42,7 @@ namespace ProcessLogs.structures
 
         internal BrokenXMLStructure(LogClass.record _logRecord, LogClass _logObject)
         {
+            keepRecord = false;
             InitializeComponent();
             logObject = _logObject;
             logRecord = _logRecord; 
@@ -68,7 +75,7 @@ namespace ProcessLogs.structures
         //Disable accepting on change in the text
         private void DisableAcceptanceEligibility(object sender, EventArgs e)
         {
-            XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
+            XMLStructureIntegrityLabel.Text = XMLStatusStringInvalid;
             hasValidXMLStructure = false;
             keepButton.Enabled = false;
         }
@@ -86,9 +93,14 @@ namespace ProcessLogs.structures
         {
             try
             {
+                //Check that XML has valid structure
                 StructureVerification.VerifyByteXMLStructure verificator = new StructureVerification.VerifyByteXMLStructure();
+
+                //Verify that <ModifiedOnParse>XML structure<ModifiedOnParse> can be inserted after the <LogElement> to store information about user's intervention
+                LogClass.InsertElementAfterLookup(checkedBytes, Configuration.ByteSequences.XMLModifiedOnParse,Configuration.ByteSequences.logXMLOpeningSequence);
+
                 verificator.ValidateXMLStructure(checkedBytes);
-                XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Platná";
+                XMLStructureIntegrityLabel.Text = XMLStatusStringValid;
                 hasValidXMLStructure = true;
                 keepButton.Enabled = true;
                 errorLineTextBox.Text = String.Empty;
@@ -98,12 +110,22 @@ namespace ProcessLogs.structures
             }
             catch (XmlException ex)
             {
-                XMLStructureIntegrityLabel.Text = "Platnosť štruktúry XML: Neplatná";
+                XMLStructureIntegrityLabel.Text = XMLStatusStringInvalid;
                 hasValidXMLStructure = false;
                 keepButton.Enabled = false;
                 errorLineTextBox.Text = ex.LineNumber.ToString();
                 errorPositionTextBox.Text = ex.LinePosition.ToString();
                 errorMessageLabel.Text = ex.Message;
+            }
+            catch (XMLElementNotFound)
+            {
+                XMLStructureIntegrityLabel.Text = XMLStatusStringInvalid;
+                hasValidXMLStructure = false;
+                keepButton.Enabled = false;
+                errorLineTextBox.Text = String.Empty;
+                errorPositionTextBox.Text = String.Empty;
+                errorMessageLabel.Text = ex.Message;
+
             }
 
         }
@@ -113,6 +135,8 @@ namespace ProcessLogs.structures
         {
             if (hasValidXMLStructure)
             {
+                byte[] XMLByteRepresentation = Encoding.UTF8.GetBytes(XMLRecordContent.Text);
+                savedByteSequence = LogClass.InsertElementAfterLookup(XMLByteRepresentation, Configuration.ByteSequences.XMLModifiedOnParse, Configuration.ByteSequences.logXMLOpeningSequence);
                 keepRecord = true;
                 this.Close();
             }

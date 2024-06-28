@@ -125,7 +125,7 @@ namespace ProcessLogs.utilities
 
 
 
-            
+        //Append closing sequence to aggregate file without having to load it into memory
         internal static void AppendClosingSequence()
         {
             string filePath = Configuration.duplicatefilePathXML;

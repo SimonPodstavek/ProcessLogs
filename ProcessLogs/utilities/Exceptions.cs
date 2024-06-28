@@ -9,9 +9,13 @@ namespace ProcessLogs.utilities
     
     internal class AggregateFileIncorrectStructure : Exception
     {
-        public AggregateFileIncorrectStructure() : base()
-        {
-
-        }
+        public AggregateFileIncorrectStructure() : base() { }
     }
+
+    internal class XMLElementNotFound : Exception 
+    {
+        
+        public XMLElementNotFound(string message) : base(message: message)  {}
+    }
+
 }
