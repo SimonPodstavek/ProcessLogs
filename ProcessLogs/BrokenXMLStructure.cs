@@ -117,7 +117,7 @@ namespace ProcessLogs.structures
                 errorPositionTextBox.Text = ex.LinePosition.ToString();
                 errorMessageLabel.Text = ex.Message;
             }
-            catch (XMLElementNotFound)
+            catch (XMLElementNotFound ex)
             {
                 XMLStructureIntegrityLabel.Text = XMLStatusStringInvalid;
                 hasValidXMLStructure = false;
