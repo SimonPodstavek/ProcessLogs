@@ -18,7 +18,9 @@ namespace ProcessLogs
     {
         private LogClass logObject;
         private LogClass.record logRecord;
-        public bool keepRecord;
+
+        public bool keepRecord { get; set; }
+        public byte[] savedByteSequence { get; set; }
 
         internal BrokenHashIntegrity(LogClass.record _logRecord, LogClass _logObject)
         {
@@ -43,12 +45,14 @@ namespace ProcessLogs
 
         private void keepButton_Click(object sender, EventArgs e)
         {
+            savedByteSequence = LogClass.InsertElementAfterLookup(logRecord.byteXMLSequence, Configuration.ByteSequences.hashModifiedOnParse, Configuration.ByteSequences.logXMLOpeningSequence);
             keepRecord = true;
             this.Close();
         }
 
         private void skipButton_Click(object sender, EventArgs e)
         {
+
             keepRecord = false;
             this.Close();
         }

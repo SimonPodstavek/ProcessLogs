@@ -150,12 +150,36 @@ namespace ProcessLogs.utilities
 
         }
 
+
+        internal static string XMLStringMinify(string XMLString)
+        {
+            // Load the XML string into an XmlDocument
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(XMLString);
+
+            // Create settings for minifying (no formatting)
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = false; // No indentation
+            settings.NewLineChars = string.Empty; // No new lines
+            settings.NewLineHandling = NewLineHandling.None; // No new line handling
+
+            StringWriter stringWriter = new StringWriter();
+            using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings))
+            {
+                xmlDoc.Save(xmlWriter);
+            }
+
+            return stringWriter.ToString();
+        }
+
+
+
         //This function creates instance of hashIntegrityBroken form and handles sequences with broken integrity.
         internal static bool BrokenIntegrityResolve(LogClass.record logRecord, LogClass logObject)
         {
             BrokenHashIntegrity BrokenHashIntegrity = new BrokenHashIntegrity(logRecord, logObject);
             BrokenHashIntegrity.ShowDialog();
-            
+            logRecord.byteXMLSequence = BrokenHashIntegrity.savedByteSequence;
             return BrokenHashIntegrity.keepRecord;
         }
 
