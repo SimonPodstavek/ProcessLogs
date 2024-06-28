@@ -96,10 +96,11 @@ namespace ProcessLogs.structures
                 //Check that XML has valid structure
                 StructureVerification.VerifyByteXMLStructure verificator = new StructureVerification.VerifyByteXMLStructure();
 
+                verificator.ValidateXMLStructure(checkedBytes);
+
                 //Verify that <ModifiedOnParse>XML structure<ModifiedOnParse> can be inserted after the <LogElement> to store information about user's intervention
                 LogClass.InsertElementAfterLookup(checkedBytes, Configuration.ByteSequences.XMLModifiedOnParse,Configuration.ByteSequences.logXMLOpeningSequence);
 
-                verificator.ValidateXMLStructure(checkedBytes);
                 XMLStructureIntegrityLabel.Text = XMLStatusStringValid;
                 hasValidXMLStructure = true;
                 keepButton.Enabled = true;

@@ -62,8 +62,10 @@ namespace ProcessLogs.logs
             int lookupLen = lookupElement.Length;
             int originalLen = originalBytes.Length;
 
+            
 
-            int insertBytePosition = Array.IndexOf(originalBytes, additionElement);
+            int insertBytePosition = LogHandler.FindSequence(0, originalBytes, lookupElement) + lookupLen;
+
 
             if (insertBytePosition == -1) {
                 throw new XMLElementNotFound($"Chyba 112: XML element {Encoding.UTF8.GetString(lookupElement)} neexistuje.");
@@ -74,7 +76,13 @@ namespace ProcessLogs.logs
 
             Array.Copy(originalBytes, resultBytes, originalLen);
 
-            Array.Copy(additionElement, 0, resultBytes, insertBytePosition, lookupLen);
+            string xyz = Encoding.UTF8.GetString(resultBytes);
+
+            Array.Copy(additionElement, 0, resultBytes, insertBytePosition, additionLen);
+             xyz = Encoding.UTF8.GetString(resultBytes);
+            Array.Copy(originalBytes, insertBytePosition, resultBytes, insertBytePosition + additionLen, originalLen - insertBytePosition);           
+             xyz = Encoding.UTF8.GetString(resultBytes);
+            
 
             return resultBytes;
         }

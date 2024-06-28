@@ -66,6 +66,9 @@ namespace ProcessLogs
 
         private async void initiateButton_Click(object sender, EventArgs e)
         {
+
+
+
             if (Configuration.IsRunning == true)
             {
                 Configuration.iniProcess(initiateButton);

@@ -146,10 +146,14 @@ namespace ProcessLogs.utilities
                 }
                 catch (XmlException ex)
                 {
-                    Program.LogEvent(errorMessage);
-                    Program.LogEvent($"Chyba: {ex.Message}");
-                    Program.LogEvent($"Riadok: {ex.LineNumber}");
-                    Program.LogEvent($"Pozícia na riadku: {ex.LinePosition}");
+                    if (Configuration.Settings.isVerbose || checkAggregateFileStructure)
+                    {
+                        Program.LogEvent(errorMessage);
+                        Program.LogEvent($"Chyba: {ex.Message}");
+                        Program.LogEvent($"Riadok: {ex.LineNumber}");
+                        Program.LogEvent($"Pozícia na riadku: {ex.LinePosition}");
+
+                    }
                     return false;
                 }
                 catch (AggregateFileIncorrectStructure ex)

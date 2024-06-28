@@ -54,7 +54,7 @@ namespace ProcessLogs.utilities
             return XMLByteSequences.ToArray();
         }
 
-        private static int FindSequence(int startingPos, byte[] haystack, byte[] needle)
+        internal static int FindSequence(int startingPos, byte[] haystack, byte[] needle)
         {
             bool found = false;
             for (int offset = startingPos; offset < haystack.Length; offset++)
