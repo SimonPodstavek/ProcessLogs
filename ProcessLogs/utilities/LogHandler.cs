@@ -151,26 +151,26 @@ namespace ProcessLogs.utilities
         }
 
 
-        internal static string XMLStringMinify(string XMLString)
-        {
-            // Load the XML string into an XmlDocument
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(XMLString);
+        //internal static string XMLStringMinify(string XMLString)
+        //{
+        //    // Load the XML string into an XmlDocument
+        //    XmlDocument xmlDoc = new XmlDocument();
+        //    xmlDoc.LoadXml(XMLString);
 
-            // Create settings for minifying (no formatting)
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = false; // No indentation
-            settings.NewLineChars = string.Empty; // No new lines
-            settings.NewLineHandling = NewLineHandling.None; // No new line handling
+        //    // Create settings for minifying (no formatting)
+        //    XmlWriterSettings settings = new XmlWriterSettings();
+        //    settings.Indent = false; // No indentation
+        //    settings.NewLineChars = string.Empty; // No new lines
+        //    settings.NewLineHandling = NewLineHandling.None; // No new line handling
 
-            StringWriter stringWriter = new StringWriter();
-            using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings))
-            {
-                xmlDoc.Save(xmlWriter);
-            }
+        //    StringWriter stringWriter = new StringWriter();
+        //    using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings))
+        //    {
+        //        xmlDoc.Save(xmlWriter);
+        //    }
 
-            return stringWriter.ToString();
-        }
+        //    return stringWriter.ToString();
+        //}
 
 
 
@@ -266,6 +266,11 @@ namespace ProcessLogs.utilities
                 LogClass.VerifyRecordsIntegrity(logObject);
             }
 
+             //Verify size if user chose size restrictions
+            if(Configuration.Settings.verifyMinimumRecordSize || Configuration.Settings.verifyMaximumRecordSize)
+            {
+                LogClass.VerifyXMLRecordsSizing(logObject);
+            }
 
 
 

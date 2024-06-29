@@ -113,12 +113,22 @@ namespace ProcessLogs
             //Update global path variables to match the user's choice
             Configuration.originalfilePathXML = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
-                //Settings
-            Configuration.Settings.verifyAggregateXMLStructureOnLoad = verifyAggregateXMLStructureOnLoadCheck.Checked;
-            Configuration.Settings.verifyAggregateXMLStructureOnClose = verifyAggregateXMLStructureOnCloseCheck.Checked;
-            Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
-            Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
-            Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
+            //Settings
+                //Should the report be verbose
+                Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
+                //Aggregate file verification settings
+                Configuration.Settings.verifyAggregateXMLStructureOnLoad = verifyAggregateXMLStructureOnLoadCheck.Checked;
+                Configuration.Settings.verifyAggregateXMLStructureOnClose = verifyAggregateXMLStructureOnCloseCheck.Checked;
+                //Record verification settings
+                Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
+                Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
+                //Check record sizes
+                Configuration.Settings.minimumRecordSize = (int) minimumRecordSizeNumeric.Value;
+                Configuration.Settings.maximumRecordSize= (int) maximumRecordSizeNumeric.Value;
+                Configuration.Settings.verifyMinimumRecordSize = minimumRecordSizeCheckBox.Checked;
+                Configuration.Settings.verifyMaximumRecordSize = maximumRecordSizeCheckBox.Checked;
+
+
 
 
             //Notify user about the missing parameters
@@ -224,6 +234,7 @@ namespace ProcessLogs
                     catch (Exception ex)
                     {
                         Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
+                        Program.LogEvent("NIE JE MOŽNÉ POKRAČOVAŤ - ZÁZNAMY NEBUDÚ ULOŽENÉ");
                         Program.LogEvent($"Popis: {ex}");
                         fileStream.Close();
                         SaveLogs.RemoveDuplicateAggregateFile();

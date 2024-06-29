@@ -1,4 +1,5 @@
 ﻿using ProcessLogs.utilities;
+using System;
 
 namespace ProcessLogs
 {
@@ -21,6 +22,32 @@ namespace ProcessLogs
             }
             base.Dispose(disposing);
         }
+
+
+        private void MinimumSizeCheckboxChecked(object sender, EventArgs e)
+        {
+            if (minimumRecordSizeCheckBox.Checked)
+            {
+                minimumRecordSizeNumeric.Enabled = true;
+            }
+            else
+            {
+                minimumRecordSizeNumeric.Enabled = false;
+            }
+        }
+
+        private void MaximumSizeCheckboxChecked(object sender, EventArgs e)
+        {
+            if (maximumRecordSizeCheckBox.Checked)
+            {
+                maximumRecordSizeNumeric.Enabled = true;
+            }
+            else
+            {
+                maximumRecordSizeNumeric.Enabled = false;
+            }
+        }
+
 
         #region Windows Form Designer generated code
 
@@ -428,7 +455,11 @@ namespace ProcessLogs
             this.maximumRecordSizeNumeric.Name = "maximumRecordSizeNumeric";
             this.maximumRecordSizeNumeric.Size = new System.Drawing.Size(60, 20);
             this.maximumRecordSizeNumeric.TabIndex = 10;
-            this.maximumRecordSizeNumeric.Value = 1800;
+            this.maximumRecordSizeNumeric.Value = new decimal(new int[] {
+            1800,
+            0,
+            0,
+            0});
             // 
             // minimumRecordSizeNumeric
             // 
@@ -441,7 +472,11 @@ namespace ProcessLogs
             this.minimumRecordSizeNumeric.Name = "minimumRecordSizeNumeric";
             this.minimumRecordSizeNumeric.Size = new System.Drawing.Size(60, 20);
             this.minimumRecordSizeNumeric.TabIndex = 11;
-            this.minimumRecordSizeNumeric.Value = 800;
+            this.minimumRecordSizeNumeric.Value = new decimal(new int[] {
+            800,
+            0,
+            0,
+            0});
             // 
             // minimumRecordSizeCheckBox
             // 
@@ -449,12 +484,15 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.minimumRecordSizeCheckBox.AutoSize = true;
+            this.minimumRecordSizeCheckBox.Checked = true;
+            this.minimumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(3, 17);
             this.minimumRecordSizeCheckBox.Name = "minimumRecordSizeCheckBox";
             this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(148, 17);
             this.minimumRecordSizeCheckBox.TabIndex = 13;
             this.minimumRecordSizeCheckBox.Text = "Minimálna dĺžka";
             this.minimumRecordSizeCheckBox.UseVisualStyleBackColor = true;
+            this.minimumRecordSizeCheckBox.CheckedChanged += new System.EventHandler(this.MinimumSizeCheckboxChecked);
             // 
             // maximumRecordSizeCheckBox
             // 
@@ -462,12 +500,15 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.maximumRecordSizeCheckBox.AutoSize = true;
+            this.maximumRecordSizeCheckBox.Checked = true;
+            this.maximumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(223, 17);
             this.maximumRecordSizeCheckBox.Name = "maximumRecordSizeCheckBox";
             this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(148, 17);
             this.maximumRecordSizeCheckBox.TabIndex = 14;
             this.maximumRecordSizeCheckBox.Text = "Maximálna dĺžka";
             this.maximumRecordSizeCheckBox.UseVisualStyleBackColor = true;
+            this.maximumRecordSizeCheckBox.CheckedChanged += new System.EventHandler(this.MaximumSizeCheckboxChecked);
             // 
             // Form1
             // 

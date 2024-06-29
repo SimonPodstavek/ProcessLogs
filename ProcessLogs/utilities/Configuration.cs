@@ -23,6 +23,12 @@ namespace ProcessLogs.utilities
             internal static bool verifyLogXMLStructure = true;
             internal static bool verifyAggregateXMLStructureOnLoad = false;
             internal static bool verifyAggregateXMLStructureOnClose = true;
+
+            internal static int minimumRecordSize = 0;
+            internal static int maximumRecordSize = 0;
+
+            internal static bool verifyMinimumRecordSize = false;
+            internal static bool verifyMaximumRecordSize = false;
         }
 
         internal static class ByteSequences

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -235,6 +236,34 @@ namespace ProcessLogs.logs
             return;
         }
 
+        internal static void VerifyXMLRecordsSizing(LogClass logObject)
+        {
+            record[] logRecords = logObject.logRecords;
+            bool checkMin = Configuration.Settings.verifyMinimumRecordSize;
+            bool checkMax = Configuration.Settings.verifyMaximumRecordSize;
+
+            int minSize = Configuration.Settings.minimumRecordSize;
+            int maxSize = Configuration.Settings.maximumRecordSize;
+
+
+            foreach ((int index, record logRecord)in logRecords.Enumerate())
+            {
+                int recordLen = logRecord.byteXMLSequence.Length;
+
+                if (checkMin && recordLen < minSize)
+                {
+                    throw new Exception($"Záznam č. {index +1 } súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                }
+
+                if(checkMax && recordLen > maxSize)
+                {
+                    throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
+                }
+
+            }
+
+
+    }
 
 
     }
