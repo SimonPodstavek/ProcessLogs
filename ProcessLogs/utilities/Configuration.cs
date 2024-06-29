@@ -106,10 +106,6 @@ namespace ProcessLogs.utilities
         //Total length of appended XML contnet
         internal static long addedLength = 0;
 
-
-
-
-
     }
 
 }

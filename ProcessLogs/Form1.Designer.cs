@@ -178,6 +178,7 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
+            this.statusBox.HideSelection = false;
             this.statusBox.Location = new System.Drawing.Point(24, 288);
             this.statusBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusBox.Name = "statusBox";
@@ -412,14 +413,11 @@ namespace ProcessLogs
             // 
             // tableLayoutPanel8
             // 
-            this.tableLayoutPanel8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel8.ColumnCount = 4;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23F));
             this.tableLayoutPanel8.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.maximumRecordSizeNumeric, 3, 1);
             this.tableLayoutPanel8.Controls.Add(this.minimumRecordSizeNumeric, 1, 1);
@@ -446,7 +444,7 @@ namespace ProcessLogs
             // 
             // maximumRecordSizeNumeric
             // 
-            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(377, 17);
+            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(340, 17);
             this.maximumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -463,7 +461,7 @@ namespace ProcessLogs
             // 
             // minimumRecordSizeNumeric
             // 
-            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(157, 17);
+            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(121, 17);
             this.minimumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -488,7 +486,7 @@ namespace ProcessLogs
             this.minimumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(3, 17);
             this.minimumRecordSizeCheckBox.Name = "minimumRecordSizeCheckBox";
-            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(112, 17);
             this.minimumRecordSizeCheckBox.TabIndex = 13;
             this.minimumRecordSizeCheckBox.Text = "Minimálna dĺžka";
             this.minimumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -502,9 +500,9 @@ namespace ProcessLogs
             this.maximumRecordSizeCheckBox.AutoSize = true;
             this.maximumRecordSizeCheckBox.Checked = true;
             this.maximumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(223, 17);
+            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(222, 17);
             this.maximumRecordSizeCheckBox.Name = "maximumRecordSizeCheckBox";
-            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(112, 17);
             this.maximumRecordSizeCheckBox.TabIndex = 14;
             this.maximumRecordSizeCheckBox.Text = "Maximálna dĺžka";
             this.maximumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -517,7 +515,7 @@ namespace ProcessLogs
             this.ClientSize = new System.Drawing.Size(561, 611);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(567, 462);
+            this.MinimumSize = new System.Drawing.Size(577, 650);
             this.Name = "Form1";
             this.Text = "Log parser";
             this.Load += new System.EventHandler(this.Form1_Load);
