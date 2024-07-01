@@ -278,6 +278,10 @@ namespace ProcessLogs
 
         }
 
+        private void importSettings_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

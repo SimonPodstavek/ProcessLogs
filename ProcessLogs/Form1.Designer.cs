@@ -77,8 +77,9 @@ namespace ProcessLogs
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.VerifyLogHashCheck = new System.Windows.Forms.CheckBox();
-            this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
             this.verifyLogXMLStructureCheck = new System.Windows.Forms.CheckBox();
+            this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
+            this.preventduplicatesCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.maximumRecordSizeNumeric = new System.Windows.Forms.NumericUpDown();
@@ -165,12 +166,14 @@ namespace ProcessLogs
             // 
             this.importSettings.AutoSize = true;
             this.tableLayoutPanel6.SetColumnSpan(this.importSettings, 2);
+            this.importSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.importSettings.Location = new System.Drawing.Point(2, 0);
             this.importSettings.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.importSettings.Name = "importSettings";
-            this.importSettings.Size = new System.Drawing.Size(243, 13);
+            this.importSettings.Size = new System.Drawing.Size(295, 13);
             this.importSettings.TabIndex = 6;
-            this.importSettings.Text = "Nastavenia verifikácie štruktúry agregátneho XML";
+            this.importSettings.Text = "Nastavenia verifikácie štruktúry agregátneho XML:";
+            this.importSettings.Click += new System.EventHandler(this.importSettings_Click);
             // 
             // statusBox
             // 
@@ -179,7 +182,7 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
             this.statusBox.HideSelection = false;
-            this.statusBox.Location = new System.Drawing.Point(24, 288);
+            this.statusBox.Location = new System.Drawing.Point(24, 309);
             this.statusBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
@@ -190,10 +193,10 @@ namespace ProcessLogs
             // verifyAggregateXMLStructureOnLoadCheck
             // 
             this.verifyAggregateXMLStructureOnLoadCheck.AutoSize = true;
-            this.verifyAggregateXMLStructureOnLoadCheck.Location = new System.Drawing.Point(2, 21);
-            this.verifyAggregateXMLStructureOnLoadCheck.Margin = new System.Windows.Forms.Padding(2);
+            this.verifyAggregateXMLStructureOnLoadCheck.Location = new System.Drawing.Point(10, 27);
+            this.verifyAggregateXMLStructureOnLoadCheck.Margin = new System.Windows.Forms.Padding(10, 2, 2, 2);
             this.verifyAggregateXMLStructureOnLoadCheck.Name = "verifyAggregateXMLStructureOnLoadCheck";
-            this.verifyAggregateXMLStructureOnLoadCheck.Size = new System.Drawing.Size(81, 16);
+            this.verifyAggregateXMLStructureOnLoadCheck.Size = new System.Drawing.Size(81, 17);
             this.verifyAggregateXMLStructureOnLoadCheck.TabIndex = 8;
             this.verifyAggregateXMLStructureOnLoadCheck.Text = "Pri otvorení";
             this.verifyAggregateXMLStructureOnLoadCheck.UseVisualStyleBackColor = true;
@@ -204,7 +207,7 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.initiateButton, 2);
-            this.initiateButton.Location = new System.Drawing.Point(24, 261);
+            this.initiateButton.Location = new System.Drawing.Point(24, 282);
             this.initiateButton.Margin = new System.Windows.Forms.Padding(2);
             this.initiateButton.Name = "initiateButton";
             this.initiateButton.Size = new System.Drawing.Size(513, 23);
@@ -235,9 +238,9 @@ namespace ProcessLogs
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(561, 611);
@@ -326,9 +329,9 @@ namespace ProcessLogs
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(442, 39);
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(442, 46);
             this.tableLayoutPanel6.TabIndex = 13;
             // 
             // verifyAggregateXMLStructureOnCloseCheck
@@ -336,81 +339,95 @@ namespace ProcessLogs
             this.verifyAggregateXMLStructureOnCloseCheck.AutoSize = true;
             this.verifyAggregateXMLStructureOnCloseCheck.Checked = true;
             this.verifyAggregateXMLStructureOnCloseCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verifyAggregateXMLStructureOnCloseCheck.Location = new System.Drawing.Point(134, 21);
+            this.verifyAggregateXMLStructureOnCloseCheck.Location = new System.Drawing.Point(134, 27);
             this.verifyAggregateXMLStructureOnCloseCheck.Margin = new System.Windows.Forms.Padding(2);
             this.verifyAggregateXMLStructureOnCloseCheck.Name = "verifyAggregateXMLStructureOnCloseCheck";
-            this.verifyAggregateXMLStructureOnCloseCheck.Size = new System.Drawing.Size(71, 16);
+            this.verifyAggregateXMLStructureOnCloseCheck.Size = new System.Drawing.Size(71, 17);
             this.verifyAggregateXMLStructureOnCloseCheck.TabIndex = 11;
             this.verifyAggregateXMLStructureOnCloseCheck.Text = "Pri zápise";
             this.verifyAggregateXMLStructureOnCloseCheck.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 3;
+            this.tableLayoutPanel7.ColumnCount = 4;
+            this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel7, 2);
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel7.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.VerifyLogHashCheck, 0, 1);
-            this.tableLayoutPanel7.Controls.Add(this.verboseLogCheckBox, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.verifyLogXMLStructureCheck, 1, 1);
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(24, 175);
+            this.tableLayoutPanel7.Controls.Add(this.verboseLogCheckBox, 3, 1);
+            this.tableLayoutPanel7.Controls.Add(this.preventduplicatesCheckBox, 2, 1);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(24, 182);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(442, 39);
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(513, 46);
             this.tableLayoutPanel7.TabIndex = 15;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.tableLayoutPanel7.SetColumnSpan(this.label1, 2);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(2, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(151, 13);
+            this.label1.Size = new System.Drawing.Size(183, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Nastavenie spracovania logov";
+            this.label1.Text = "Nastavenie spracovania logov:";
             // 
             // VerifyLogHashCheck
             // 
             this.VerifyLogHashCheck.AutoSize = true;
             this.VerifyLogHashCheck.Checked = true;
             this.VerifyLogHashCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.VerifyLogHashCheck.Location = new System.Drawing.Point(2, 21);
-            this.VerifyLogHashCheck.Margin = new System.Windows.Forms.Padding(2);
+            this.VerifyLogHashCheck.Location = new System.Drawing.Point(10, 27);
+            this.VerifyLogHashCheck.Margin = new System.Windows.Forms.Padding(10, 2, 2, 2);
             this.VerifyLogHashCheck.Name = "VerifyLogHashCheck";
-            this.VerifyLogHashCheck.Size = new System.Drawing.Size(101, 16);
+            this.VerifyLogHashCheck.Size = new System.Drawing.Size(101, 17);
             this.VerifyLogHashCheck.TabIndex = 8;
             this.VerifyLogHashCheck.Text = "Verifikácia hash";
             this.VerifyLogHashCheck.UseVisualStyleBackColor = true;
-            // 
-            // verboseLogCheckBox
-            // 
-            this.verboseLogCheckBox.AutoSize = true;
-            this.verboseLogCheckBox.Location = new System.Drawing.Point(310, 21);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.verboseLogCheckBox.Name = "verboseLogCheckBox";
-            this.verboseLogCheckBox.Size = new System.Drawing.Size(65, 16);
-            this.verboseLogCheckBox.TabIndex = 10;
-            this.verboseLogCheckBox.Text = "Verbose";
-            this.verboseLogCheckBox.UseVisualStyleBackColor = true;
             // 
             // verifyLogXMLStructureCheck
             // 
             this.verifyLogXMLStructureCheck.AutoSize = true;
             this.verifyLogXMLStructureCheck.Checked = true;
             this.verifyLogXMLStructureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verifyLogXMLStructureCheck.Location = new System.Drawing.Point(134, 21);
+            this.verifyLogXMLStructureCheck.Location = new System.Drawing.Point(130, 27);
             this.verifyLogXMLStructureCheck.Margin = new System.Windows.Forms.Padding(2);
             this.verifyLogXMLStructureCheck.Name = "verifyLogXMLStructureCheck";
-            this.verifyLogXMLStructureCheck.Size = new System.Drawing.Size(143, 16);
+            this.verifyLogXMLStructureCheck.Size = new System.Drawing.Size(143, 17);
             this.verifyLogXMLStructureCheck.TabIndex = 11;
             this.verifyLogXMLStructureCheck.Text = "Verifikácia XML štruktúry";
             this.verifyLogXMLStructureCheck.UseVisualStyleBackColor = true;
+            // 
+            // verboseLogCheckBox
+            // 
+            this.verboseLogCheckBox.AutoSize = true;
+            this.verboseLogCheckBox.Location = new System.Drawing.Point(411, 27);
+            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.verboseLogCheckBox.Name = "verboseLogCheckBox";
+            this.verboseLogCheckBox.Size = new System.Drawing.Size(65, 17);
+            this.verboseLogCheckBox.TabIndex = 10;
+            this.verboseLogCheckBox.Text = "Verbose";
+            this.verboseLogCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // preventduplicatesCheckBox
+            // 
+            this.preventduplicatesCheckBox.AutoSize = true;
+            this.preventduplicatesCheckBox.Location = new System.Drawing.Point(283, 27);
+            this.preventduplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.preventduplicatesCheckBox.Name = "preventduplicatesCheckBox";
+            this.preventduplicatesCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.preventduplicatesCheckBox.TabIndex = 17;
+            this.preventduplicatesCheckBox.Text = "Prevencia duplicity";
+            this.preventduplicatesCheckBox.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel8
             // 
@@ -424,28 +441,29 @@ namespace ProcessLogs
             this.tableLayoutPanel8.Controls.Add(this.minimumRecordSizeNumeric, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.minimumRecordSizeCheckBox, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.maximumRecordSizeCheckBox, 2, 1);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(25, 219);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(25, 233);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(440, 37);
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(440, 44);
             this.tableLayoutPanel8.TabIndex = 16;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.tableLayoutPanel8.SetColumnSpan(this.label2, 2);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.Location = new System.Drawing.Point(2, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(173, 13);
+            this.label2.Size = new System.Drawing.Size(208, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Nastavenie spracovania záznamov";
+            this.label2.Text = "Nastavenie spracovania záznamov:";
             // 
             // maximumRecordSizeNumeric
             // 
-            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(340, 17);
+            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(340, 25);
             this.maximumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -462,7 +480,7 @@ namespace ProcessLogs
             // 
             // minimumRecordSizeNumeric
             // 
-            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(121, 17);
+            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(121, 25);
             this.minimumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -485,9 +503,10 @@ namespace ProcessLogs
             this.minimumRecordSizeCheckBox.AutoSize = true;
             this.minimumRecordSizeCheckBox.Checked = true;
             this.minimumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(3, 17);
+            this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(10, 24);
+            this.minimumRecordSizeCheckBox.Margin = new System.Windows.Forms.Padding(10, 2, 2, 2);
             this.minimumRecordSizeCheckBox.Name = "minimumRecordSizeCheckBox";
-            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(112, 17);
+            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(106, 18);
             this.minimumRecordSizeCheckBox.TabIndex = 13;
             this.minimumRecordSizeCheckBox.Text = "Minimálna dĺžka";
             this.minimumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -501,9 +520,9 @@ namespace ProcessLogs
             this.maximumRecordSizeCheckBox.AutoSize = true;
             this.maximumRecordSizeCheckBox.Checked = true;
             this.maximumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(222, 17);
+            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(222, 25);
             this.maximumRecordSizeCheckBox.Name = "maximumRecordSizeCheckBox";
-            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(112, 17);
+            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(112, 16);
             this.maximumRecordSizeCheckBox.TabIndex = 14;
             this.maximumRecordSizeCheckBox.Text = "Maximálna dĺžka";
             this.maximumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -569,6 +588,7 @@ namespace ProcessLogs
         private System.Windows.Forms.NumericUpDown minimumRecordSizeNumeric;
         private System.Windows.Forms.CheckBox minimumRecordSizeCheckBox;
         private System.Windows.Forms.CheckBox maximumRecordSizeCheckBox;
+        private System.Windows.Forms.CheckBox preventduplicatesCheckBox;
     }
 }
 
