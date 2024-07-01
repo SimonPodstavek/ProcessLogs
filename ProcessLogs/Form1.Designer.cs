@@ -79,7 +79,7 @@ namespace ProcessLogs
             this.VerifyLogHashCheck = new System.Windows.Forms.CheckBox();
             this.verifyLogXMLStructureCheck = new System.Windows.Forms.CheckBox();
             this.verboseLogCheckBox = new System.Windows.Forms.CheckBox();
-            this.preventduplicatesCheckBox = new System.Windows.Forms.CheckBox();
+            this.preventDuplicatesCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.maximumRecordSizeNumeric = new System.Windows.Forms.NumericUpDown();
@@ -359,7 +359,7 @@ namespace ProcessLogs
             this.tableLayoutPanel7.Controls.Add(this.VerifyLogHashCheck, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.verifyLogXMLStructureCheck, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.verboseLogCheckBox, 3, 1);
-            this.tableLayoutPanel7.Controls.Add(this.preventduplicatesCheckBox, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.preventDuplicatesCheckBox, 2, 1);
             this.tableLayoutPanel7.Location = new System.Drawing.Point(24, 182);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -418,16 +418,16 @@ namespace ProcessLogs
             this.verboseLogCheckBox.Text = "Verbose";
             this.verboseLogCheckBox.UseVisualStyleBackColor = true;
             // 
-            // preventduplicatesCheckBox
+            // preventDuplicatesCheckBox
             // 
-            this.preventduplicatesCheckBox.AutoSize = true;
-            this.preventduplicatesCheckBox.Location = new System.Drawing.Point(283, 27);
-            this.preventduplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.preventduplicatesCheckBox.Name = "preventduplicatesCheckBox";
-            this.preventduplicatesCheckBox.Size = new System.Drawing.Size(115, 17);
-            this.preventduplicatesCheckBox.TabIndex = 17;
-            this.preventduplicatesCheckBox.Text = "Prevencia duplicity";
-            this.preventduplicatesCheckBox.UseVisualStyleBackColor = true;
+            this.preventDuplicatesCheckBox.AutoSize = true;
+            this.preventDuplicatesCheckBox.Location = new System.Drawing.Point(283, 27);
+            this.preventDuplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.preventDuplicatesCheckBox.Name = "preventDuplicatesCheckBox";
+            this.preventDuplicatesCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.preventDuplicatesCheckBox.TabIndex = 17;
+            this.preventDuplicatesCheckBox.Text = "Prevencia duplicity";
+            this.preventDuplicatesCheckBox.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel8
             // 
@@ -588,7 +588,7 @@ namespace ProcessLogs
         private System.Windows.Forms.NumericUpDown minimumRecordSizeNumeric;
         private System.Windows.Forms.CheckBox minimumRecordSizeCheckBox;
         private System.Windows.Forms.CheckBox maximumRecordSizeCheckBox;
-        private System.Windows.Forms.CheckBox preventduplicatesCheckBox;
+        private System.Windows.Forms.CheckBox preventDuplicatesCheckBox;
     }
 }
 
