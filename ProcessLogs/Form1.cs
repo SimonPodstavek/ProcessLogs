@@ -57,9 +57,9 @@ namespace ProcessLogs
             dialog.Filter = "XML files (*.xml)|*.xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Configuration.originalfilePathXML = dialog.FileName;
-                Configuration.originalfilePathXML = Configuration.originalfilePathXML.Trim();
-                filePathXMLTextBox.Text = Configuration.originalfilePathXML;
+                Configuration.AggregateFile.filePath = dialog.FileName;
+                Configuration.AggregateFile.filePath = Configuration.AggregateFile.filePath.Trim();
+                filePathXMLTextBox.Text = Configuration.AggregateFile.filePath;
             }
 
         }
@@ -111,7 +111,7 @@ namespace ProcessLogs
             Configuration.addedLength = 0;
 
             //Update global path variables to match the user's choice
-            Configuration.originalfilePathXML = filePathXMLTextBox.Text;
+            Configuration.AggregateFile.filePath = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             //Settings
                 //Should the report be verbose
@@ -138,7 +138,7 @@ namespace ProcessLogs
                 return;
             }
 
-            if (Configuration.originalfilePathXML == String.Empty)
+            if (Configuration.AggregateFile.filePath == String.Empty)
             {
                 MessageBox.Show("Chyba 106: Zadajte prosím cestu k agregátnemu XML súboru.", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -152,7 +152,7 @@ namespace ProcessLogs
             if (Configuration.Settings.verifyAggregateXMLStructureOnLoad)
             {
                 //HasCorrectXMLStructure returns false if the structure is not valid
-                if (!StructureVerification.XMLValidator.ValidateXMLStructure(Configuration.originalfilePathXML, "Agregátny Log súbor nemá správnu XML štruktúru.", checkAggregateFileStructure:true))
+                if (!StructureVerification.XMLValidator.ValidateXMLStructure(Configuration.AggregateFile.filePath, "Agregátny Log súbor nemá správnu XML štruktúru.", checkAggregateFileStructure:true))
                 {
                     return;
                 }
@@ -166,8 +166,8 @@ namespace ProcessLogs
             //Get Paths for log files from root directory
             Iterator.GetPathsFromRoot(Configuration.rootDirectory);
             Program.LogEvent(delimeter);
-            Program.LogEvent("Nájdených všetkých dokumentov: " + Configuration.CountAndRemoveAllPaths());
-            Program.LogEvent("Nájdených dokumentov typu .log: " + Configuration.CountLogPaths());
+            Program.LogEvent("Nájdených všetkých súborov: " + Configuration.CountAndRemoveAllPaths());
+            Program.LogEvent("Nájdených dokumentov typu .log na spracovanie: " + Configuration.CountLogPaths());
             Program.LogEvent(delimeter);
 
 
@@ -177,7 +177,7 @@ namespace ProcessLogs
             //Notify user if the root directory doesn't contain any logs
             if (Configuration.LogPaths.Count() == 0)
             {
-                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne súbory. Ukončujem spracovanie.");
+                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne platné súbory. Ukončujem spracovanie.");
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace ProcessLogs
             int processedRecords = 0;
 
             //Initiate file stream to write to the aggregate file
-            using (FileStream fileStream = new FileStream(Configuration.duplicatefilePathXML, FileMode.Append, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(Configuration.AggregateFile.duplicatefilePathXML, FileMode.Append, FileAccess.Write))
             {
 
                 //Generate log object for every log path and add it to globalLogs IEnumerable.

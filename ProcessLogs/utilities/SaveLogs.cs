@@ -19,7 +19,7 @@ namespace ProcessLogs.utilities
 
         internal static void RemoveDuplicateAggregateFile()
         {
-            string duplicateFilePathXML = Configuration.duplicatefilePathXML;
+            string duplicateFilePathXML = Configuration.AggregateFile.duplicatefilePathXML;
 
             if (duplicateFilePathXML == String.Empty)
             {
@@ -41,7 +41,7 @@ namespace ProcessLogs.utilities
 
         internal static void DupplicateAggregateFile()
         {
-            string originalFile = Configuration.originalfilePathXML;
+            string originalFile = Configuration.AggregateFile.filePath;
             string originalDirectory = Path.GetDirectoryName(originalFile);
             string originalFileWithoutExt = Path.GetFileName(originalFile);
             int len = originalFileWithoutExt.Length -4 ;
@@ -53,11 +53,11 @@ namespace ProcessLogs.utilities
 
             Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
 
-            Configuration.XMLDirectoryPath = Path.GetDirectoryName(Configuration.originalfilePathXML);
+            Configuration.XMLDirectoryPath = Path.GetDirectoryName(Configuration.AggregateFile.filePath);
 
 
             // Create a FileStream to read the source file
-            using (FileStream sourceStream = new FileStream(Configuration.originalfilePathXML, FileMode.Open, FileAccess.Read))
+            using (FileStream sourceStream = new FileStream(Configuration.AggregateFile.filePath, FileMode.Open, FileAccess.Read))
             {
                 // Create a FileStream to write to the destination file
                 using (FileStream destinationStream = new FileStream(duplicateFile, FileMode.Create, FileAccess.Write))
@@ -73,7 +73,7 @@ namespace ProcessLogs.utilities
             if (originalFileSize == duplicateFileSize)
             {
                 Program.LogEvent("Vytváranie dočasného agregátného súboru: úspech");
-                Configuration.duplicatefilePathXML = duplicateFile;
+                Configuration.AggregateFile.duplicatefilePathXML = duplicateFile;
             }
             else
             {
@@ -89,7 +89,7 @@ namespace ProcessLogs.utilities
         {
 
             //Shorten the length of an aggregate XML file by the length of the closing sequence
-            string filePath = Configuration.duplicatefilePathXML;
+            string filePath = Configuration.AggregateFile.duplicatefilePathXML;
             int aggregateXMLClosingSequenceLength = Configuration.ByteSequences.aggregateXMLClosingSequence.Length;
 
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
@@ -103,7 +103,7 @@ namespace ProcessLogs.utilities
 
         internal static void AppendLogToDuplicateAggregateFile(LogClass logObject, FileStream fileStream)
         {
-            string filePath = Configuration.duplicatefilePathXML;
+            string filePath = Configuration.AggregateFile.duplicatefilePathXML;
             foreach((int recordIndex, LogClass.record logRecord) in logObject.logRecords.Enumerate())
             {
                 //Copy only XML path excluding the XML definition (<?xml version="1.0" encoding="UTF-8"?>)
@@ -128,7 +128,7 @@ namespace ProcessLogs.utilities
         //Append closing sequence to aggregate file without having to load it into memory
         internal static void AppendClosingSequence()
         {
-            string filePath = Configuration.duplicatefilePathXML;
+            string filePath = Configuration.AggregateFile.duplicatefilePathXML;
             int aggregateXMLClosingSequenceLength = Configuration.ByteSequences.aggregateXMLClosingSequence.Length;
 
             using (var fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write))
@@ -143,10 +143,10 @@ namespace ProcessLogs.utilities
 
            
             
-            string originalFile = Configuration.originalfilePathXML;
+            string originalFile = Configuration.AggregateFile.filePath;
             long originalFileLength = new FileInfo(originalFile).Length;
 
-            string duplicateFile = Configuration.duplicatefilePathXML;
+            string duplicateFile = Configuration.AggregateFile.duplicatefilePathXML;
             long duplicateFileLength = new FileInfo(duplicateFile).Length;
             long expectedLength = originalFileLength + Configuration.addedLength;
 

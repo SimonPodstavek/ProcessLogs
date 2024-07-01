@@ -160,7 +160,7 @@ namespace ProcessLogs.utilities
         //    // Create settings for minifying (no formatting)
         //    XmlWriterSettings settings = new XmlWriterSettings();
         //    settings.Indent = false; // No indentation
-        //    settings.NewLineChars = string.Empty; // No new lines
+        //    settings.NewLineChars = String.Empty; // No new lines
         //    settings.NewLineHandling = NewLineHandling.None; // No new line handling
 
         //    StringWriter stringWriter = new StringWriter();

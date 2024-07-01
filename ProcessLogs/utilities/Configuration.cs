@@ -15,21 +15,49 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
+        //Path of an aggregate XML file
+
+
+        internal static class AggregateFile
+        {
+            internal static string filePath = String.Empty;
+            internal static string duplicatefilePathXML = String.Empty;
+        }
+
+        internal static HashSet<string> existingHashes = new HashSet<string>();
+
+
+
+        internal static string XMLDirectoryPath = String.Empty;
+        //Path to a directory with LeafDirectories cotaining logs
+        internal static string rootDirectory = String.Empty;
+        internal static IEnumerable<string> LogPaths;
+        internal static IEnumerable<string> AllPaths;
+        internal static volatile bool IsRunning = false;
+
+        //Total length of appended XML contnet
+        internal static long addedLength = 0;
+
+
+
         internal static List<LogClass> globalLogs;
 
         internal static class Settings
         {
             internal static bool isVerbose = false;
-            internal static bool verifyHash = true;
-            internal static bool verifyLogXMLStructure = true;
+            internal static bool verifyHash = false;
+            internal static bool verifyLogXMLStructure = false;
             internal static bool verifyAggregateXMLStructureOnLoad = false;
-            internal static bool verifyAggregateXMLStructureOnClose = true;
+            internal static bool verifyAggregateXMLStructureOnClose = false;
 
             internal static int minimumRecordSize = 0;
             internal static int maximumRecordSize = 0;
 
             internal static bool verifyMinimumRecordSize = false;
             internal static bool verifyMaximumRecordSize = false;
+
+            internal static bool preventHashDuplicity = false;
+
         }
 
         internal static class ByteSequences
@@ -97,19 +125,6 @@ namespace ProcessLogs.utilities
             return LogPaths.Count();
         }
 
-        //Path of an aggregate XML file
-        internal static string originalfilePathXML = string.Empty;
-        internal static string duplicatefilePathXML = string.Empty;
-
-        internal static string XMLDirectoryPath = string.Empty;
-        //Path to a directory with LeafDirectories cotaining logs
-        internal static string rootDirectory = string.Empty;
-        internal static IEnumerable<string> LogPaths;
-        internal static IEnumerable<string> AllPaths;
-        internal static volatile bool IsRunning = false;
-
-        //Total length of appended XML contnet
-        internal static long addedLength = 0;
 
     }
 
