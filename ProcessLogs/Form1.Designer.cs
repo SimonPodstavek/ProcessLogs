@@ -471,7 +471,7 @@ namespace ProcessLogs
             this.minimumRecordSizeNumeric.Size = new System.Drawing.Size(60, 20);
             this.minimumRecordSizeNumeric.TabIndex = 11;
             this.minimumRecordSizeNumeric.Value = new decimal(new int[] {
-            800,
+            850,
             0,
             0,
             0});
