@@ -109,8 +109,13 @@ namespace ProcessLogs.logs
                     throw new Exception($"Chyba 108: Pri čítaní hash integrity XML súboru { logObject.filePath } sa vyskytla chyba.");
                 }
 
-                //Convert hash(hex) from byte to UTF-8 string.
+                //Convert hash(hex) from byte to UTF-8 string
                 hashString = Encoding.UTF8.GetString(byteXMLHashes[0]);
+
+                //Remove whitespace characters from hash for the purposes of comparison against logs in aggregate file and the XML content itself
+                hashString = hashString.Replace(Encoding.UTF8.GetString(Configuration.ByteSequences.whiteSpace), String.Empty);
+
+                //Strip the pure hash content cleared of <Hash> element
                 hashString = hashString.Substring(6, 40);
 
                 //Split string and turn it into hash.

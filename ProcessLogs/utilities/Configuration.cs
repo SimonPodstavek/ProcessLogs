@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Schema;
 namespace ProcessLogs.utilities
 {
@@ -33,6 +34,10 @@ namespace ProcessLogs.utilities
 
         internal static class ByteSequences
         {
+
+            //Whitespace identifier
+            internal static byte[] whiteSpace = { 0x20 };
+
             //Sequences utilized to identify offset and end of XML byte stream
             internal static byte[] logXMLOpeningSequence = Encoding.UTF8.GetBytes("<LogEntry>");
             internal static byte[] logXMLClosingSequence = Encoding.UTF8.GetBytes("</LogEntry>");
