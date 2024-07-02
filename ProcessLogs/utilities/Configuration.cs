@@ -10,29 +10,29 @@ using System.Xml;
 using System.Xml.Schema;
 namespace ProcessLogs.utilities
 {
-    //Singleton process class is used to store globally required variables.
+    //Configuration class is used to store globally required variables.
     //It also provides data from logging and statistics
     internal static class Configuration
     {
 
 
 
+        internal static InstanceDependent instanceDependent;
 
-        internal static HashSet<string> registeredHashes = new HashSet<string>();
+        //Data dependent on instance (on repeated processing run)
+        public class InstanceDependent
+        {
+            internal HashSet<string> registeredHashes = new HashSet<string>();
 
-        internal static List<LogClass> globalLogs;
+            internal List<LogClass> globalLogs;
 
+            //Total length of appended XML contnet for the purposes of verifying whether a correct amount of bytes has been written to an aggregate file
+            internal long addedLength = 0;
 
-        //Total length of appended XML contnet for the purposes of verifying whether a correct amount of bytes has been written to an aggregate file
-        internal static long addedLength = 0;
+            internal IEnumerable<string> LogPaths;
+            internal IEnumerable<string> AllPaths;
 
-
-        //Path to a directory with LeafDirectories cotaining logs
-        internal static string rootDirectory = String.Empty;
-        internal static IEnumerable<string> LogPaths;
-        internal static IEnumerable<string> AllPaths;
-        internal static volatile bool IsRunning = false;
-
+        }
 
         //Paths to the aggregate XML file
         internal static class AggregateFile
@@ -41,9 +41,13 @@ namespace ProcessLogs.utilities
             internal static string duplicatefilePathXML = String.Empty;
         }
 
-       
 
 
+        //Path to a directory with LeafDirectories cotaining logs
+        internal static string rootDirectory = String.Empty;
+
+        //Reflects the state of user's selection.
+        internal static volatile bool isRunning = false;
 
 
         internal static class Settings
@@ -99,10 +103,11 @@ namespace ProcessLogs.utilities
         }
 
 
+        //Make more efficient
         internal static int CountAndRemoveAllPaths()
         {
-            int count = AllPaths.Count();
-            AllPaths = Enumerable.Empty<string>();
+            int count = instanceDependent.AllPaths.Count();
+            instanceDependent.AllPaths = Enumerable.Empty<string>();
             return count;
         }
 
@@ -115,18 +120,18 @@ namespace ProcessLogs.utilities
 
         private static void NewMethod()
         {
-            IsRunning = false;
+            isRunning = false;
         }
 
         internal static void stopProcess(Button initiateButton)
         {
-            IsRunning = true;
+            isRunning = true;
             initiateButton.Text = "Zastaviť";
         }
 
         internal static int CountLogPaths()
         {
-            return LogPaths.Count();
+            return instanceDependent.LogPaths.Count();
         }
 
 

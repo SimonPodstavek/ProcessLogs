@@ -287,13 +287,13 @@ namespace ProcessLogs.logs
 
             foreach ((int index, record logRecord) in logRecords.Enumerate())
             {
-                string recordHash = Encoding.UTF8.GetString(logRecord.computedHash);
-                if (Configuration.registeredHashes.Contains(recordHash));
+                string recordHash = LogHandler.HexByteToString(logRecord.XMLHash);
+                if (Configuration.instanceDependent.registeredHashes.Contains(recordHash))
                 {
                     removeIndexes.Add(index);
                     Program.LogEvent($"Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose:true);
                 }
-                Configuration.registeredHashes.Add(recordHash);
+                Configuration.instanceDependent.registeredHashes.Add(recordHash);
             }
 
             //If there are any records with broken XML structure to be removed, remove them

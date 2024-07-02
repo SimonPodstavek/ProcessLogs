@@ -120,7 +120,7 @@ namespace ProcessLogs.utilities
             try
             {
                 
-                return BitConverter.ToString(hex).Replace("-", " ").ToUpper();
+                return BitConverter.ToString(hex).Replace("-", "").ToUpper();
                 
             }
             catch (Exception ex)

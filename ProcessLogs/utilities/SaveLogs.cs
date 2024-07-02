@@ -49,6 +49,8 @@ namespace ProcessLogs.utilities
             string originalFileName = originalFileWithoutExt.Substring(0, len);
             string duplicateFile = originalDirectory + "\\" + originalFileName + ".tmp";
 
+
+
             AccessControlUtils.VerifyFileReadPermission(originalFile);
 
             Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
@@ -115,7 +117,7 @@ namespace ProcessLogs.utilities
                 Array.Copy(logRecord.byteXMLSequence,XMLDefinitionLength, savedSequence,0 ,SavedByteXMLSequenceLength);
 
                 //Save the shortened array
-                Configuration.addedLength += SavedByteXMLSequenceLength;  
+                Configuration.instanceDependent.addedLength += SavedByteXMLSequenceLength;  
                 fileStream.Write(savedSequence, 0, SavedByteXMLSequenceLength);
             }
 
@@ -146,7 +148,7 @@ namespace ProcessLogs.utilities
 
             string duplicateFile = Configuration.AggregateFile.duplicatefilePathXML;
             long duplicateFileLength = new FileInfo(duplicateFile).Length;
-            long expectedLength = originalFileLength + Configuration.addedLength;
+            long expectedLength = originalFileLength + Configuration.instanceDependent.addedLength;
 
             //Verify that all bytes have been written to the duplicate file 
             if(expectedLength == duplicateFileLength)
@@ -161,7 +163,7 @@ namespace ProcessLogs.utilities
 
 
 
-            //Verify the structure of duplicate (appended) aggregate XML file before rewriting the original (optional)
+            //Verify the structure of duplicate aggregate XML file before rewriting the original (optional)
             if (Configuration.Settings.verifyAggregateXMLStructureOnClose)
             {
                 //HasCorrectXMLStructure returns false if the structure is not valid
@@ -176,8 +178,16 @@ namespace ProcessLogs.utilities
 
 
 
+            //Before deleting the file, make sure that the file is not opened and is movable
+            string duplicateFileSecondPath = duplicateFile + "a";
+
+            File.Move(duplicateFile, duplicateFileSecondPath);
+
+            //if there is not an error moving duplicate file to second location, proceed with removing the original file 
             File.Delete(originalFile);
-            File.Move(duplicateFile, originalFile);
+
+            File.Move(duplicateFileSecondPath, originalFile);
+
             Program.LogEvent("Súbory boli spracované a zmeny v agregátnom súbore uložené.");
 
             return;

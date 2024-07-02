@@ -44,27 +44,25 @@ namespace ProcessLogs.utilities
 
 
         // Check if the user has access to the file
-        internal static bool VerifyFileReadPermission(string filepath)
+        internal static void VerifyFileReadPermission(string filepath)
         {
             try
             {
-
                 //Open a file and read a first character to verify read permissions.
                 FileStream fileStream = File.OpenRead(filepath);
                 int firstChar = fileStream.ReadByte();
-                return true;
             }
             catch (UnauthorizedAccessException)
             {
-                throw new Exception("Chyba 101: Pre súbor nemáte dostatočné povolenia, súbor bude preskočený.");
+                throw new Exception($"Chyba 101: Pre súbor {filepath} nemáte dostatočné povolenia.");
             }
             catch (FileNotFoundException)
             {
-                throw new Exception("Chyba 102: Súbor neexistuje.");
+                throw new Exception($"Chyba 102: Súbor {filepath} neexistuje.");
             }
             catch (Exception err)
             {
-                throw new Exception("Chyba: Pri overení prístupu k súboru sa vyskytla neočakávaná chyba: " + err);
+                throw new Exception($"Chyba: Pri overení prístupu k súboru {filepath} sa vyskytla neočakávaná chyba: " + err);
             }
 
         }
@@ -173,8 +171,8 @@ namespace ProcessLogs.utilities
             //Read permission not granted for root directory
             if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
             {
-                Configuration.LogPaths = Enumerable.Empty<string>();
-                Configuration.AllPaths = Enumerable.Empty<string>();
+                Configuration.instanceDependent.LogPaths = Enumerable.Empty<string>();
+                Configuration.instanceDependent.AllPaths = Enumerable.Empty<string>();
                 return;
             }
 
@@ -185,13 +183,13 @@ namespace ProcessLogs.utilities
 
             if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(LeafDirectories))
             {
-                Configuration.LogPaths = Enumerable.Empty<string>();
-                Configuration.AllPaths = Enumerable.Empty<string>();
+                Configuration.instanceDependent.LogPaths = Enumerable.Empty<string>();
+                Configuration.instanceDependent.AllPaths = Enumerable.Empty<string>();
                 return;
             }
 
-            Configuration.LogPaths = GetLogPathsFromRootDirectory(Configuration.rootDirectory);
-            Configuration.AllPaths = GetAllFilesFromRootDirectory(Configuration.rootDirectory);
+            Configuration.instanceDependent.LogPaths = GetLogPathsFromRootDirectory(Configuration.rootDirectory);
+            Configuration.instanceDependent.AllPaths = GetAllFilesFromRootDirectory(Configuration.rootDirectory);
         }
 
     }

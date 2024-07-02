@@ -105,7 +105,7 @@ namespace ProcessLogs
             this.sourceDirectoryTextBox.Location = new System.Drawing.Point(2, 19);
             this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
-            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(438, 20);
+            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(250, 11);
             this.sourceDirectoryTextBox.TabIndex = 0;
             // 
             // sourceDirectoryLabel
@@ -193,6 +193,8 @@ namespace ProcessLogs
             // verifyAggregateXMLStructureOnLoadCheck
             // 
             this.verifyAggregateXMLStructureOnLoadCheck.AutoSize = true;
+            this.verifyAggregateXMLStructureOnLoadCheck.Checked = true;
+            this.verifyAggregateXMLStructureOnLoadCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verifyAggregateXMLStructureOnLoadCheck.Location = new System.Drawing.Point(10, 27);
             this.verifyAggregateXMLStructureOnLoadCheck.Margin = new System.Windows.Forms.Padding(10, 2, 2, 2);
             this.verifyAggregateXMLStructureOnLoadCheck.Name = "verifyAggregateXMLStructureOnLoadCheck";
@@ -410,6 +412,8 @@ namespace ProcessLogs
             // verboseLogCheckBox
             // 
             this.verboseLogCheckBox.AutoSize = true;
+            this.verboseLogCheckBox.Checked = true;
+            this.verboseLogCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verboseLogCheckBox.Location = new System.Drawing.Point(411, 27);
             this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.verboseLogCheckBox.Name = "verboseLogCheckBox";
@@ -421,6 +425,8 @@ namespace ProcessLogs
             // preventDuplicatesCheckBox
             // 
             this.preventDuplicatesCheckBox.AutoSize = true;
+            this.preventDuplicatesCheckBox.Checked = true;
+            this.preventDuplicatesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.preventDuplicatesCheckBox.Location = new System.Drawing.Point(283, 27);
             this.preventDuplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.preventDuplicatesCheckBox.Name = "preventDuplicatesCheckBox";

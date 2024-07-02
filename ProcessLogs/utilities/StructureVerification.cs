@@ -72,7 +72,7 @@ namespace ProcessLogs.utilities
                                 string recordHash = xmlReader.ReadElementContentAsString();
                                 recordHash = LogClass.FormatHash(recordHash);
 
-                                //Configuration.registeredHashes.Add(recordHash);
+                                Configuration.instanceDependent.registeredHashes.Add(recordHash);
                             }
 
 
@@ -100,8 +100,9 @@ namespace ProcessLogs.utilities
                 {
                     AccessControlUtils.VerifyFileReadPermission(logXMLPath);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Program.LogEvent(ex.Message);
                     return false;
                     throw;
                 }
@@ -111,16 +112,6 @@ namespace ProcessLogs.utilities
                 
                 //ValidateXMLStructure structure
                 bool response = ValidationMediator(byteXMLContent, errorMessage, checkAggregateFileStructure);
-                
-                
-                //Give the user the file path in case the structure is invalid
-                if (!response)
-                {
-                    Program.LogEvent($"Cesta súboru: {logXMLPath}");
-                }
-
-                Array.Clear(byteXMLContent, 0, byteXMLContent.Length);
-                byteXMLContent = null;
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();

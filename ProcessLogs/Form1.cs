@@ -17,6 +17,7 @@ using System.Xml;
 using ProcessLogs.structures;
 using System.Web.UI.Design.WebControls;
 using System.IO.Pipes;
+using static ProcessLogs.utilities.Configuration;
 
 
 
@@ -69,7 +70,7 @@ namespace ProcessLogs
 
 
 
-            if (Configuration.IsRunning == true)
+            if (Configuration.isRunning == true)
             {
                 Configuration.iniProcess(initiateButton);
             }
@@ -80,7 +81,7 @@ namespace ProcessLogs
 
             try
             {    
-                if( Configuration.IsRunning == true )
+                if( Configuration.isRunning == true )
                 {
                     await Task.Run(() => ProcessLogs());
                 }
@@ -94,7 +95,7 @@ namespace ProcessLogs
                 Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");
                 Program.LogEvent(delimeter);
-                Configuration.IsRunning = false;
+                Configuration.isRunning = false;
                 initiateButton.Text = "Spracovať";
 
             }
@@ -108,7 +109,7 @@ namespace ProcessLogs
         private void ProcessLogs()
         {
 
-            Configuration.addedLength = 0;
+            Configuration.instanceDependent = new InstanceDependent();
 
             //Update global path variables to match the user's choice
             Configuration.AggregateFile.filePath = filePathXMLTextBox.Text;
@@ -182,7 +183,7 @@ namespace ProcessLogs
 
 
             //Notify user if the root directory doesn't contain any logs
-            if (Configuration.LogPaths.Count() == 0)
+            if (Configuration.instanceDependent.LogPaths.Count() == 0)
             {
                 Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne platné súbory. Ukončujem spracovanie.");
                 return;
@@ -204,7 +205,7 @@ namespace ProcessLogs
             SaveLogs.truncateAggregateXML();
 
             //Get file name for each log 
-            Configuration.globalLogs = Configuration.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
+            Configuration.instanceDependent.globalLogs = Configuration.instanceDependent.LogPaths.Select(path => new LogClass(filePath: path, fileName: Path.GetFileName(path))).ToList();
 
             //Store information about total nmber of processed records
             int processedRecords = 0;
@@ -214,7 +215,7 @@ namespace ProcessLogs
             {
 
                 //Generate log object for every log path and add it to globalLogs IEnumerable.
-                for (int index = 0; index < Configuration.globalLogs.Count(); index++)
+                for (int index = 0; index < Configuration.instanceDependent.globalLogs.Count(); index++)
                 {
 
                     //Inform the user about every 5th processed log, if the verbose setting is on
@@ -226,11 +227,11 @@ namespace ProcessLogs
 
 
                     //If the log processing failed, output the reason into status box.
-                    LogClass logObject = Configuration.globalLogs[index];
+                    LogClass logObject = Configuration.instanceDependent.globalLogs[index];
 
                     try
                     {
-                        if (!Configuration.IsRunning)
+                        if (!Configuration.isRunning)
                         {
                             return;
                         }
@@ -249,7 +250,7 @@ namespace ProcessLogs
                     }
                     finally
                     {
-                        Configuration.globalLogs[index] = null;
+                        Configuration.instanceDependent.globalLogs[index] = null;
                     }
 
                 }
@@ -259,7 +260,7 @@ namespace ProcessLogs
 
 
             //Inform the user about the total number of processed logs and records.
-            Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} súborov ({processedRecords} záznamov)", onlyVerbose: false);
+            Program.LogEvent($"Spracovaných bolo  {Configuration.instanceDependent.globalLogs.Count()} súborov ({processedRecords} záznamov)", onlyVerbose: false);
             Program.LogEvent(delimeter, onlyVerbose: false);
 
 
@@ -276,7 +277,7 @@ namespace ProcessLogs
             }
             finally
             {
-                Configuration.IsRunning = false;
+                Configuration.isRunning = false;
             }
 
 
