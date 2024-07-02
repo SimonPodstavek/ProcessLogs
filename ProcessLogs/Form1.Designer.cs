@@ -186,7 +186,7 @@ namespace ProcessLogs
             this.statusBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
-            this.statusBox.Size = new System.Drawing.Size(513, 303);
+            this.statusBox.Size = new System.Drawing.Size(513, 251);
             this.statusBox.TabIndex = 7;
             this.statusBox.Text = "";
             // 

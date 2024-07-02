@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -265,21 +266,30 @@ namespace ProcessLogs.logs
             int maxSize = Configuration.Settings.maximumRecordSize;
 
 
-            foreach ((int index, record logRecord) in logRecords.Enumerate())
+
+
+            try
             {
-                int recordLen = logRecord.byteXMLSequence.Length;
-
-                if (checkMin && recordLen < minSize)
+                foreach ((int index, record logRecord) in logRecords.Enumerate())
                 {
-                    throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
-                }
+                    int recordLen = logRecord.byteXMLSequence.Length;
 
-                if (checkMax && recordLen > maxSize)
-                {
-                    throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
-                }
+                    if (checkMin && recordLen < minSize)
+                    {
+                        throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                    }
 
+                    if (checkMax && recordLen > maxSize)
+                    {
+                        throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
+                    }
+                }
+            }catch(Exception ex)
+            {
+                Program.LogEvent(ex.Message);
+                logObject.XMLSequences = null;
             }
+
 
 
         }

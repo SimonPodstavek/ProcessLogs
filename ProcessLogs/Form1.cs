@@ -251,13 +251,12 @@ namespace ProcessLogs
                         Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
                         Program.LogEvent("NIE JE MOŽNÉ POKRAČOVAŤ - ZÁZNAMY NEBUDÚ ULOŽENÉ");
                         Program.LogEvent($"Popis: {ex}");
-
+                        fileStream.Close();
                         return;
                     }
                     finally
                     {
 
-                        fileStream.Close();
 
                         Configuration.instanceDependent.globalLogs[index] = null;
                     }
