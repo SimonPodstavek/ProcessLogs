@@ -224,7 +224,7 @@ namespace ProcessLogs.utilities
             //Allow the user to bypass the error and skip the file.
             if (logObject.XMLSequences.Count() == 0)
             {
-                DialogResult continueProcessing = MessageBox.Show("Chyba 103: Log" + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť záznam a pokračovať v spracovaní?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult continueProcessing = MessageBox.Show("Chyba 103: Log " + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť súbor a pokračovať v spracovaní?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (continueProcessing == DialogResult.No)
                 {
                     throw new Exception("Chyba 103: Log neobsahuje XML sekcie.");

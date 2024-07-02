@@ -287,7 +287,8 @@ namespace ProcessLogs.logs
             }catch(Exception ex)
             {
                 Program.LogEvent(ex.Message);
-                logObject.XMLSequences = null;
+                Program.LogEvent($"Záznamy súboru {logObject.filePath} nebudú uložené ");
+                logObject.logRecords = new record[0];
             }
 
 
