@@ -65,6 +65,8 @@ namespace ProcessLogs
 
         }
 
+
+
         private async void initiateButton_Click(object sender, EventArgs e)
         {
 
@@ -72,11 +74,12 @@ namespace ProcessLogs
 
             if (Configuration.isRunning == true)
             {
-                Configuration.iniProcess(initiateButton);
+                Configuration.stopProcess(initiateButton);
+                return;
             }
             else
             {
-                Configuration.stopProcess(initiateButton);
+                Configuration.iniProcess(initiateButton);
             }
 
             try
@@ -92,10 +95,9 @@ namespace ProcessLogs
             }
             finally
             {
-                if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML))
-                {
-                    SaveLogs.RemoveDuplicateAggregateFile();
-                }
+
+                SaveLogs.RemoveDuplicateAggregateFile();
+
 
                 Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");

@@ -114,19 +114,14 @@ namespace ProcessLogs.utilities
 
         internal static void iniProcess(Button initiateButton)
         {
-            NewMethod();
-            initiateButton.Text = "Spracovať";
-        }
-
-        private static void NewMethod()
-        {
-            isRunning = false;
+            isRunning = true;
+            initiateButton.Text = "Zastaviť";
         }
 
         internal static void stopProcess(Button initiateButton)
         {
-            isRunning = true;
-            initiateButton.Text = "Zastaviť";
+            isRunning = false;
+            initiateButton.Text = "Spracovať";
         }
 
         internal static int CountLogPaths()

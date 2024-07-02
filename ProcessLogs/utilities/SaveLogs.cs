@@ -157,10 +157,6 @@ namespace ProcessLogs.utilities
             }
             else
             {
-                if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML))
-                {
-                    RemoveDuplicateAggregateFile();
-                }
                 throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
             }
 
@@ -172,10 +168,6 @@ namespace ProcessLogs.utilities
                 //HasCorrectXMLStructure returns false if the structure is not valid
                 if (!StructureVerification.XMLValidator.ValidateXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!", checkAggregateFileStructure: true))
                 {
-                    if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML))
-                    {
-                        RemoveDuplicateAggregateFile();
-                    }
                     return;
                 }
                 Program.LogEvent("Štruktúra agregátneho XML po zápise logov je platná.");
@@ -193,8 +185,6 @@ namespace ProcessLogs.utilities
             catch (Exception)
             {
                 File.Delete(duplicateFileSecondPath);
-
-                RemoveDuplicateAggregateFile();
 
                 throw;
             }

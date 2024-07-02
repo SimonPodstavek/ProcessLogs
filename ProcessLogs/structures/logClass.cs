@@ -175,7 +175,9 @@ namespace ProcessLogs.logs
                 //Throw an error if there are multiple data elements in the same record
                 if (dataBytesSequence.Length != 1)
                 {
-                    throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    removeIndexes.Add(index);
+                    continue;
                 }
 
                 //Select the only available byte sequence
@@ -219,7 +221,9 @@ namespace ProcessLogs.logs
                 //Return an error if there are multiple sequences of the same file 
                 if (dataBytesSequence.Length != 1)
                 {
-                    throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    removeIndexes.Add(index);
+                    continue;
                 }
 
                 //Verify structure, if it is valid go to the following record
