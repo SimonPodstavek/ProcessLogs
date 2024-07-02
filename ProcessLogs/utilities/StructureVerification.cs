@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProcessLogs.logs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
@@ -65,6 +66,17 @@ namespace ProcessLogs.utilities
                             {
                                 lastElementName = xmlReader.Name;
                             }
+
+                            if(xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Hash")
+                            {
+                                string recordHash = xmlReader.ReadElementContentAsString();
+                                recordHash = LogClass.FormatHash(recordHash);
+
+                                //Configuration.registeredHashes.Add(recordHash);
+                            }
+
+
+                            
                         }
 
                         // Check if the last element is <AGGREGATEXML> if verifying aggregate file

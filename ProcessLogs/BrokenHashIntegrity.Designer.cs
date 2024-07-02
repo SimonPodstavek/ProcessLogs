@@ -72,19 +72,19 @@
             // XMLHashTextBox
             // 
             this.XMLHashTextBox.Location = new System.Drawing.Point(2, 27);
-            this.XMLHashTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.XMLHashTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.XMLHashTextBox.Name = "XMLHashTextBox";
             this.XMLHashTextBox.ReadOnly = true;
-            this.XMLHashTextBox.Size = new System.Drawing.Size(303, 20);
+            this.XMLHashTextBox.Size = new System.Drawing.Size(446, 20);
             this.XMLHashTextBox.TabIndex = 2;
             // 
             // computedHashTextBox
             // 
             this.computedHashTextBox.Location = new System.Drawing.Point(2, 27);
-            this.computedHashTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.computedHashTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.computedHashTextBox.Name = "computedHashTextBox";
             this.computedHashTextBox.ReadOnly = true;
-            this.computedHashTextBox.Size = new System.Drawing.Size(303, 20);
+            this.computedHashTextBox.Size = new System.Drawing.Size(446, 20);
             this.computedHashTextBox.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -99,9 +99,9 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22, 22, 22, 22);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
@@ -122,7 +122,7 @@
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.XMLHashTextBox, 0, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(24, 106);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -140,7 +140,7 @@
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.computedHashTextBox, 0, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(24, 52);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -172,7 +172,7 @@
             this.tableLayoutPanel5.Controls.Add(this.XMLRecordContent, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(24, 160);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
@@ -186,7 +186,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.XMLRecordContent.Location = new System.Drawing.Point(2, 24);
-            this.XMLRecordContent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.XMLRecordContent.Margin = new System.Windows.Forms.Padding(2);
             this.XMLRecordContent.Name = "XMLRecordContent";
             this.XMLRecordContent.ReadOnly = true;
             this.XMLRecordContent.Size = new System.Drawing.Size(872, 333);
@@ -214,7 +214,7 @@
             this.tableLayoutPanel4.Controls.Add(this.keepButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.skipButton, 1, 0);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(24, 523);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -224,7 +224,7 @@
             // keepButton
             // 
             this.keepButton.Location = new System.Drawing.Point(2, 2);
-            this.keepButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.keepButton.Margin = new System.Windows.Forms.Padding(2);
             this.keepButton.Name = "keepButton";
             this.keepButton.Size = new System.Drawing.Size(54, 20);
             this.keepButton.TabIndex = 0;
@@ -235,7 +235,7 @@
             // skipButton
             // 
             this.skipButton.Location = new System.Drawing.Point(62, 2);
-            this.skipButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.skipButton.Margin = new System.Windows.Forms.Padding(2);
             this.skipButton.Name = "skipButton";
             this.skipButton.Size = new System.Drawing.Size(63, 20);
             this.skipButton.TabIndex = 1;
@@ -249,7 +249,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 575);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(940, 614);
             this.Name = "BrokenHashIntegrity";
             this.Text = "Porušená integrita záznamu";

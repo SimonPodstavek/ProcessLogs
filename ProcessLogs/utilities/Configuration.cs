@@ -15,32 +15,36 @@ namespace ProcessLogs.utilities
     internal static class Configuration
     {
 
-        //Path of an aggregate XML file
-
-
-        internal static class AggregateFile
-        {
-            internal static string filePath = String.Empty;
-            internal static string duplicatefilePathXML = String.Empty;
-        }
-
-        internal static HashSet<string> existingHashes = new HashSet<string>();
 
 
 
-        internal static string XMLDirectoryPath = String.Empty;
+        internal static HashSet<string> registeredHashes = new HashSet<string>();
+
+        internal static List<LogClass> globalLogs;
+
+
+        //Total length of appended XML contnet for the purposes of verifying whether a correct amount of bytes has been written to an aggregate file
+        internal static long addedLength = 0;
+
+
         //Path to a directory with LeafDirectories cotaining logs
         internal static string rootDirectory = String.Empty;
         internal static IEnumerable<string> LogPaths;
         internal static IEnumerable<string> AllPaths;
         internal static volatile bool IsRunning = false;
 
-        //Total length of appended XML contnet
-        internal static long addedLength = 0;
+
+        //Paths to the aggregate XML file
+        internal static class AggregateFile
+        {
+            internal static string filePath = String.Empty;
+            internal static string duplicatefilePathXML = String.Empty;
+        }
+
+       
 
 
 
-        internal static List<LogClass> globalLogs;
 
         internal static class Settings
         {

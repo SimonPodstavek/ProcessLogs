@@ -114,19 +114,26 @@ namespace ProcessLogs
             Configuration.AggregateFile.filePath = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
             //Settings
+
                 //Should the report be verbose
                 Configuration.Settings.isVerbose = verboseLogCheckBox.Checked;
+
                 //Aggregate file verification settings
                 Configuration.Settings.verifyAggregateXMLStructureOnLoad = verifyAggregateXMLStructureOnLoadCheck.Checked;
                 Configuration.Settings.verifyAggregateXMLStructureOnClose = verifyAggregateXMLStructureOnCloseCheck.Checked;
+            
                 //Record verification settings
                 Configuration.Settings.verifyHash = VerifyLogHashCheck.Checked;
                 Configuration.Settings.verifyLogXMLStructure = verifyLogXMLStructureCheck.Checked;
+                
                 //Check record sizes
                 Configuration.Settings.minimumRecordSize = (int) minimumRecordSizeNumeric.Value;
                 Configuration.Settings.maximumRecordSize= (int) maximumRecordSizeNumeric.Value;
                 Configuration.Settings.verifyMinimumRecordSize = minimumRecordSizeCheckBox.Checked;
                 Configuration.Settings.verifyMaximumRecordSize = maximumRecordSizeCheckBox.Checked;
+                
+                // Check duplicity in newly processed records
+                Configuration.Settings.preventHashDuplicity = preventDuplicatesCheckBox.Checked;
 
 
 
@@ -252,7 +259,6 @@ namespace ProcessLogs
 
 
             //Inform the user about the total number of processed logs and records.
-
             Program.LogEvent($"Spracovaných bolo  {Configuration.globalLogs.Count()} súborov ({processedRecords} záznamov)", onlyVerbose: false);
             Program.LogEvent(delimeter, onlyVerbose: false);
 

@@ -63,29 +63,39 @@ namespace ProcessLogs.logs
             int lookupLen = lookupElement.Length;
             int originalLen = originalBytes.Length;
 
-            
+
 
             int insertBytePosition = LogHandler.FindSequence(0, originalBytes, lookupElement) + lookupLen;
 
 
-            if (insertBytePosition == -1) {
+            if (insertBytePosition == -1)
+            {
                 throw new XMLElementNotFound($"Chyba 112: XML element {Encoding.UTF8.GetString(lookupElement)} neexistuje.");
             }
 
 
-            byte [] resultBytes = new byte[originalLen + additionLen];
+            byte[] resultBytes = new byte[originalLen + additionLen];
 
             Array.Copy(originalBytes, resultBytes, originalLen);
 
             string xyz = Encoding.UTF8.GetString(resultBytes);
 
             Array.Copy(additionElement, 0, resultBytes, insertBytePosition, additionLen);
-             xyz = Encoding.UTF8.GetString(resultBytes);
-            Array.Copy(originalBytes, insertBytePosition, resultBytes, insertBytePosition + additionLen, originalLen - insertBytePosition);           
-             xyz = Encoding.UTF8.GetString(resultBytes);
-            
+            xyz = Encoding.UTF8.GetString(resultBytes);
+            Array.Copy(originalBytes, insertBytePosition, resultBytes, insertBytePosition + additionLen, originalLen - insertBytePosition);
+            xyz = Encoding.UTF8.GetString(resultBytes);
+
 
             return resultBytes;
+        }
+
+
+        /// <summary>
+        /// This module removes whitespaces from hash string
+        /// </summary>
+        internal static string FormatHash(string hashString)
+        {
+            return hashString.Replace(Encoding.UTF8.GetString(Configuration.ByteSequences.whiteSpace), String.Empty);
         }
 
         //This method locates Hash sequence in each record by sequences defined in Configuration.ByteSequences
@@ -106,14 +116,14 @@ namespace ProcessLogs.logs
 
                 if (byteXMLHashes.Length != 1)
                 {
-                    throw new Exception($"Chyba 108: Pri čítaní hash integrity XML súboru { logObject.filePath } sa vyskytla chyba.");
+                    throw new Exception($"Chyba 108: Pri čítaní hash integrity XML súboru {logObject.filePath} sa vyskytla chyba.");
                 }
 
                 //Convert hash(hex) from byte to UTF-8 string
                 hashString = Encoding.UTF8.GetString(byteXMLHashes[0]);
 
                 //Remove whitespace characters from hash for the purposes of comparison against logs in aggregate file and the XML content itself
-                hashString = hashString.Replace(Encoding.UTF8.GetString(Configuration.ByteSequences.whiteSpace), String.Empty);
+                hashString = FormatHash(hashString);
 
                 //Strip the pure hash content cleared of <Hash> element
                 hashString = hashString.Substring(6, 40);
@@ -122,9 +132,10 @@ namespace ProcessLogs.logs
                 try
                 {
                     logRecord.XMLHash = LogHandler.HexStringToByteArray(hashString);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    throw new Exception($"Chyba 110: Konverzia hash z reťazca na byte zlyhala. pri zázname č. { index + 1 }.", ex);
+                    throw new Exception($"Chyba 110: Konverzia hash z reťazca na byte zlyhala. pri zázname č. {index + 1}.", ex);
                 }
             }
 
@@ -136,10 +147,10 @@ namespace ProcessLogs.logs
         {
             int len = originalArray.Length - removeList.Count();
             record[] res = new record[len];
-            int pos =0;   
-            foreach((int index, record item) in originalArray.Enumerate())
+            int pos = 0;
+            foreach ((int index, record item) in originalArray.Enumerate())
             {
-                if (!removeList.Contains(index)) 
+                if (!removeList.Contains(index))
                 {
                     res[pos] = item;
                     pos += 1;
@@ -150,9 +161,9 @@ namespace ProcessLogs.logs
         }
 
 
-        //This method verifies whether the sequences in a log file has a right hash
+        //This method verifies whether the sequences in a log file has a right hash 
         internal static void VerifyRecordsIntegrity(LogClass logObject)
-        {   
+        {
             record[] logRecords = logObject.logRecords;
             HashSet<int> removeIndexes = new HashSet<int>();
 
@@ -161,11 +172,10 @@ namespace ProcessLogs.logs
 
                 byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
 
-
-                //Throw an error if there are multiple sequences of the same file 
+                //Throw an error if there are multiple data elements in the same record
                 if (dataBytesSequence.Length != 1)
                 {
-                    throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. { index + 1 } sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    throw new Exception($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
                 }
 
                 //Select the only available byte sequence
@@ -181,14 +191,14 @@ namespace ProcessLogs.logs
                         removeIndexes.Add(index);
                         continue;
                     }
-                    Program.LogEvent($"Záznam č. { index + 1 }. súboru { logObject.filePath } s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
+                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
                 }
             }
-            
+
             //If there are any records to be removed, remove them
-            if(removeIndexes.Count() != 0)
+            if (removeIndexes.Count() != 0)
             {
-                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes); 
+                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
             }
             return;
         }
@@ -213,13 +223,13 @@ namespace ProcessLogs.logs
                 }
 
                 //Verify structure, if it is valid go to the following record
-                bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index +1} je poškodená");
+                bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index + 1} je poškodená");
 
                 if (isValid)
                 {
                     continue;
                 }
-                    
+
                 //if the structure is not valid, ask the user to validate
                 bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
                 if (!keepRecord)
@@ -251,16 +261,16 @@ namespace ProcessLogs.logs
             int maxSize = Configuration.Settings.maximumRecordSize;
 
 
-            foreach ((int index, record logRecord)in logRecords.Enumerate())
+            foreach ((int index, record logRecord) in logRecords.Enumerate())
             {
                 int recordLen = logRecord.byteXMLSequence.Length;
 
                 if (checkMin && recordLen < minSize)
                 {
-                    throw new Exception($"Záznam č. {index +1 } súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                    throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
                 }
 
-                if(checkMax && recordLen > maxSize)
+                if (checkMax && recordLen > maxSize)
                 {
                     throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
                 }
@@ -268,8 +278,33 @@ namespace ProcessLogs.logs
             }
 
 
-    }
+        }
+
+        internal static void VerifyXMLRecordUniqueness(LogClass logObject)
+        {
+            record[] logRecords = logObject.logRecords;
+            HashSet<int> removeIndexes = new HashSet<int>();
+
+            foreach ((int index, record logRecord) in logRecords.Enumerate())
+            {
+                string recordHash = Encoding.UTF8.GetString(logRecord.computedHash);
+                if (Configuration.registeredHashes.Contains(recordHash));
+                {
+                    removeIndexes.Add(index);
+                    Program.LogEvent($"Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose:true);
+                }
+                Configuration.registeredHashes.Add(recordHash);
+            }
+
+            //If there are any records with broken XML structure to be removed, remove them
+            if (removeIndexes.Count() != 0)
+            {
+                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
+            }
+
+        }
 
 
     }
+
 }

@@ -53,8 +53,6 @@ namespace ProcessLogs.utilities
 
             Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
 
-            Configuration.XMLDirectoryPath = Path.GetDirectoryName(Configuration.AggregateFile.filePath);
-
 
             // Create a FileStream to read the source file
             using (FileStream sourceStream = new FileStream(Configuration.AggregateFile.filePath, FileMode.Open, FileAccess.Read))

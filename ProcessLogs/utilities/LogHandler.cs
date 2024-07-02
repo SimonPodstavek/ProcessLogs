@@ -119,7 +119,9 @@ namespace ProcessLogs.utilities
         {
             try
             {
-                return BitConverter.ToString(hex).Replace("-", "").ToUpper();
+                
+                return BitConverter.ToString(hex).Replace("-", " ").ToUpper();
+                
             }
             catch (Exception ex)
             {
@@ -270,6 +272,12 @@ namespace ProcessLogs.utilities
             if(Configuration.Settings.verifyMinimumRecordSize || Configuration.Settings.verifyMaximumRecordSize)
             {
                 LogClass.VerifyXMLRecordsSizing(logObject);
+            }
+
+
+            if(Configuration.Settings.preventHashDuplicity)
+            {
+                LogClass.VerifyXMLRecordUniqueness(logObject);
             }
 
 
