@@ -205,7 +205,6 @@ namespace ProcessLogs.utilities
                 return;
 
 
-
             //Get byte content of a log
             try
             {
@@ -259,11 +258,12 @@ namespace ProcessLogs.utilities
                 LogClass.VerifyXMLRecordsStructure(logObject);
             }
 
+            //Get contents of <Hash> tag for every record
+            LogClass.FindXMLHash(logObject);
+
             //Verify hash in each of the records (optional)
             if (Configuration.Settings.verifyHash)
             {
-                //Get contents of <Hash> tag for every record
-                LogClass.FindXMLHash(logObject);
                 //Verify hash located in logs with computed SHA1 hash for every record
                 LogClass.VerifyRecordsIntegrity(logObject);
             }
@@ -283,7 +283,7 @@ namespace ProcessLogs.utilities
 
 
             //Append all XML contents ot the aggregate file
-                try
+            try
             {
                 SaveLogs.AppendLogToDuplicateAggregateFile(logObject, fileStream);
             }

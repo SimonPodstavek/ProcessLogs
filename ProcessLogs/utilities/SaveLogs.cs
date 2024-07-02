@@ -21,7 +21,7 @@ namespace ProcessLogs.utilities
         {
             string duplicateFilePathXML = Configuration.AggregateFile.duplicatefilePathXML;
 
-            if (duplicateFilePathXML == String.Empty)
+            if (duplicateFilePathXML == String.Empty || !(File.Exists(duplicateFilePathXML)))
             {
                 Program.LogEvent("Duplikát agregátneho súboru neexistuje, nebol odstránený.", onlyVerbose:true);
                 return;
@@ -157,7 +157,10 @@ namespace ProcessLogs.utilities
             }
             else
             {
-                RemoveDuplicateAggregateFile();
+                if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML))
+                {
+                    RemoveDuplicateAggregateFile();
+                }
                 throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
             }
 
@@ -169,7 +172,10 @@ namespace ProcessLogs.utilities
                 //HasCorrectXMLStructure returns false if the structure is not valid
                 if (!StructureVerification.XMLValidator.ValidateXMLStructure(duplicateFile, "Štruktúra agregátneho XML po zápise logov je poškodená, spracované logy sa nezapíšu!", checkAggregateFileStructure: true))
                 {
-                    RemoveDuplicateAggregateFile();
+                    if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML))
+                    {
+                        RemoveDuplicateAggregateFile();
+                    }
                     return;
                 }
                 Program.LogEvent("Štruktúra agregátneho XML po zápise logov je platná.");
@@ -180,8 +186,18 @@ namespace ProcessLogs.utilities
 
             //Before deleting the file, make sure that the file is not opened and is movable
             string duplicateFileSecondPath = duplicateFile + "a";
+            try
+            {
+                File.Move(duplicateFile, duplicateFileSecondPath);
+            }
+            catch (Exception)
+            {
+                File.Delete(duplicateFileSecondPath);
 
-            File.Move(duplicateFile, duplicateFileSecondPath);
+                RemoveDuplicateAggregateFile();
+
+                throw;
+            }
 
             //if there is not an error moving duplicate file to second location, proceed with removing the original file 
             File.Delete(originalFile);

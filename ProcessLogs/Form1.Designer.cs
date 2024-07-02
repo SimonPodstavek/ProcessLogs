@@ -105,7 +105,7 @@ namespace ProcessLogs
             this.sourceDirectoryTextBox.Location = new System.Drawing.Point(2, 19);
             this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
-            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(250, 11);
+            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(438, 20);
             this.sourceDirectoryTextBox.TabIndex = 0;
             // 
             // sourceDirectoryLabel
