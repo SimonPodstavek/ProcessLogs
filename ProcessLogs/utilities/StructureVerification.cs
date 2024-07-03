@@ -96,15 +96,9 @@ namespace ProcessLogs.utilities
             internal static bool ValidateXMLStructure(string logXMLPath, string errorMessage = "Štruktúra XML súboru nie je platná", bool checkAggregateFileStructure = false)
             {
                 //Verify that the user has read permission for the file
-                try
+                if (!AccessControlUtils.VerifyFileReadPermission(logXMLPath))
                 {
-                    AccessControlUtils.VerifyFileReadPermission(logXMLPath);
-                }
-                catch (Exception ex)
-                {
-                    Program.LogEvent(ex.Message);
                     return false;
-                    throw;
                 }
 
                 //Read bytes and load them into memory

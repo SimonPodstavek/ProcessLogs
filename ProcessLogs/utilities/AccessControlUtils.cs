@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 
 namespace ProcessLogs.utilities
@@ -30,39 +31,46 @@ namespace ProcessLogs.utilities
             }
             catch(UnauthorizedAccessException)
             {
-                throw new Exception("Chyba 101: Pre adresár " + dirPath + " nemáte dostatočné povolenia.");
+                Program.LogEvent("Chyba 101: Pre adresár " + dirPath + " nemáte dostatočné povolenia.");
+                return false;
             }
             catch(DirectoryNotFoundException)
             {
-                throw new Exception("Chyba 100: Adresár " + dirPath + " neexistuje.");
+                Program.LogEvent("Chyba 100: Adresár " + dirPath + " neexistuje.");
+                return false;
             }
             catch(Exception err)
             {
-                throw new Exception("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba " + err + " .");
+                Program.LogEvent("Chyba: Pri overení prístupu k adresáru " + dirPath + " sa vyskytla neočakávaná chyba " + err + " .");
+                return false;
             }
         }
 
 
         // Check if the user has access to the file
-        internal static void VerifyFileReadPermission(string filepath)
+        internal static bool VerifyFileReadPermission(string filepath)
         {
             try
             {
                 //Open a file and read a first character to verify read permissions.
                 FileStream fileStream = File.OpenRead(filepath);
                 int firstChar = fileStream.ReadByte();
+                return true;
             }
             catch (UnauthorizedAccessException)
             {
-                throw new Exception($"Chyba 101: Pre súbor {filepath} nemáte dostatočné povolenia.");
+                Program.LogEvent($"Chyba 101: Pre súbor {filepath} nemáte dostatočné povolenia.");
+                return false;
             }
             catch (FileNotFoundException)
             {
-                throw new Exception($"Chyba 102: Súbor {filepath} neexistuje.");
+                Program.LogEvent($"Chyba 102: Súbor {filepath} neexistuje.");
+                return false;
             }
             catch (Exception err)
             {
-                throw new Exception($"Chyba: Pri overení prístupu k súboru {filepath} sa vyskytla neočakávaná chyba: " + err);
+                Program.LogEvent($"Chyba: Pri overení prístupu k súboru {filepath} sa vyskytla neočakávaná chyba: " + err);
+                return false;
             }
 
         }

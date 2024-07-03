@@ -39,49 +39,58 @@ namespace ProcessLogs.utilities
             }
         }
 
-        internal static void DupplicateAggregateFile()
+        internal static bool DupplicateAggregateFile()
         {
-            string originalFile = Configuration.AggregateFile.filePath;
-            string originalDirectory = Path.GetDirectoryName(originalFile);
-            string originalFileWithoutExt = Path.GetFileName(originalFile);
-            int len = originalFileWithoutExt.Length -4 ;
-
-            string originalFileName = originalFileWithoutExt.Substring(0, len);
-            string duplicateFile = originalDirectory + "\\" + originalFileName + ".tmp";
-
-
-
-            AccessControlUtils.VerifyFileReadPermission(originalFile);
-
-            Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
-
-
-            // Create a FileStream to read the source file
-            using (FileStream sourceStream = new FileStream(Configuration.AggregateFile.filePath, FileMode.Open, FileAccess.Read))
+            try
             {
-                // Create a FileStream to write to the destination file
-                using (FileStream destinationStream = new FileStream(duplicateFile, FileMode.Create, FileAccess.Write))
+                string originalFile = Configuration.AggregateFile.filePath;
+                string originalDirectory = Path.GetDirectoryName(originalFile);
+                string originalFileWithoutExt = Path.GetFileName(originalFile);
+                int len = originalFileWithoutExt.Length - 4;
+
+                string originalFileName = originalFileWithoutExt.Substring(0, len);
+                string duplicateFile = originalDirectory + "\\" + originalFileName + ".tmp";
+
+
+                if (!AccessControlUtils.VerifyFileReadPermission(originalFile))
                 {
-                    // Copy the contents of the source file to the destination file
-                    sourceStream.CopyTo(destinationStream);
+                    return false;
                 }
-            }
 
-            long originalFileSize = new FileInfo(originalFile).Length;
-            long duplicateFileSize = new FileInfo(duplicateFile).Length;
+                Program.LogEvent("Vytváranie dočasného agregátného súboru", onlyVerbose: true);
 
-            if (originalFileSize == duplicateFileSize)
-            {
+
+                // Create a FileStream to read the source file
+                using (FileStream sourceStream = new FileStream(Configuration.AggregateFile.filePath, FileMode.Open, FileAccess.Read))
+                {
+                    // Create a FileStream to write to the destination file
+                    using (FileStream destinationStream = new FileStream(duplicateFile, FileMode.Create, FileAccess.Write))
+                    {
+                        // Copy the contents of the source file to the destination file
+                        sourceStream.CopyTo(destinationStream);
+                    }
+                }
+
+                long originalFileSize = new FileInfo(originalFile).Length;
+                long duplicateFileSize = new FileInfo(duplicateFile).Length;
+
+                if (originalFileSize != duplicateFileSize)
+                {
+                    throw new Exception("Chyba 113: Zdrojový a dočasný agregátny súbor nemajú rovnakú veľkosť.");
+                }
+
                 Program.LogEvent("Vytváranie dočasného agregátného súboru: úspech");
                 Configuration.AggregateFile.duplicatefilePathXML = duplicateFile;
+                return true;
+
+
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("Chyba 113: Zdrojový a dočasný agregátny súbor nemajú rovnakú veľkosť.");
+                Program.LogEvent($"Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
+                return false;
             }
 
-
-            return;
 
         }
 

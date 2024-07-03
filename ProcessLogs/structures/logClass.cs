@@ -360,7 +360,7 @@ namespace ProcessLogs.logs
                 string recordHash = LogHandler.HexByteToString(logRecord.XMLHash);
                 if (Configuration.instanceDependent.registeredHashes.Contains(recordHash))
                 {
-                    Program.LogEvent($"Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose: true);
+                    Program.LogEvent($"Chyba Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose: true);
                     return index;
                 }
                 Configuration.instanceDependent.registeredHashes.Add(recordHash);
@@ -414,9 +414,6 @@ namespace ProcessLogs.logs
                 }
             }
 
-
-
-        }
 
 
     }
