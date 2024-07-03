@@ -103,7 +103,7 @@ namespace ProcessLogs
             this.sourceDirectoryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sourceDirectoryTextBox.Location = new System.Drawing.Point(2, 19);
-            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
             this.sourceDirectoryTextBox.Size = new System.Drawing.Size(438, 20);
             this.sourceDirectoryTextBox.TabIndex = 0;
@@ -133,7 +133,7 @@ namespace ProcessLogs
             this.filePathXMLTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathXMLTextBox.Location = new System.Drawing.Point(2, 19);
-            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.filePathXMLTextBox.Name = "filePathXMLTextBox";
             this.filePathXMLTextBox.Size = new System.Drawing.Size(438, 20);
             this.filePathXMLTextBox.TabIndex = 2;
@@ -142,7 +142,7 @@ namespace ProcessLogs
             // 
             this.sourceDirectoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sourceDirectoryButton.Location = new System.Drawing.Point(11, 19);
-            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(2);
             this.sourceDirectoryButton.Name = "sourceDirectoryButton";
             this.sourceDirectoryButton.Size = new System.Drawing.Size(54, 20);
             this.sourceDirectoryButton.TabIndex = 4;
@@ -154,7 +154,7 @@ namespace ProcessLogs
             // 
             this.filePathXMLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathXMLButton.Location = new System.Drawing.Point(11, 19);
-            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(2);
             this.filePathXMLButton.Name = "filePathXMLButton";
             this.filePathXMLButton.Size = new System.Drawing.Size(54, 20);
             this.filePathXMLButton.TabIndex = 5;
@@ -183,7 +183,7 @@ namespace ProcessLogs
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
             this.statusBox.HideSelection = false;
             this.statusBox.Location = new System.Drawing.Point(24, 309);
-            this.statusBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.statusBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
             this.statusBox.Size = new System.Drawing.Size(513, 251);
@@ -210,7 +210,7 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.initiateButton, 2);
             this.initiateButton.Location = new System.Drawing.Point(24, 282);
-            this.initiateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.initiateButton.Margin = new System.Windows.Forms.Padding(2);
             this.initiateButton.Name = "initiateButton";
             this.initiateButton.Size = new System.Drawing.Size(513, 23);
             this.initiateButton.TabIndex = 9;
@@ -234,9 +234,9 @@ namespace ProcessLogs
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22, 22, 22, 22);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(22);
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
@@ -257,7 +257,7 @@ namespace ProcessLogs
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.filePathXMLButton, 0, 1);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(470, 78);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -275,7 +275,7 @@ namespace ProcessLogs
             this.tableLayoutPanel3.Controls.Add(this.XMLDirectoryLabel, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.filePathXMLTextBox, 0, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(24, 78);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -293,7 +293,7 @@ namespace ProcessLogs
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryTextBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryLabel, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(24, 24);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -310,7 +310,7 @@ namespace ProcessLogs
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.sourceDirectoryButton, 0, 1);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(470, 24);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -328,7 +328,7 @@ namespace ProcessLogs
             this.tableLayoutPanel6.Controls.Add(this.verifyAggregateXMLStructureOnLoadCheck, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.verifyAggregateXMLStructureOnCloseCheck, 1, 1);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(24, 132);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
@@ -342,7 +342,7 @@ namespace ProcessLogs
             this.verifyAggregateXMLStructureOnCloseCheck.Checked = true;
             this.verifyAggregateXMLStructureOnCloseCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verifyAggregateXMLStructureOnCloseCheck.Location = new System.Drawing.Point(134, 27);
-            this.verifyAggregateXMLStructureOnCloseCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.verifyAggregateXMLStructureOnCloseCheck.Margin = new System.Windows.Forms.Padding(2);
             this.verifyAggregateXMLStructureOnCloseCheck.Name = "verifyAggregateXMLStructureOnCloseCheck";
             this.verifyAggregateXMLStructureOnCloseCheck.Size = new System.Drawing.Size(71, 17);
             this.verifyAggregateXMLStructureOnCloseCheck.TabIndex = 11;
@@ -363,7 +363,7 @@ namespace ProcessLogs
             this.tableLayoutPanel7.Controls.Add(this.verboseLogCheckBox, 3, 1);
             this.tableLayoutPanel7.Controls.Add(this.preventDuplicatesCheckBox, 2, 1);
             this.tableLayoutPanel7.Location = new System.Drawing.Point(24, 182);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
@@ -402,7 +402,7 @@ namespace ProcessLogs
             this.verifyLogXMLStructureCheck.Checked = true;
             this.verifyLogXMLStructureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verifyLogXMLStructureCheck.Location = new System.Drawing.Point(130, 27);
-            this.verifyLogXMLStructureCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.verifyLogXMLStructureCheck.Margin = new System.Windows.Forms.Padding(2);
             this.verifyLogXMLStructureCheck.Name = "verifyLogXMLStructureCheck";
             this.verifyLogXMLStructureCheck.Size = new System.Drawing.Size(143, 17);
             this.verifyLogXMLStructureCheck.TabIndex = 11;
@@ -415,7 +415,7 @@ namespace ProcessLogs
             this.verboseLogCheckBox.Checked = true;
             this.verboseLogCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verboseLogCheckBox.Location = new System.Drawing.Point(411, 27);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.verboseLogCheckBox.Name = "verboseLogCheckBox";
             this.verboseLogCheckBox.Size = new System.Drawing.Size(65, 17);
             this.verboseLogCheckBox.TabIndex = 10;
@@ -428,7 +428,7 @@ namespace ProcessLogs
             this.preventDuplicatesCheckBox.Checked = true;
             this.preventDuplicatesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.preventDuplicatesCheckBox.Location = new System.Drawing.Point(283, 27);
-            this.preventDuplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.preventDuplicatesCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.preventDuplicatesCheckBox.Name = "preventDuplicatesCheckBox";
             this.preventDuplicatesCheckBox.Size = new System.Drawing.Size(115, 17);
             this.preventDuplicatesCheckBox.TabIndex = 17;
@@ -540,7 +540,7 @@ namespace ProcessLogs
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 575);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(573, 576);
             this.Name = "Form1";
             this.Text = "Log parser";

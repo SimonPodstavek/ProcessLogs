@@ -1,9 +1,12 @@
-﻿using ProcessLogs.utilities;
+﻿using Microsoft.SqlServer.Server;
+using ProcessLogs.utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,16 +102,107 @@ namespace ProcessLogs.logs
             return hashString.Replace(Encoding.UTF8.GetString(Configuration.ByteSequences.whiteSpace), String.Empty);
         }
 
+
+        //This method removes records with IDs in removeList from an array
+        public static record[] StripRecordsFromArray(record[] originalArray, HashSet<int> removeList)
+        {
+            int len = originalArray.Length - removeList.Count();
+            record[] res = new record[len];
+            int pos = 0;
+            foreach ((int index, record item) in originalArray.Enumerate())
+            {
+                if (!removeList.Contains(index))
+                {
+                    res[pos] = item;
+                    pos += 1;
+                }
+            }
+            return res;
+
+        }
+
+
+
+
+        private interface IVerification
+        {
+            bool isActive();
+
+            bool onExceptionRemoveAll();
+
+            int? VerificationMethod(int index, record logRecord, LogClass logObject);
+        }
+
+
+
+
+        //This method verifies whether the records in a log file has a valid XML structure  (optional)
+        private class VerifyXMLRecordStructure : IVerification
+        {
+            public bool onExceptionRemoveAll()
+            {
+                return false;
+            }
+
+            public bool isActive()
+            {
+                return Configuration.Settings.verifyLogXMLStructure;
+            }
+
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
+            {
+                byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logRecordOpeningSequence, Configuration.ByteSequences.logXMLClosingSequence);
+
+                //Select the only available byte sequence
+                //Return an error if there are multiple sequences of the same file 
+                if (dataBytesSequence.Length != 1)
+                {
+                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
+                    return index;
+                }
+
+                //Verify structure, if it is valid go to the following record
+                bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index + 1} je poškodená");
+
+                if (isValid)
+                {
+                    return null;
+                }
+
+                //if the structure is not valid, ask the user to validate
+                bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
+                if (!keepRecord)
+                {
+                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov nebude uložený");
+                    return index;
+                }
+                Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov bude uložený.");
+                return null;
+
+            }
+
+        }
+
+
+
         //This method locates Hash sequence in each record by sequences defined in Configuration.ByteSequences
-        internal static void FindXMLHash(LogClass logObject)
+
+        private class FindXMLRecordHash : IVerification
         {
 
-
-            record[] logRecords = logObject.logRecords;
-
-            foreach ((int index, record logRecord) in logRecords.Enumerate())
+            public bool onExceptionRemoveAll()
             {
+                return true;
+            }
 
+            public bool isActive()
+            {
+                return true;
+            }
+
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
+            {
+            
                 string hashString;
                 byte[] byteXMLContent = logRecord.byteXMLSequence;
                 byte[][] byteXMLHashes = LogHandler.GetEnclosedSequences(byteXMLContent,
@@ -138,43 +232,26 @@ namespace ProcessLogs.logs
                 {
                     throw new Exception($"Chyba 110: Konverzia hash z reťazca na byte zlyhala. pri zázname č. {index + 1}.", ex);
                 }
+                return null;
             }
-
-            return;
         }
 
-        //This method removes records with IDs in removeList from an array
-        public static record[] RemoveRecordsFromLog(record[] originalArray, HashSet<int> removeList)
+
+        //This method verifies whether the records in a log file have a right hash  (optional)
+        private class VerifyRecordIntegrity: IVerification
         {
-            int len = originalArray.Length - removeList.Count();
-            record[] res = new record[len];
-            int pos = 0;
-            foreach ((int index, record item) in originalArray.Enumerate())
+
+            public bool onExceptionRemoveAll()
             {
-                if (!removeList.Contains(index))
-                {
-                    res[pos] = item;
-                    pos += 1;
-                }
+                return false;
             }
-            return res;
 
-        }
+            public bool isActive()
+            {
+                return Configuration.Settings.verifyHash;
+            }
 
-
-        public static record[] RemoveAllRecordsFromLog()
-        {
-            return new record[0];
-        }
-
-
-        //This method verifies whether the sequences in a log file has a right hash 
-        internal static void VerifyRecordsIntegrity(LogClass logObject)
-        {
-            record[] logRecords = logObject.logRecords;
-            HashSet<int> removeIndexes = new HashSet<int>();
-
-            foreach ((int index, record logRecord) in logRecords.Enumerate())
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
             {
 
                 byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logXMLDataOpeningSequence, Configuration.ByteSequences.logXMLDataClosingSequence);
@@ -182,9 +259,8 @@ namespace ProcessLogs.logs
                 //Throw an error if there are multiple data elements in the same record
                 if (dataBytesSequence.Length != 1)
                 {
-                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
-                    removeIndexes.Add(index);
-                    continue;
+                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");;
+                    return index;
                 }
 
                 //Select the only available byte sequence
@@ -197,131 +273,148 @@ namespace ProcessLogs.logs
                     if (!keepRecord)
                     {
                         Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou nebude uložený.");
-                        removeIndexes.Add(index);
-                        continue;
+                        return index;
                     }
                     Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou integritou {LogHandler.HexByteToString(logRecord.computedHash)} != {LogHandler.HexByteToString(logRecord.XMLHash)} bude uložený.");
                 }
+
+                return null;
             }
 
-            //If there are any records to be removed, remove them
-            if (removeIndexes.Count() != 0)
-            {
-                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
-            }
-            return;
         }
 
 
-        //This method verifies whether the sequences in a log file has a valid XML structure 
-        internal static void VerifyXMLRecordsStructure(LogClass logObject)
+        //This method verifies that the record in a log file has at least the minimum size defined by user (optional)
+
+        private class VerifyXMLRecordMinimum : IVerification
         {
-            record[] logRecords = logObject.logRecords;
-            HashSet<int> removeIndexes = new HashSet<int>();
-
-            foreach ((int index, record logRecord) in logRecords.Enumerate())
+            public bool onExceptionRemoveAll()
             {
-
-                byte[][] dataBytesSequence = LogHandler.GetEnclosedSequences(logRecord.byteXMLSequence, Configuration.ByteSequences.logRecordOpeningSequence, Configuration.ByteSequences.logXMLClosingSequence);
-
-                //Select the only available byte sequence
-                //Return an error if there are multiple sequences of the same file 
-                if (dataBytesSequence.Length != 1)
-                {
-                    Program.LogEvent($"Chyba 107: V súbore {logObject.fileName} v XML log-u č. {index + 1} sa nenachádza element <Data> alebo sa v ňom nachádza viac ako 1-krát.");
-                    removeIndexes.Add(index);
-                    continue;
-                }
-
-                //Verify structure, if it is valid go to the following record
-                bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index + 1} je poškodená");
-
-                if (isValid)
-                {
-                    continue;
-                }
-
-                //if the structure is not valid, ask the user to validate
-                bool keepRecord = LogHandler.BrokenXMLStructureResolve(logRecord, logObject);
-                if (!keepRecord)
-                {
-                    Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov nebude uložený");
-                    removeIndexes.Add(index);
-                    continue;
-                }
-                Program.LogEvent($"Záznam č. {index + 1}. súboru {logObject.filePath} s poškodenou XML štruktúrov bude uložený.");
-
+                return true;
             }
 
-            //If there are any records with broken XML structure to be removed, remove them
-            if (removeIndexes.Count() != 0)
+            public bool isActive()
             {
-                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
+                return Configuration.Settings.verifyMinimumRecordSize;
             }
 
-            return;
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
+            {
+                int minSize = Configuration.Settings.minimumRecordSize;
+                int recordLen = logRecord.byteXMLSequence.Length;
+
+                if (recordLen < minSize)
+                {
+                    Program.LogEvent($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                    return index;
+                }
+                return null;
+
+            }
         }
 
-        internal static void VerifyXMLRecordsSizing(LogClass logObject)
+
+        private class VerifyXMLRecordMaximum : IVerification
         {
-            record[] logRecords = logObject.logRecords;
-            bool checkMin = Configuration.Settings.verifyMinimumRecordSize;
-            bool checkMax = Configuration.Settings.verifyMaximumRecordSize;
-
-            int minSize = Configuration.Settings.minimumRecordSize;
-            int maxSize = Configuration.Settings.maximumRecordSize;
-
-
-
-
-            try
+            public bool onExceptionRemoveAll()
             {
-                foreach ((int index, record logRecord) in logRecords.Enumerate())
+                return true;
+            }
+
+            public bool isActive()
+            {
+                return Configuration.Settings.verifyMaximumRecordSize;
+            }
+
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
+            {
+                int maxSize = Configuration.Settings.maximumRecordSize;
+                int recordLen = logRecord.byteXMLSequence.Length;
+
+                if (recordLen > maxSize)
                 {
-                    int recordLen = logRecord.byteXMLSequence.Length;
-
-                    if (checkMin && recordLen < minSize)
-                    {
-                        throw new SizeInvalid($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
-                    }
-
-                    if (checkMax && recordLen > maxSize)
-                    {
-                        throw new SizeInvalid($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
-                    }
+                    Program.LogEvent($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
+                    return index;
                 }
-            }catch(SizeInvalid ex)
+                return null;
+
+            }
+        }
+
+
+        private class VerifyXMLRecordUniqueness : IVerification
+        {
+            public bool isActive()
             {
-                Program.LogEvent(ex.Message);
-                Program.LogEvent($"Záznamy súboru {logObject.filePath} nebudú uložené ");
-                logObject.logRecords = RemoveAllRecordsFromLog();
+                return Configuration.Settings.preventHashDuplicity;
+            }
+
+            public bool onExceptionRemoveAll()
+            {
+                return false;
             }
 
 
-
-        }
-
-        internal static void VerifyXMLRecordUniqueness(LogClass logObject)
-        {
-            record[] logRecords = logObject.logRecords;
-            HashSet<int> removeIndexes = new HashSet<int>();
-
-            foreach ((int index, record logRecord) in logRecords.Enumerate())
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
             {
                 string recordHash = LogHandler.HexByteToString(logRecord.XMLHash);
                 if (Configuration.instanceDependent.registeredHashes.Contains(recordHash))
                 {
-                    removeIndexes.Add(index);
-                    Program.LogEvent($"Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose:true);
+                    Program.LogEvent($"Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose: true);
+                    return index;
                 }
                 Configuration.instanceDependent.registeredHashes.Add(recordHash);
+                return null;
             }
 
-            //If there are any records with broken XML structure to be removed, remove them
-            if (removeIndexes.Count() != 0)
+        }
+
+
+
+        internal static void LogIterator(LogClass logObject)
+        {
+            record[] logRecords = logObject.logRecords;
+            HashSet<int> removeIndexes = new HashSet<int>();
+
+            //Define verifications
+            List<IVerification> verifications = new List<IVerification> 
+            { new FindXMLRecordHash(), new VerifyRecordIntegrity(), 
+              new VerifyXMLRecordStructure(), new VerifyXMLRecordMinimum(),
+              new VerifyXMLRecordMaximum(), new VerifyXMLRecordUniqueness() };
+
+            //Iterate over Verificators and run only those that are required
+            foreach (IVerification verification in verifications)
             {
-                logObject.logRecords = RemoveRecordsFromLog(logRecords, removeIndexes);
+                //Skip the iteration of a verificatior if it's not required
+                if (!(verification.isActive())) { continue; }
+
+                //Iterate over every record and make necessary checks
+                foreach ((int index, record logRecord) in logRecords.Enumerate())
+                {
+                    if(verification.VerificationMethod(index, logRecord, logObject) != null)
+                    {
+                        removeIndexes.Add(index);
+
+                        if (verification.onExceptionRemoveAll())
+                        {
+                            removeIndexes = new HashSet<int>(Enumerable.Range(0, logRecords.Length-1)); ;
+                            break;
+                        }
+
+                    }
+                }
+                //If there are any records that need to be removed, remove them
+                //In case the verifiation method forces removal of all records in case of exception, the records will be removed and logObject will not be processed further
+                if(removeIndexes.Count != 0)
+                {
+                    logObject.logRecords = StripRecordsFromArray(logRecords, removeIndexes);
+                }
+
+
+                }
             }
+
+
 
         }
 

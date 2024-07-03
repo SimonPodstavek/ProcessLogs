@@ -153,27 +153,6 @@ namespace ProcessLogs.utilities
         }
 
 
-        //internal static string XMLStringMinify(string XMLString)
-        //{
-        //    // Load the XML string into an XmlDocument
-        //    XmlDocument xmlDoc = new XmlDocument();
-        //    xmlDoc.LoadXml(XMLString);
-
-        //    // Create settings for minifying (no formatting)
-        //    XmlWriterSettings settings = new XmlWriterSettings();
-        //    settings.Indent = false; // No indentation
-        //    settings.NewLineChars = String.Empty; // No new lines
-        //    settings.NewLineHandling = NewLineHandling.None; // No new line handling
-
-        //    StringWriter stringWriter = new StringWriter();
-        //    using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings))
-        //    {
-        //        xmlDoc.Save(xmlWriter);
-        //    }
-
-        //    return stringWriter.ToString();
-        //}
-
 
 
         //This function creates instance of hashIntegrityBroken form and handles sequences with broken integrity.
@@ -252,35 +231,7 @@ namespace ProcessLogs.utilities
             tmpLogRecords = null;
 
 
-            //Verify XML structure of each record (optional)
-            if (Configuration.Settings.verifyLogXMLStructure)
-            {
-                LogClass.VerifyXMLRecordsStructure(logObject);
-            }
-
-            //Get contents of <Hash> tag for every record
-            LogClass.FindXMLHash(logObject);
-
-            //Verify hash in each of the records (optional)
-            if (Configuration.Settings.verifyHash)
-            {
-                //Verify hash located in logs with computed SHA1 hash for every record
-                LogClass.VerifyRecordsIntegrity(logObject);
-            }
-
-             //Verify size if user chose size restrictions
-            if(Configuration.Settings.verifyMinimumRecordSize || Configuration.Settings.verifyMaximumRecordSize)
-            {
-                LogClass.VerifyXMLRecordsSizing(logObject);
-            }
-
-
-            if(Configuration.Settings.preventHashDuplicity)
-            {
-                LogClass.VerifyXMLRecordUniqueness(logObject);
-            }
-
-
+            LogClass.LogIterator(logObject);
 
             //Append all XML contents ot the aggregate file
             try
