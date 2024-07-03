@@ -155,19 +155,19 @@ namespace ProcessLogs.utilities
         }
 
         //Get path for log files from leaf directories
-        private static IEnumerable<string> GetLogPathsFromRootDirectory(string dirPath)
+        private static List<string> GetLogPathsFromRootDirectory(string dirPath)
         {
             //Iterate over all files in root directory
-            IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.log", SearchOption.AllDirectories);
+            List<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.log", SearchOption.AllDirectories).ToList();
             return NumerableLogPaths;
         }
 
 
         //This method finds paths to all paths in leaf directories. It is later used to verify that all files in the directory are of .log type
-        private static IEnumerable<string> GetAllFilesFromRootDirectory(string dirPath)
+        private static List<string> GetAllFilesFromRootDirectory(string dirPath)
         {
             //Iterate over all files in root directory
-            IEnumerable<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.*", SearchOption.AllDirectories);
+            List<string> NumerableLogPaths = Directory.EnumerateFiles(dirPath, "*.*", SearchOption.AllDirectories).ToList();
             return NumerableLogPaths;
 
         }
@@ -178,19 +178,18 @@ namespace ProcessLogs.utilities
 
             void fetchingDirectoriesFailed()
             {
-                Configuration.instanceDependent.LogPaths = Enumerable.Empty<string>();
-                Configuration.instanceDependent.AllPaths = Enumerable.Empty<string>();
-                return;
+                Configuration.instanceDependent.LogPaths = new List<string>();
+                Configuration.instanceDependent.AllPaths = new List<string>();
             }
 
 
             //If read permission is not granted for root directory, put all further processing on halt
-            if (!AccessControlUtils.VerifyDirReadPermission(dirPath)) { fetchingDirectoriesFailed(); }
+            if (!AccessControlUtils.VerifyDirReadPermission(dirPath)) { fetchingDirectoriesFailed(); return; }
 
             string[] LeafDirectories = GetLeafDirectories(dirPath);
 
 
-            if (!IntegrityVerification.VerifyLeafDirectoriesStructure(LeafDirectories)) { fetchingDirectoriesFailed(); }
+            if (!IntegrityVerification.VerifyLeafDirectoriesStructure(LeafDirectories)) { fetchingDirectoriesFailed(); return; }
 
 
             Configuration.instanceDependent.LogPaths = GetLogPathsFromRootDirectory(Configuration.rootDirectory);

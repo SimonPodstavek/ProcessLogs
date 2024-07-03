@@ -29,8 +29,8 @@ namespace ProcessLogs.utilities
             //Total length of appended XML contnet for the purposes of verifying whether a correct amount of bytes has been written to an aggregate file
             internal long addedLength = 0;
 
-            internal IEnumerable<string> LogPaths;
-            internal IEnumerable<string> AllPaths;
+            internal List<string> LogPaths;
+            internal List<string> AllPaths;
 
         }
 
@@ -107,7 +107,7 @@ namespace ProcessLogs.utilities
         internal static int CountAndRemoveAllPaths()
         {
             int count = instanceDependent.AllPaths.Count();
-            instanceDependent.AllPaths = Enumerable.Empty<string>();
+            instanceDependent.AllPaths = null;
             return count;
         }
 

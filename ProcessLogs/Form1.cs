@@ -91,14 +91,12 @@ namespace ProcessLogs
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Chyba: Pri spracovaní sa vyskytla chyba" + ex + " . Odstráňte závadu a skúste to opäť", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba: Pri spracovaní sa vyskytla chyba: " + ex + " . Odstráňte závadu a skúste to opäť", "Neočakávaná chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
 
                 SaveLogs.RemoveDuplicateAggregateFile();
-
-
                 Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");
                 Program.LogEvent(delimeter);
@@ -180,6 +178,8 @@ namespace ProcessLogs
 
             //Get Paths for log files from root directory
             Iterator.GetPathsFromRoot(Configuration.rootDirectory);
+            
+            
             Program.LogEvent(delimeter);
             Program.LogEvent("Nájdených všetkých súborov: " + Configuration.CountAndRemoveAllPaths());
             Program.LogEvent("Nájdených dokumentov typu .log na spracovanie: " + Configuration.CountLogPaths());
@@ -279,11 +279,6 @@ namespace ProcessLogs
                 Program.LogEvent($"Pri ukladaní záznamu s logmi sa vyskytla chyba : {ex}");
                 return;
             }
-            finally
-            {
-                Configuration.isRunning = false;
-            }
-
 
             return;
 
