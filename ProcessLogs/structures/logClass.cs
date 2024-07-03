@@ -162,6 +162,12 @@ namespace ProcessLogs.logs
         }
 
 
+        public static record[] RemoveAllRecordsFromLog()
+        {
+            return new record[0];
+        }
+
+
         //This method verifies whether the sequences in a log file has a right hash 
         internal static void VerifyRecordsIntegrity(LogClass logObject)
         {
@@ -276,19 +282,19 @@ namespace ProcessLogs.logs
 
                     if (checkMin && recordLen < minSize)
                     {
-                        throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                        throw new SizeInvalid($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
                     }
 
                     if (checkMax && recordLen > maxSize)
                     {
-                        throw new Exception($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
+                        throw new SizeInvalid($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
                     }
                 }
-            }catch(Exception ex)
+            }catch(SizeInvalid ex)
             {
                 Program.LogEvent(ex.Message);
                 Program.LogEvent($"Záznamy súboru {logObject.filePath} nebudú uložené ");
-                logObject.logRecords = new record[0];
+                logObject.logRecords = RemoveAllRecordsFromLog();
             }
 
 

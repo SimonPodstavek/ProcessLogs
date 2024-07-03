@@ -18,4 +18,10 @@ namespace ProcessLogs.utilities
         public XMLElementNotFound(string message) : base(message: message)  {}
     }
 
+
+    internal class SizeInvalid : Exception
+    {
+        public SizeInvalid(string message) : base(message:message) { }
+    }
+
 }
