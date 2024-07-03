@@ -80,7 +80,7 @@ namespace ProcessLogs.utilities
     internal static class IntegrityVerification
     {
         //Checks that structure of leaf directories matches expected form
-        internal static bool VerifyLeafDirectoriesIntegrity(string[] Leafdirectories)
+        internal static bool VerifyLeafDirectoriesStructure(string[] Leafdirectories)
         {
             string directoryStructureRegex = @".*\\20\d{2}\\\d{2}$";
             Regex regex = new Regex(directoryStructureRegex);
@@ -132,12 +132,13 @@ namespace ProcessLogs.utilities
             string[] subdirectories = Directory.GetDirectories(dirPath);
 
 
+            //Exit recursion for the given branch
             if (subdirectories.Length == 0)
             {
                 return new string[] { dirPath };
             }
 
-
+            //If a branch has further subdirectories,iterate over them 
             foreach (string subdir in subdirectories)
             {
                 if (AccessControlUtils.VerifyDirReadPermission(subdir))
@@ -146,8 +147,7 @@ namespace ProcessLogs.utilities
                 }
                 else
                 {
-                    //Raise exception !!!!
-                    Console.WriteLine("NOT FINISHED YET!");
+                    throw new Exception($"Na čítanie obsahu adresára {subdir} nemáte dostatočné povolenia");
                 }
                 
             }
@@ -176,25 +176,22 @@ namespace ProcessLogs.utilities
         internal static void GetPathsFromRoot(string dirPath)
         {
 
-            //Read permission not granted for root directory
-            if (!AccessControlUtils.VerifyDirReadPermission(dirPath))
+            void fetchingDirectoriesFailed()
             {
                 Configuration.instanceDependent.LogPaths = Enumerable.Empty<string>();
                 Configuration.instanceDependent.AllPaths = Enumerable.Empty<string>();
                 return;
             }
+
+
+            //If read permission is not granted for root directory, put all further processing on halt
+            if (!AccessControlUtils.VerifyDirReadPermission(dirPath)) { fetchingDirectoriesFailed(); }
 
             string[] LeafDirectories = GetLeafDirectories(dirPath);
 
 
+            if (!IntegrityVerification.VerifyLeafDirectoriesStructure(LeafDirectories)) { fetchingDirectoriesFailed(); }
 
-
-            if (!IntegrityVerification.VerifyLeafDirectoriesIntegrity(LeafDirectories))
-            {
-                Configuration.instanceDependent.LogPaths = Enumerable.Empty<string>();
-                Configuration.instanceDependent.AllPaths = Enumerable.Empty<string>();
-                return;
-            }
 
             Configuration.instanceDependent.LogPaths = GetLogPathsFromRootDirectory(Configuration.rootDirectory);
             Configuration.instanceDependent.AllPaths = GetAllFilesFromRootDirectory(Configuration.rootDirectory);
