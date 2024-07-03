@@ -253,7 +253,6 @@ namespace ProcessLogs
                     finally
                     {
 
-
                         Configuration.instanceDependent.globalLogs[index] = null;
                     }
 

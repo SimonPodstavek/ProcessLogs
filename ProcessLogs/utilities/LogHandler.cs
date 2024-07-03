@@ -160,7 +160,15 @@ namespace ProcessLogs.utilities
         {
             BrokenHashIntegrity BrokenHashIntegrity = new BrokenHashIntegrity(logRecord, logObject);
             BrokenHashIntegrity.ShowDialog();
-            logRecord.byteXMLSequence = BrokenHashIntegrity.savedByteSequence;
+
+            //if the window is closed by a user, do not save the record
+            var byteSequence = BrokenHashIntegrity.savedByteSequence;
+            if (byteSequence == null)
+            {
+                return false;
+            }
+           
+            logRecord.byteXMLSequence = byteSequence;
             return BrokenHashIntegrity.keepRecord;
         }
 
@@ -171,7 +179,14 @@ namespace ProcessLogs.utilities
         {
             BrokenXMLStructure BrokenXMLStructureForm = new BrokenXMLStructure(logRecord, logObject);
             BrokenXMLStructureForm.ShowDialog();
-            logRecord.byteXMLSequence = BrokenXMLStructureForm.savedByteSequence;
+            //if the window is closed by a user, do not save the record
+            var byteSequence = BrokenXMLStructureForm.savedByteSequence;
+            if (byteSequence == null)
+            {
+                return false;
+            }
+
+            logRecord.byteXMLSequence = byteSequence;
             return BrokenXMLStructureForm.keepRecord;
         }
 
