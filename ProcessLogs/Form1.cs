@@ -95,8 +95,10 @@ namespace ProcessLogs
             }
             finally
             {
-
-                SaveLogs.RemoveDuplicateAggregateFile();
+                if (File.Exists(Configuration.AggregateFile.duplicatefilePathXML)) 
+                { 
+                    SaveLogs.RemoveDuplicateAggregateFile(); 
+                }
                 Program.LogEvent(delimeter);
                 Program.LogEvent("Spracovanie je ukončené.");
                 Program.LogEvent(delimeter);
@@ -256,8 +258,7 @@ namespace ProcessLogs
                         Configuration.instanceDependent.globalLogs[index] = null;
                     }
 
-                }
-                fileStream.Close();
+                }        
             }
 
 

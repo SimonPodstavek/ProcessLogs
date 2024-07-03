@@ -107,9 +107,9 @@ namespace ProcessLogs.utilities
                 //ValidateXMLStructure structure
                 bool response = ValidationMediator(byteXMLContent, errorMessage, checkAggregateFileStructure);
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
+                //GC.Collect();
+                //GC.WaitForPendingFinalizers();
+                //GC.Collect();
 
 
                 return response;

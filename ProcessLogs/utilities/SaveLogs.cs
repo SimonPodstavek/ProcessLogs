@@ -30,7 +30,7 @@ namespace ProcessLogs.utilities
             try
             {
                 File.Delete(duplicateFilePathXML);
-            Program.LogEvent("Duplikát agregátneho súboru bol úspešne odstránený.", onlyVerbose: true);
+                Program.LogEvent("Duplikát agregátneho súboru bol úspešne odstránený.", onlyVerbose: true);
             }
             catch(Exception ex)
             {
@@ -200,6 +200,8 @@ namespace ProcessLogs.utilities
 
             //if there is not an error moving duplicate file to second location, proceed with removing the original file 
             File.Delete(originalFile);
+
+           
 
             File.Move(duplicateFileSecondPath, originalFile);
 

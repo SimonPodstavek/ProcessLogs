@@ -52,10 +52,13 @@ namespace ProcessLogs.utilities
         {
             try
             {
-                //Open a file and read a first character to verify read permissions.
-                FileStream fileStream = File.OpenRead(filepath);
-                int firstChar = fileStream.ReadByte();
-                return true;
+                using (FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+                {
+                    //Open a file and read a first character to verify read permissions.
+                    int firstChar = fileStream.ReadByte();
+                    return true;
+
+                }
             }
             catch (UnauthorizedAccessException)
             {
