@@ -202,6 +202,7 @@ namespace ProcessLogs
             this.verifyAggregateXMLStructureOnLoadCheck.TabIndex = 8;
             this.verifyAggregateXMLStructureOnLoadCheck.Text = "Pri otvorení";
             this.verifyAggregateXMLStructureOnLoadCheck.UseVisualStyleBackColor = true;
+            this.verifyAggregateXMLStructureOnLoadCheck.CheckStateChanged += new System.EventHandler(this.verifyAggregateXMLStructureOnLoadCheck_CheckedChanged);
             // 
             // initiateButton
             // 
@@ -379,9 +380,9 @@ namespace ProcessLogs
             this.label1.Location = new System.Drawing.Point(2, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(315, 13);
+            this.label1.Size = new System.Drawing.Size(340, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Nastavenie spracovania logov (diskvalifikuje záznam):";
+            this.label1.Text = "Nastavenie spracovania záznamov (diskvalifikuje záznam):";
             // 
             // VerifyLogHashCheck
             // 
@@ -395,6 +396,7 @@ namespace ProcessLogs
             this.VerifyLogHashCheck.TabIndex = 8;
             this.VerifyLogHashCheck.Text = "Verifikácia hash";
             this.VerifyLogHashCheck.UseVisualStyleBackColor = true;
+            this.VerifyLogHashCheck.CheckedChanged += new System.EventHandler(this.VerifyLogHashCheck_CheckedChanged);
             // 
             // verifyLogXMLStructureCheck
             // 
@@ -434,6 +436,7 @@ namespace ProcessLogs
             this.preventDuplicatesCheckBox.TabIndex = 17;
             this.preventDuplicatesCheckBox.Text = "Prevencia duplicity";
             this.preventDuplicatesCheckBox.UseVisualStyleBackColor = true;
+            this.preventDuplicatesCheckBox.CheckedChanged += new System.EventHandler(this.preventDuplicatesCheckBox_CheckedChanged);
             // 
             // tableLayoutPanel8
             // 

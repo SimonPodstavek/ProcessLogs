@@ -161,7 +161,7 @@ namespace ProcessLogs.logs
                     return index;
                 }
 
-                //Verify structure, if it is valid go to the following record
+                //Verify structure, if it is valid go to the next record
                 bool isValid = StructureVerification.XMLValidator.ValidateXMLStructure(dataBytesSequence[0], errorMessage: $"Štruktúra záznamu {index + 1} je poškodená");
 
                 if (isValid)
@@ -186,7 +186,6 @@ namespace ProcessLogs.logs
 
 
         //This method locates Hash sequence in each record by sequences defined in Configuration.ByteSequences
-
         private class FindXMLRecordHash : IVerification
         {
 
@@ -197,7 +196,7 @@ namespace ProcessLogs.logs
 
             public bool isActive()
             {
-                return true;
+                return Configuration.Settings.verifyHash;
             }
 
             public int? VerificationMethod(int index, record logRecord, LogClass logObject)
@@ -286,7 +285,7 @@ namespace ProcessLogs.logs
 
         //This method verifies that the record in a log file has at least the minimum size defined by user (optional)
 
-        private class VerifyXMLRecordMinimum : IVerification
+        private class VerifyXMLRecordMinimumSize : IVerification
         {
             public bool onExceptionRemoveAll()
             {
@@ -314,7 +313,7 @@ namespace ProcessLogs.logs
         }
 
 
-        private class VerifyXMLRecordMaximum : IVerification
+        private class VerifyXMLRecordMaximumSize : IVerification
         {
             public bool onExceptionRemoveAll()
             {
@@ -379,8 +378,8 @@ namespace ProcessLogs.logs
             //Define verifications
             List<IVerification> verifications = new List<IVerification> 
             { new FindXMLRecordHash(), new VerifyRecordIntegrity(), 
-              new VerifyXMLRecordStructure(), new VerifyXMLRecordMinimum(),
-              new VerifyXMLRecordMaximum(), new VerifyXMLRecordUniqueness() };
+              new VerifyXMLRecordStructure(), new VerifyXMLRecordMinimumSize(),
+              new VerifyXMLRecordMaximumSize(), new VerifyXMLRecordUniqueness() };
 
             //Iterate over Verificators and run only those that are required
             foreach (IVerification verification in verifications)
@@ -397,7 +396,7 @@ namespace ProcessLogs.logs
 
                         if (verification.onExceptionRemoveAll())
                         {
-                            removeIndexes = new HashSet<int>(Enumerable.Range(0, logRecords.Length-1)); ;
+                            removeIndexes = new HashSet<int>(Enumerable.Range(0, logRecords.Length)); ;
                             break;
                         }
 

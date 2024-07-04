@@ -67,7 +67,7 @@ namespace ProcessLogs.utilities
                                 lastElementName = xmlReader.Name;
                             }
 
-                            if(xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Hash")
+                            if(xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Hash" && Configuration.Settings.verifyAggregateXMLStructureOnLoad)
                             {
                                 string recordHash = xmlReader.ReadElementContentAsString();
                                 recordHash = LogClass.FormatHash(recordHash);

@@ -288,6 +288,38 @@ namespace ProcessLogs
         {
 
         }
+
+        private void verifyAggregateXMLStructureOnLoadCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (verifyAggregateXMLStructureOnLoadCheck.Checked)
+            {
+                preventDuplicatesCheckBox.Enabled = true;
+            }
+            else
+            {
+                preventDuplicatesCheckBox.Checked = false;
+                preventDuplicatesCheckBox.Enabled = false;
+            }
+        }
+
+        private void preventDuplicatesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VerifyLogHashCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (VerifyLogHashCheck.Checked)
+            {
+                verifyAggregateXMLStructureOnLoadCheck.Enabled = true;
+            }
+            else
+            {
+                verifyAggregateXMLStructureOnLoadCheck.Checked = false;
+                verifyAggregateXMLStructureOnLoadCheck.Enabled = false;
+            }
+
+        }
     }
 }
 

@@ -10,6 +10,7 @@ using ProcessLogs.structures;
 using static System.Windows.Forms.Design.AxImporter;
 using System.ComponentModel;
 using System.Text;
+using System.Web;
 
 
 namespace ProcessLogs.utilities
@@ -202,7 +203,9 @@ namespace ProcessLogs.utilities
             //Get byte content of a log
             try
             {
-                logObject.LogContent = File.ReadAllBytes(logObject.filePath);
+                string filepath = logObject.filePath;
+                AccessControlUtils.VerifyFileReadPermission(filepath);
+                logObject.LogContent = File.ReadAllBytes(filepath);
             }
             catch (Exception ex)
             {
