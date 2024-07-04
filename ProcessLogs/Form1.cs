@@ -100,7 +100,7 @@ namespace ProcessLogs
                     SaveLogs.RemoveDuplicateAggregateFile(); 
                 }
                 Program.LogEvent(delimeter);
-                Program.LogEvent("Spracovanie je ukončené.");
+                Program.LogEvent("Spracovanie je ukončené. Môžete zatvoriť aplikáciu.");
                 Program.LogEvent(delimeter);
                 Configuration.isRunning = false;
                 initiateButton.Text = "Spracovať";
@@ -226,7 +226,7 @@ namespace ProcessLogs
                     //Inform the user about every 5th processed log, if the verbose setting is on
                     if (Configuration.Settings.isVerbose && (index + 1) % 5 == 0)
                     {
-                        Program.LogEvent($"Spracované záznamy: {index - 3} - {index + 1}");
+                        Program.LogEvent($"Spracované súbory: {index - 3} - {index + 1}");
                     }
 
 
@@ -284,42 +284,8 @@ namespace ProcessLogs
 
         }
 
-        private void importSettings_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void verifyAggregateXMLStructureOnLoadCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            if (verifyAggregateXMLStructureOnLoadCheck.Checked)
-            {
-                preventDuplicatesCheckBox.Enabled = true;
-            }
-            else
-            {
-                preventDuplicatesCheckBox.Checked = false;
-                preventDuplicatesCheckBox.Enabled = false;
-            }
-        }
-
-        private void preventDuplicatesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void VerifyLogHashCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            if (VerifyLogHashCheck.Checked)
-            {
-                verifyAggregateXMLStructureOnLoadCheck.Enabled = true;
-            }
-            else
-            {
-                verifyAggregateXMLStructureOnLoadCheck.Checked = false;
-                verifyAggregateXMLStructureOnLoadCheck.Enabled = false;
-            }
-
-        }
+    
+    
     }
 }
 
