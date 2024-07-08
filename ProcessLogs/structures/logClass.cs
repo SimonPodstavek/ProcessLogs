@@ -304,7 +304,7 @@ namespace ProcessLogs.logs
 
                 if (recordLen < minSize)
                 {
-                    Program.LogEvent($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
+                    Program.LogEvent($"Chyba 116: Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je menej ako minimálna dĺžka {minSize} znakov");
                     return index;
                 }
                 return null;
@@ -332,7 +332,7 @@ namespace ProcessLogs.logs
 
                 if (recordLen > maxSize)
                 {
-                    Program.LogEvent($"Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
+                    Program.LogEvent($"Chyba 116: Záznam č. {index + 1} súboru {logObject.filePath} má {recordLen} znakov čo je viac ako maximálna dĺžka {maxSize} znakov");
                     return index;
                 }
                 return null;
@@ -359,7 +359,7 @@ namespace ProcessLogs.logs
                 string recordHash = LogHandler.HexByteToString(logRecord.XMLHash);
                 if (Configuration.instanceDependent.registeredHashes.Contains(recordHash))
                 {
-                    Program.LogEvent($"Chyba Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose: true);
+                    Program.LogEvent($"Chyba 114: Hash záznamu č. {index + 1} súboru {logObject.filePath} bol už registrovaný.", onlyVerbose: true);
                     return index;
                 }
                 Configuration.instanceDependent.registeredHashes.Add(recordHash);

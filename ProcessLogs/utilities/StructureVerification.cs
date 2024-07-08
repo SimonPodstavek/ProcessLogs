@@ -151,7 +151,7 @@ namespace ProcessLogs.utilities
                 }
                 catch (AggregateFileIncorrectStructure ex)
                 {
-                    Program.LogEvent("Agregátny XML súbor musí obsahovať deklaráciu XML (<?xml version=\"1.0\" encoding=\"UTF-8\"?>).");
+                    Program.LogEvent("Chyba 115: Agregátny XML súbor musí obsahovať deklaráciu XML (<?xml version=\"1.0\" encoding=\"UTF-8\"?>).");
                     Program.LogEvent("Agregátny XML súbor musí obsahovať element (<AGGREGATEXML>).");
                     Program.LogEvent("Štruktúra pre platný agregátny XML súbor (<?xml version=\"1.0\" encoding=\"UTF-8\"?><AGGREGATEXML></AGGREGATEXML>).");
                     Program.LogEvent($"Stack trace: {ex.StackTrace}");

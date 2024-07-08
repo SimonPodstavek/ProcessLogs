@@ -34,7 +34,7 @@ namespace ProcessLogs.utilities
             }
             catch(Exception ex)
             {
-                Program.LogEvent($"Odstraňovanie duplikátu agregátneho súboru zlyhalo, odstráňte ho prosím manuálne. Cesta: {duplicateFilePathXML}");
+                Program.LogEvent($"Chyba 117: Odstraňovanie duplikátu agregátneho súboru zlyhalo, odstráňte ho prosím manuálne. Cesta: {duplicateFilePathXML}");
                 Program.LogEvent(ex.Message);
             }
         }
@@ -87,7 +87,7 @@ namespace ProcessLogs.utilities
             }
             catch(Exception ex)
             {
-                Program.LogEvent($"Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
+                Program.LogEvent($"Chyba 118: Pri vytváraní kópie agregátneho súboru sa vyskytla chyba: {ex}");
                 return false;
             }
 
@@ -166,7 +166,7 @@ namespace ProcessLogs.utilities
             }
             else
             {
-                throw new Exception("Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
+                throw new Exception("Chyba 119: Do agregátneho súboru neboli zapísané všetky bajty. Zopakujte proces znovu.");
             }
 
 
