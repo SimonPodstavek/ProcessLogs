@@ -169,6 +169,7 @@ namespace ProcessLogs
                 //HasCorrectXMLStructure returns false if the structure is not valid
                 if (!StructureVerification.XMLValidator.ValidateXMLStructure(Configuration.AggregateFile.filePath, "Agregátny Log súbor nemá správnu XML štruktúru.", checkAggregateFileStructure:true))
                 {
+                    Program.LogEvent("Štruktúra pre platný agregátny XML súbor (<?xml version=\"1.0\" encoding=\"UTF-8\"?><AGGREGATEXML></AGGREGATEXML>).");
                     return;
                 }
             }

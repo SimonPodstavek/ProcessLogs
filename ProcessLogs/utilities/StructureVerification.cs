@@ -157,11 +157,6 @@ namespace ProcessLogs.utilities
                     Program.LogEvent($"Stack trace: {ex.StackTrace}");
                     return false;
                 }
-                catch( Exception ex )
-                {
-                    Console.WriteLine("dasd");
-                    return false;
-                }
             }
         }
 

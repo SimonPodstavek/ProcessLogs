@@ -377,8 +377,8 @@ namespace ProcessLogs.logs
 
             //Define verifications
             List<IVerification> verifications = new List<IVerification> 
-            { new FindXMLRecordHash(), new VerifyRecordIntegrity(), 
-              new VerifyXMLRecordStructure(), new VerifyXMLRecordMinimumSize(),
+            { new VerifyXMLRecordStructure(), new FindXMLRecordHash(),
+              new VerifyRecordIntegrity(), new VerifyXMLRecordMinimumSize(),
               new VerifyXMLRecordMaximumSize(), new VerifyXMLRecordUniqueness() };
 
             //Iterate over Verificators and run only those that are required

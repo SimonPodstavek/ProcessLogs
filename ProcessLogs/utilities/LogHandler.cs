@@ -204,7 +204,10 @@ namespace ProcessLogs.utilities
             try
             {
                 string filepath = logObject.filePath;
-                AccessControlUtils.VerifyFileReadPermission(filepath);
+                if (!AccessControlUtils.VerifyFileReadPermission(filepath))
+                {
+                    throw new Exception("Chyba 108: Pri čítaní bytov sa vyskytla chyba.");
+                }
                 logObject.LogContent = File.ReadAllBytes(filepath);
             }
             catch (Exception ex)
