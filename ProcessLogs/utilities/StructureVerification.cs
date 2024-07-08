@@ -107,10 +107,6 @@ namespace ProcessLogs.utilities
                 //ValidateXMLStructure structure
                 bool response = ValidationMediator(byteXMLContent, errorMessage, checkAggregateFileStructure);
 
-                //GC.Collect();
-                //GC.WaitForPendingFinalizers();
-                //GC.Collect();
-
 
                 return response;
             }
@@ -159,6 +155,11 @@ namespace ProcessLogs.utilities
                     Program.LogEvent("Agregátny XML súbor musí obsahovať element (<AGGREGATEXML>).");
                     Program.LogEvent("Štruktúra pre platný agregátny XML súbor (<?xml version=\"1.0\" encoding=\"UTF-8\"?><AGGREGATEXML></AGGREGATEXML>).");
                     Program.LogEvent($"Stack trace: {ex.StackTrace}");
+                    return false;
+                }
+                catch( Exception ex )
+                {
+                    Console.WriteLine("dasd");
                     return false;
                 }
             }
