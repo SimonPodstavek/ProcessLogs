@@ -150,7 +150,7 @@ namespace ProcessLogs.utilities
                 }
                 else
                 {
-                    throw new Exception($"Na čítanie obsahu adresára {subdir} nemáte dostatočné povolenia");
+                    throw new Exception($"Chyba 101: Na čítanie obsahu adresára {subdir} nemáte dostatočné povolenia");
                 }
                 
             }

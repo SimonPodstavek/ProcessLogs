@@ -43,7 +43,7 @@ namespace ProcessLogs.utilities
                 if (sequenceLength <= 0)
                 {
                     
-                    throw new Exception($"Záznam nemá správne otvorené alebo ukončené elementy: {Encoding.UTF8.GetString(logXMLOpeningSequence)} a {Encoding.UTF8.GetString(logXMLClosingSequence)}.");
+                    throw new Exception($"Chyba 113: Záznam nemá správne otvorené alebo ukončené elementy: {Encoding.UTF8.GetString(logXMLOpeningSequence)} a {Encoding.UTF8.GetString(logXMLClosingSequence)}.");
                 }
 
                 byte[] XMLByteSequence = new byte[sequenceLength];
