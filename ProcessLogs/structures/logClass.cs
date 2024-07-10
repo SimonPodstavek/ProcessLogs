@@ -136,6 +136,7 @@ namespace ProcessLogs.logs
 
 
 
+
         //This method verifies whether the records in a log file has a valid XML structure  (optional)
         private class VerifyXMLRecordStructure : IVerification
         {
@@ -384,7 +385,7 @@ namespace ProcessLogs.logs
             //Iterate over Verificators and run only those that are required
             foreach (IVerification verification in verifications)
             {
-                //Skip the iteration of a verificatior if it's not required
+                //Skip the iteration of a verificator if it's not required
                 if (!(verification.isActive())) { continue; }
 
                 //Iterate over every record and make necessary checks

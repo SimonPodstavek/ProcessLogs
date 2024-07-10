@@ -262,8 +262,6 @@ namespace ProcessLogs
                 }        
             }
 
-
-
             //Inform the user about the total number of processed logs and records.
             Program.LogEvent($"Uložených bolo  {Configuration.instanceDependent.globalLogs.Count()} súborov ({processedRecords} záznamov)", onlyVerbose: false);
             Program.LogEvent(delimeter, onlyVerbose: false);
