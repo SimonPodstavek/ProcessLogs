@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Permissions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,7 +22,7 @@ namespace ProcessLogs.logs
 
         internal string filePath, fileName;
         internal byte[][] XMLSequences;
-        internal byte[] LogContent;
+        internal byte[] LogContent, XMLFilePath;
         internal record[] logRecords;
 
         internal int CountRecords()
@@ -39,8 +40,26 @@ namespace ProcessLogs.logs
         {
             this.filePath = filePath;
             this.fileName = fileName;
+            this.XMLFilePath = GetRelativeLogPath(filePath);
         }
 
+
+        internal static byte[] GetRelativeLogPath(string filePath)
+        {
+
+         
+            Match match = Regex.Match(filePath, Configuration.logRelativePathRegex);
+            
+            if(match.Success)
+            {
+                return Encoding.UTF8.GetBytes($"<FilePath>{match.Groups[1]}</FilePath>");
+            }
+  
+            return Encoding.UTF8.GetBytes("<FilePath>Incorrect root directory structure</FilePath>");
+            
+
+
+        } 
 
         internal class record
         {
@@ -54,7 +73,7 @@ namespace ProcessLogs.logs
         }
 
         /// <summary>
-        /// This module appends Addition element after first occurance of Lookup element
+        /// This module appends Addition element after the first occurance of the Lookup element
         /// <param name="originalBytes">Original sequence that will be extended with additionElement</param>
         /// <param name="additionElement">The element with value (optional) to be inserted</param>
         /// <param name="lookupElement">The element to insert addition element after</param>
@@ -81,13 +100,8 @@ namespace ProcessLogs.logs
             byte[] resultBytes = new byte[originalLen + additionLen];
 
             Array.Copy(originalBytes, resultBytes, originalLen);
-
-            string xyz = Encoding.UTF8.GetString(resultBytes);
-
             Array.Copy(additionElement, 0, resultBytes, insertBytePosition, additionLen);
-            xyz = Encoding.UTF8.GetString(resultBytes);
             Array.Copy(originalBytes, insertBytePosition, resultBytes, insertBytePosition + additionLen, originalLen - insertBytePosition);
-            xyz = Encoding.UTF8.GetString(resultBytes);
 
 
             return resultBytes;
@@ -135,7 +149,38 @@ namespace ProcessLogs.logs
 
 
 
+        private class MetaDataAdder : IVerification
+        {
+            public bool onExceptionRemoveAll()
+            {
+                return true;
+            }
+            public bool isActive()
+            {
+                return true;
+            }
 
+            public int? VerificationMethod(int index, record logRecord, LogClass logObject)
+            {
+
+                try
+                {
+                    byte[] XMLByteRepresentation = logRecord.byteXMLSequence;
+
+                    logRecord.byteXMLSequence =  LogClass.InsertElementAfterLookup(XMLByteRepresentation, logObject.XMLFilePath, Configuration.ByteSequences.logXMLOpeningSequence);
+                    return null;
+                }
+                catch(Exception)
+                {
+                    return 0;
+
+                }
+
+
+            }
+
+
+        }
 
         //This method verifies whether the records in a log file has a valid XML structure  (optional)
         private class VerifyXMLRecordStructure : IVerification
@@ -378,7 +423,7 @@ namespace ProcessLogs.logs
 
             //Define verifications
             List<IVerification> verifications = new List<IVerification> 
-            { new VerifyXMLRecordStructure(), new FindXMLRecordHash(),
+            { new MetaDataAdder(), new VerifyXMLRecordStructure(), new FindXMLRecordHash(),
               new VerifyRecordIntegrity(), new VerifyXMLRecordMinimumSize(),
               new VerifyXMLRecordMaximumSize(), new VerifyXMLRecordUniqueness() };
 

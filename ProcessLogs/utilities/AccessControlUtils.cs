@@ -85,8 +85,8 @@ namespace ProcessLogs.utilities
         //Checks that structure of leaf directories matches expected form
         internal static bool VerifyLeafDirectoriesStructure(string[] Leafdirectories)
         {
-            string directoryStructureRegex = @".*\\20\d{2}\\\d{2}$";
-            Regex regex = new Regex(directoryStructureRegex);
+            
+            Regex regex = new Regex(Configuration.directoryStructureRegex);
 
             foreach(string leafDirectory in Leafdirectories)
             {

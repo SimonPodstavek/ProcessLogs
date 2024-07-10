@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,8 +15,6 @@ namespace ProcessLogs.utilities
     //It also provides data from logging and statistics
     internal static class Configuration
     {
-
-
 
         internal static InstanceDependent instanceDependent;
 
@@ -48,6 +47,14 @@ namespace ProcessLogs.utilities
 
         //Reflects the state of user's selection.
         internal static volatile bool isRunning = false;
+
+        //This regex defines the structure of selected root directory
+        internal static string directoryStructureRegex = @".*\\20\d{2}\\\d{2}$";
+
+        //This regex defines the exected structure of relative log file path
+        internal static string logRelativePathRegex = @".*\\(20\d{2}\\\d{2}\\.*\.log)$";
+
+
 
 
         internal static class Settings
