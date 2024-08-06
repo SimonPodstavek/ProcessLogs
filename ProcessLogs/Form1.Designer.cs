@@ -121,29 +121,26 @@ namespace ProcessLogs
             // 
             this.sourceDirectoryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.sourceDirectoryTextBox.Location = new System.Drawing.Point(4, 36);
-            this.sourceDirectoryTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.sourceDirectoryTextBox.Location = new System.Drawing.Point(3, 29);
             this.sourceDirectoryTextBox.Name = "sourceDirectoryTextBox";
-            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(801, 29);
+            this.sourceDirectoryTextBox.Size = new System.Drawing.Size(656, 26);
             this.sourceDirectoryTextBox.TabIndex = 0;
             // 
             // sourceDirectoryLabel
             // 
             this.sourceDirectoryLabel.AutoSize = true;
-            this.sourceDirectoryLabel.Location = new System.Drawing.Point(4, 0);
-            this.sourceDirectoryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sourceDirectoryLabel.Location = new System.Drawing.Point(3, 0);
             this.sourceDirectoryLabel.Name = "sourceDirectoryLabel";
-            this.sourceDirectoryLabel.Size = new System.Drawing.Size(158, 25);
+            this.sourceDirectoryLabel.Size = new System.Drawing.Size(126, 20);
             this.sourceDirectoryLabel.TabIndex = 0;
             this.sourceDirectoryLabel.Text = "Zdrojový adresár";
             // 
             // XMLDirectoryLabel
             // 
             this.XMLDirectoryLabel.AutoSize = true;
-            this.XMLDirectoryLabel.Location = new System.Drawing.Point(4, 0);
-            this.XMLDirectoryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.XMLDirectoryLabel.Location = new System.Drawing.Point(3, 0);
             this.XMLDirectoryLabel.Name = "XMLDirectoryLabel";
-            this.XMLDirectoryLabel.Size = new System.Drawing.Size(203, 25);
+            this.XMLDirectoryLabel.Size = new System.Drawing.Size(163, 20);
             this.XMLDirectoryLabel.TabIndex = 1;
             this.XMLDirectoryLabel.Text = "Agregátny XML súbor";
             // 
@@ -151,19 +148,17 @@ namespace ProcessLogs
             // 
             this.filePathXMLTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathXMLTextBox.Location = new System.Drawing.Point(4, 36);
-            this.filePathXMLTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.filePathXMLTextBox.Location = new System.Drawing.Point(3, 29);
             this.filePathXMLTextBox.Name = "filePathXMLTextBox";
-            this.filePathXMLTextBox.Size = new System.Drawing.Size(801, 29);
+            this.filePathXMLTextBox.Size = new System.Drawing.Size(656, 26);
             this.filePathXMLTextBox.TabIndex = 0;
             // 
             // sourceDirectoryButton
             // 
             this.sourceDirectoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sourceDirectoryButton.Location = new System.Drawing.Point(20, 36);
-            this.sourceDirectoryButton.Margin = new System.Windows.Forms.Padding(4);
+            this.sourceDirectoryButton.Location = new System.Drawing.Point(17, 29);
             this.sourceDirectoryButton.Name = "sourceDirectoryButton";
-            this.sourceDirectoryButton.Size = new System.Drawing.Size(99, 37);
+            this.sourceDirectoryButton.Size = new System.Drawing.Size(81, 31);
             this.sourceDirectoryButton.TabIndex = 0;
             this.sourceDirectoryButton.Text = "Vybrať";
             this.sourceDirectoryButton.UseVisualStyleBackColor = true;
@@ -172,10 +167,9 @@ namespace ProcessLogs
             // filePathXMLButton
             // 
             this.filePathXMLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathXMLButton.Location = new System.Drawing.Point(20, 36);
-            this.filePathXMLButton.Margin = new System.Windows.Forms.Padding(4);
+            this.filePathXMLButton.Location = new System.Drawing.Point(17, 29);
             this.filePathXMLButton.Name = "filePathXMLButton";
-            this.filePathXMLButton.Size = new System.Drawing.Size(99, 37);
+            this.filePathXMLButton.Size = new System.Drawing.Size(81, 31);
             this.filePathXMLButton.TabIndex = 0;
             this.filePathXMLButton.Text = "Vybrať";
             this.filePathXMLButton.UseVisualStyleBackColor = true;
@@ -186,10 +180,9 @@ namespace ProcessLogs
             this.importSettings.AutoSize = true;
             this.tableLayoutPanel6.SetColumnSpan(this.importSettings, 2);
             this.importSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.importSettings.Location = new System.Drawing.Point(4, 0);
-            this.importSettings.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.importSettings.Location = new System.Drawing.Point(3, 0);
             this.importSettings.Name = "importSettings";
-            this.importSettings.Size = new System.Drawing.Size(497, 25);
+            this.importSettings.Size = new System.Drawing.Size(433, 20);
             this.importSettings.TabIndex = 0;
             this.importSettings.Text = "Nastavenia verifikácie štruktúry agregátneho XML:";
             // 
@@ -200,11 +193,10 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.statusBox, 2);
             this.statusBox.HideSelection = false;
-            this.statusBox.Location = new System.Drawing.Point(44, 571);
-            this.statusBox.Margin = new System.Windows.Forms.Padding(4);
+            this.statusBox.Location = new System.Drawing.Point(36, 476);
             this.statusBox.Name = "statusBox";
             this.statusBox.ReadOnly = true;
-            this.statusBox.Size = new System.Drawing.Size(940, 460);
+            this.statusBox.Size = new System.Drawing.Size(769, 384);
             this.statusBox.TabIndex = 0;
             this.statusBox.TabStop = false;
             this.statusBox.Text = "";
@@ -214,10 +206,10 @@ namespace ProcessLogs
             this.verifyAggregateXMLStructureOnLoadCheck.AutoSize = true;
             this.verifyAggregateXMLStructureOnLoadCheck.Checked = true;
             this.verifyAggregateXMLStructureOnLoadCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verifyAggregateXMLStructureOnLoadCheck.Location = new System.Drawing.Point(18, 50);
-            this.verifyAggregateXMLStructureOnLoadCheck.Margin = new System.Windows.Forms.Padding(18, 4, 4, 4);
+            this.verifyAggregateXMLStructureOnLoadCheck.Location = new System.Drawing.Point(15, 41);
+            this.verifyAggregateXMLStructureOnLoadCheck.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
             this.verifyAggregateXMLStructureOnLoadCheck.Name = "verifyAggregateXMLStructureOnLoadCheck";
-            this.verifyAggregateXMLStructureOnLoadCheck.Size = new System.Drawing.Size(135, 29);
+            this.verifyAggregateXMLStructureOnLoadCheck.Size = new System.Drawing.Size(113, 24);
             this.verifyAggregateXMLStructureOnLoadCheck.TabIndex = 0;
             this.verifyAggregateXMLStructureOnLoadCheck.Text = "Pri otvorení";
             this.verifyAggregateXMLStructureOnLoadCheck.UseVisualStyleBackColor = true;
@@ -229,10 +221,9 @@ namespace ProcessLogs
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.initiateButton, 2);
-            this.initiateButton.Location = new System.Drawing.Point(44, 521);
-            this.initiateButton.Margin = new System.Windows.Forms.Padding(4);
+            this.initiateButton.Location = new System.Drawing.Point(36, 434);
             this.initiateButton.Name = "initiateButton";
-            this.initiateButton.Size = new System.Drawing.Size(940, 42);
+            this.initiateButton.Size = new System.Drawing.Size(769, 36);
             this.initiateButton.TabIndex = 7;
             this.initiateButton.Text = "Spracovať";
             this.initiateButton.UseVisualStyleBackColor = true;
@@ -242,7 +233,7 @@ namespace ProcessLogs
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 107F));
             this.tableLayoutPanel1.Controls.Add(this.statusBox, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
@@ -254,18 +245,17 @@ namespace ProcessLogs
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(40, 41, 40, 41);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(33, 34, 33, 34);
             this.tableLayoutPanel1.RowCount = 7;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1028, 1062);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(841, 885);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel5
@@ -276,13 +266,12 @@ namespace ProcessLogs
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.filePathXMLButton, 0, 1);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(861, 145);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(704, 120);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(123, 92);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(101, 77);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
             // tableLayoutPanel3
@@ -294,13 +283,12 @@ namespace ProcessLogs
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.XMLDirectoryLabel, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.filePathXMLTextBox, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(44, 145);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(36, 120);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(809, 92);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(662, 77);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel2
@@ -312,13 +300,12 @@ namespace ProcessLogs
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryTextBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.sourceDirectoryLabel, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(44, 45);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(36, 37);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(809, 92);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(662, 77);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -329,13 +316,12 @@ namespace ProcessLogs
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.sourceDirectoryButton, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(861, 45);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(704, 37);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(123, 92);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(101, 77);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel6
@@ -347,13 +333,12 @@ namespace ProcessLogs
             this.tableLayoutPanel6.Controls.Add(this.importSettings, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.verifyAggregateXMLStructureOnLoadCheck, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.verifyAggregateXMLStructureOnCloseCheck, 1, 1);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(44, 245);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(36, 203);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(809, 84);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(662, 70);
             this.tableLayoutPanel6.TabIndex = 4;
             // 
             // verifyAggregateXMLStructureOnCloseCheck
@@ -361,10 +346,9 @@ namespace ProcessLogs
             this.verifyAggregateXMLStructureOnCloseCheck.AutoSize = true;
             this.verifyAggregateXMLStructureOnCloseCheck.Checked = true;
             this.verifyAggregateXMLStructureOnCloseCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verifyAggregateXMLStructureOnCloseCheck.Location = new System.Drawing.Point(246, 50);
-            this.verifyAggregateXMLStructureOnCloseCheck.Margin = new System.Windows.Forms.Padding(4);
+            this.verifyAggregateXMLStructureOnCloseCheck.Location = new System.Drawing.Point(201, 41);
             this.verifyAggregateXMLStructureOnCloseCheck.Name = "verifyAggregateXMLStructureOnCloseCheck";
-            this.verifyAggregateXMLStructureOnCloseCheck.Size = new System.Drawing.Size(123, 29);
+            this.verifyAggregateXMLStructureOnCloseCheck.Size = new System.Drawing.Size(103, 24);
             this.verifyAggregateXMLStructureOnCloseCheck.TabIndex = 1;
             this.verifyAggregateXMLStructureOnCloseCheck.Text = "Pri zápise";
             this.verifyAggregateXMLStructureOnCloseCheck.UseVisualStyleBackColor = true;
@@ -382,13 +366,12 @@ namespace ProcessLogs
             this.tableLayoutPanel7.Controls.Add(this.verifyLogXMLStructureCheck, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.verboseLogCheckBox, 3, 1);
             this.tableLayoutPanel7.Controls.Add(this.preventDuplicatesCheckBox, 2, 1);
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(44, 337);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(36, 280);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(940, 84);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(769, 70);
             this.tableLayoutPanel7.TabIndex = 5;
             // 
             // label1
@@ -396,10 +379,9 @@ namespace ProcessLogs
             this.label1.AutoSize = true;
             this.tableLayoutPanel7.SetColumnSpan(this.label1, 5);
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(580, 25);
+            this.label1.Size = new System.Drawing.Size(504, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nastavenie spracovania záznamov (diskvalifikuje záznam):";
             // 
@@ -408,10 +390,10 @@ namespace ProcessLogs
             this.VerifyLogHashCheck.AutoSize = true;
             this.VerifyLogHashCheck.Checked = true;
             this.VerifyLogHashCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.VerifyLogHashCheck.Location = new System.Drawing.Point(18, 50);
-            this.VerifyLogHashCheck.Margin = new System.Windows.Forms.Padding(18, 4, 4, 4);
+            this.VerifyLogHashCheck.Location = new System.Drawing.Point(15, 41);
+            this.VerifyLogHashCheck.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
             this.VerifyLogHashCheck.Name = "VerifyLogHashCheck";
-            this.VerifyLogHashCheck.Size = new System.Drawing.Size(176, 29);
+            this.VerifyLogHashCheck.Size = new System.Drawing.Size(147, 24);
             this.VerifyLogHashCheck.TabIndex = 0;
             this.VerifyLogHashCheck.Text = "Verifikácia hash";
             this.VerifyLogHashCheck.UseVisualStyleBackColor = true;
@@ -422,10 +404,9 @@ namespace ProcessLogs
             this.verifyLogXMLStructureCheck.AutoSize = true;
             this.verifyLogXMLStructureCheck.Checked = true;
             this.verifyLogXMLStructureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verifyLogXMLStructureCheck.Location = new System.Drawing.Point(239, 50);
-            this.verifyLogXMLStructureCheck.Margin = new System.Windows.Forms.Padding(4);
+            this.verifyLogXMLStructureCheck.Location = new System.Drawing.Point(195, 41);
             this.verifyLogXMLStructureCheck.Name = "verifyLogXMLStructureCheck";
-            this.verifyLogXMLStructureCheck.Size = new System.Drawing.Size(254, 29);
+            this.verifyLogXMLStructureCheck.Size = new System.Drawing.Size(210, 24);
             this.verifyLogXMLStructureCheck.TabIndex = 1;
             this.verifyLogXMLStructureCheck.Text = "Verifikácia XML štruktúry";
             this.verifyLogXMLStructureCheck.UseVisualStyleBackColor = true;
@@ -435,10 +416,9 @@ namespace ProcessLogs
             this.verboseLogCheckBox.AutoSize = true;
             this.verboseLogCheckBox.Checked = true;
             this.verboseLogCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verboseLogCheckBox.Location = new System.Drawing.Point(756, 50);
-            this.verboseLogCheckBox.Margin = new System.Windows.Forms.Padding(4);
+            this.verboseLogCheckBox.Location = new System.Drawing.Point(617, 41);
             this.verboseLogCheckBox.Name = "verboseLogCheckBox";
-            this.verboseLogCheckBox.Size = new System.Drawing.Size(112, 29);
+            this.verboseLogCheckBox.Size = new System.Drawing.Size(95, 24);
             this.verboseLogCheckBox.TabIndex = 3;
             this.verboseLogCheckBox.Text = "Verbose";
             this.verboseLogCheckBox.UseVisualStyleBackColor = true;
@@ -448,10 +428,9 @@ namespace ProcessLogs
             this.preventDuplicatesCheckBox.AutoSize = true;
             this.preventDuplicatesCheckBox.Checked = true;
             this.preventDuplicatesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.preventDuplicatesCheckBox.Location = new System.Drawing.Point(521, 50);
-            this.preventDuplicatesCheckBox.Margin = new System.Windows.Forms.Padding(4);
+            this.preventDuplicatesCheckBox.Location = new System.Drawing.Point(425, 41);
             this.preventDuplicatesCheckBox.Name = "preventDuplicatesCheckBox";
-            this.preventDuplicatesCheckBox.Size = new System.Drawing.Size(200, 29);
+            this.preventDuplicatesCheckBox.Size = new System.Drawing.Size(164, 24);
             this.preventDuplicatesCheckBox.TabIndex = 2;
             this.preventDuplicatesCheckBox.Text = "Prevencia duplicity";
             this.preventDuplicatesCheckBox.UseVisualStyleBackColor = true;
@@ -468,13 +447,13 @@ namespace ProcessLogs
             this.tableLayoutPanel8.Controls.Add(this.minimumRecordSizeNumeric, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.minimumRecordSizeCheckBox, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.maximumRecordSizeCheckBox, 2, 1);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(46, 431);
-            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(6);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(38, 359);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(805, 79);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(658, 66);
             this.tableLayoutPanel8.TabIndex = 6;
             // 
             // label2
@@ -482,24 +461,23 @@ namespace ProcessLogs
             this.label2.AutoSize = true;
             this.tableLayoutPanel8.SetColumnSpan(this.label2, 4);
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(4, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(559, 25);
+            this.label2.Size = new System.Drawing.Size(486, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Nastavenie spracovania záznamov (diskvalifikuje súbor):";
             // 
             // maximumRecordSizeNumeric
             // 
-            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(625, 45);
-            this.maximumRecordSizeNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.maximumRecordSizeNumeric.Location = new System.Drawing.Point(510, 38);
+            this.maximumRecordSizeNumeric.Margin = new System.Windows.Forms.Padding(5);
             this.maximumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.maximumRecordSizeNumeric.Name = "maximumRecordSizeNumeric";
-            this.maximumRecordSizeNumeric.Size = new System.Drawing.Size(110, 29);
+            this.maximumRecordSizeNumeric.Size = new System.Drawing.Size(90, 26);
             this.maximumRecordSizeNumeric.TabIndex = 3;
             this.maximumRecordSizeNumeric.Value = new decimal(new int[] {
             1800,
@@ -509,15 +487,15 @@ namespace ProcessLogs
             // 
             // minimumRecordSizeNumeric
             // 
-            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(223, 45);
-            this.minimumRecordSizeNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.minimumRecordSizeNumeric.Location = new System.Drawing.Point(182, 38);
+            this.minimumRecordSizeNumeric.Margin = new System.Windows.Forms.Padding(5);
             this.minimumRecordSizeNumeric.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.minimumRecordSizeNumeric.Name = "minimumRecordSizeNumeric";
-            this.minimumRecordSizeNumeric.Size = new System.Drawing.Size(110, 29);
+            this.minimumRecordSizeNumeric.Size = new System.Drawing.Size(90, 26);
             this.minimumRecordSizeNumeric.TabIndex = 1;
             this.minimumRecordSizeNumeric.Value = new decimal(new int[] {
             850,
@@ -533,10 +511,10 @@ namespace ProcessLogs
             this.minimumRecordSizeCheckBox.AutoSize = true;
             this.minimumRecordSizeCheckBox.Checked = true;
             this.minimumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(18, 43);
-            this.minimumRecordSizeCheckBox.Margin = new System.Windows.Forms.Padding(18, 4, 4, 4);
+            this.minimumRecordSizeCheckBox.Location = new System.Drawing.Point(15, 36);
+            this.minimumRecordSizeCheckBox.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
             this.minimumRecordSizeCheckBox.Name = "minimumRecordSizeCheckBox";
-            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(195, 32);
+            this.minimumRecordSizeCheckBox.Size = new System.Drawing.Size(159, 27);
             this.minimumRecordSizeCheckBox.TabIndex = 0;
             this.minimumRecordSizeCheckBox.Text = "Minimálna dĺžka";
             this.minimumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -550,10 +528,10 @@ namespace ProcessLogs
             this.maximumRecordSizeCheckBox.AutoSize = true;
             this.maximumRecordSizeCheckBox.Checked = true;
             this.maximumRecordSizeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(408, 45);
-            this.maximumRecordSizeCheckBox.Margin = new System.Windows.Forms.Padding(6);
+            this.maximumRecordSizeCheckBox.Location = new System.Drawing.Point(333, 38);
+            this.maximumRecordSizeCheckBox.Margin = new System.Windows.Forms.Padding(5);
             this.maximumRecordSizeCheckBox.Name = "maximumRecordSizeCheckBox";
-            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(205, 28);
+            this.maximumRecordSizeCheckBox.Size = new System.Drawing.Size(167, 23);
             this.maximumRecordSizeCheckBox.TabIndex = 2;
             this.maximumRecordSizeCheckBox.Text = "Maximálna dĺžka";
             this.maximumRecordSizeCheckBox.UseVisualStyleBackColor = true;
@@ -561,12 +539,11 @@ namespace ProcessLogs
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 1062);
+            this.ClientSize = new System.Drawing.Size(841, 885);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(1030, 1009);
+            this.MinimumSize = new System.Drawing.Size(847, 850);
             this.Name = "Form1";
             this.Text = "Log parser";
             this.Load += new System.EventHandler(this.Form1_Load);

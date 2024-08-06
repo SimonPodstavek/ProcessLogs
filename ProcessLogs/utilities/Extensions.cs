@@ -26,6 +26,7 @@ public static class Extensions
     }
 
     
+    
 
     public static void SafeInvoke(this Control uiElement, Action updater, bool forceSynchronous = true, bool checkHandleCreated = true)
     {

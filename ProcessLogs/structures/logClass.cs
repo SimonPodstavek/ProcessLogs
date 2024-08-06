@@ -433,12 +433,15 @@ namespace ProcessLogs.logs
                 //Skip the iteration of a verificator if it's not required
                 if (!(verification.isActive())) { continue; }
 
-                //Iterate over every record and make necessary checks
+                //Iterate over every record and make the necessary checks
                 foreach ((int index, record logRecord) in logRecords.Enumerate())
                 {
+                    if (removeIndexes.Contains(index)) continue;
+
                     if(verification.VerificationMethod(index, logRecord, logObject) != null)
                     {
                         removeIndexes.Add(index);
+
 
                         if (verification.onExceptionRemoveAll())
                         {
