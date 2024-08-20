@@ -71,7 +71,7 @@ namespace ProcessLogs
         {
 
 
-
+            //If the processing is currently in progress and the initiate button is pressed, stop the processing 
             if (Configuration.isRunning == true)
             {
                 Configuration.stopProcess(initiateButton);
@@ -121,6 +121,7 @@ namespace ProcessLogs
             //Update global path variables to match the user's choice
             Configuration.AggregateFile.filePath = filePathXMLTextBox.Text;
             Configuration.rootDirectory = sourceDirectoryTextBox.Text;
+
             //Settings
 
                 //Should the report be verbose
@@ -149,7 +150,7 @@ namespace ProcessLogs
             //Notify user about the missing parameters
             if (Configuration.rootDirectory == String.Empty)
             {
-                MessageBox.Show("Chyba 105: Zadajte prosím zdrojový adresár obsahujúci predpísanú štruktúru a súbory .log", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chyba 105: Zadajte prosím koreňový adresár obsahujúci predpísanú štruktúru a súbory .log", "Chýbajúca cesta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -195,16 +196,16 @@ namespace ProcessLogs
             //Notify user if the root directory doesn't contain any logs
             if (Configuration.instanceDependent.LogPaths.Count() == 0)
             {
-                Program.LogEvent("Chyba 104: V zadanom zdrojovom adresári neboli nájdené žiadne platné súbory. Ukončujem spracovanie.");
+                Program.LogEvent("Chyba 104: V zadanom koreňovom adresári neboli nájdené žiadne platné súbory. Ukončujem spracovanie.");
                 return;
             }
 
 
             //Create duplicate of an aggregate XML file that will be later appended to.
 
-            if (!SaveLogs.DupplicateAggregateFile()){
+            if (!SaveLogs.DupplicateAggregateFile())
+            {
                 return;
-
             }
 
             //Remove the ending XML tag form duplicate
@@ -220,6 +221,8 @@ namespace ProcessLogs
             using (FileStream fileStream = new FileStream(Configuration.AggregateFile.duplicatefilePathXML, FileMode.Append, FileAccess.Write))
             {
 
+                //Hold the information about user ignorring absent XML section in the log
+                bool ignoreNonXMLFiles = false;
                 //Generate log object for every log path and add it to globalLogs IEnumerable.
                 for (int index = 0; index < Configuration.instanceDependent.globalLogs.Count(); index++)
                 {
@@ -235,6 +238,7 @@ namespace ProcessLogs
                     //If the log processing failed, output the reason into status box.
                     LogClass logObject = Configuration.instanceDependent.globalLogs[index];
 
+
                     try
                     {
                         if (!Configuration.isRunning)
@@ -245,17 +249,34 @@ namespace ProcessLogs
                         processedRecords += logObject.CountRecords();
 
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
-                    //    Program.LogEvent("NIE JE MOŽNÉ POKRAČOVAŤ - ZÁZNAMY NEBUDÚ ULOŽENÉ");
-                    //    Program.LogEvent($"Popis: {ex}");
-                    //    fileStream.Close();
-                    //    return;
-                    //}
+                    catch (AbsentXMLSection)
+                    {
+                        if (ignoreNonXMLFiles)
+                        {
+                            Program.LogEvent("Varovanie 103: Log " + logObject.filePath + " neobsahuje ani jednu XML sekciu");
+                            continue;
+                        }
+
+                        DialogResult continueProcessing = MessageBox.Show("Varovanie 103: Log " + logObject.filePath + " neobsahuje ani jednu XML sekciu. Preskočiť súbor a pokračovať v spracovaní?", "Chýbajúci záznam", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        ignoreNonXMLFiles = true;
+                        MessageBox.Show("Upozornenia pre nasledujúce logy bez XML sekcie boli vypnuté. Nasledujúce logy bez XML sekcie budú zapísané v textovom okne.");
+
+                        if (continueProcessing == DialogResult.No)
+                        {
+                            throw new Exception("Chyba 103: Log neobsahuje XML sekcie.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Program.LogEvent("Vyskytla sa chyba pri spracovaní záznamu: " + logObject.filePath);
+                        Program.LogEvent("NIE JE MOŽNÉ POKRAČOVAŤ - ZÁZNAMY NEBUDÚ ULOŽENÉ");
+                        Program.LogEvent($"Popis: {ex}");
+                        fileStream.Close();
+                        return;
+                    }
                     finally
                     {
-
                         Configuration.instanceDependent.globalLogs[index] = null;
                     }
 
@@ -273,7 +294,8 @@ namespace ProcessLogs
             {
                 SaveLogs.AppendClosingSequence();
                 SaveLogs.SaveTempFile();
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 Program.LogEvent($"Pri ukladaní záznamu s logmi sa vyskytla chyba : {ex}");
                 return;
@@ -286,5 +308,6 @@ namespace ProcessLogs
     
     
     }
+
 }
 

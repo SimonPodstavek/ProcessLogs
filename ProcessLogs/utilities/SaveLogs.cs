@@ -76,7 +76,7 @@ namespace ProcessLogs.utilities
 
                 if (originalFileSize != duplicateFileSize)
                 {
-                    throw new Exception("Chyba 113: Zdrojový a dočasný agregátny súbor nemajú rovnakú veľkosť.");
+                    throw new Exception("Chyba 113: Koreňový a dočasný agregátny súbor nemajú rovnakú veľkosť.");
                 }
 
                 Program.LogEvent("Vytváranie dočasného agregátného súboru: úspech");

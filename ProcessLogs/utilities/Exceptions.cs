@@ -24,4 +24,8 @@ namespace ProcessLogs.utilities
         public SizeInvalid(string message) : base(message:message) { }
     }
 
+    internal class AbsentXMLSection : Exception
+    {
+        public AbsentXMLSection() : base() { }
+    }
 }
