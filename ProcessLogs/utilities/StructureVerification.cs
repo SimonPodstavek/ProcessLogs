@@ -49,6 +49,20 @@ namespace ProcessLogs.utilities
                     using (XmlReader xmlReader = XmlReader.Create(memoryStream))
                     {
 
+                        //Verify that the file contains XML declaration by going to the next element until the declaration is found
+                        bool containsDeclaration = false;
+                        while (xmlReader.Read())
+                        {
+                            if (xmlReader.NodeType == XmlNodeType.XmlDeclaration)
+                            {
+                                containsDeclaration = true;
+                                break;
+                            }
+                        }
+
+
+                        if (!containsDeclaration) throw new AggregateFileIncorrectStructure("Chyba 115: Agregátny súbor neobsahuje deklaráciu");
+
                         //Locate the first element and verify that it's AGGREGATEXML
                         xmlReader.MoveToContent();
 
