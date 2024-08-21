@@ -133,7 +133,7 @@ namespace ProcessLogs
             this.sourceDirectoryLabel.Location = new System.Drawing.Point(2, 0);
             this.sourceDirectoryLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.sourceDirectoryLabel.Name = "sourceDirectoryLabel";
-            this.sourceDirectoryLabel.Size = new System.Drawing.Size(86, 13);
+            this.sourceDirectoryLabel.Size = new System.Drawing.Size(90, 13);
             this.sourceDirectoryLabel.TabIndex = 0;
             this.sourceDirectoryLabel.Text = "Koreňový adresár";
             // 
@@ -401,7 +401,7 @@ namespace ProcessLogs
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(340, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Nastavenie spracovania záznamov (diskvalifikuje záznam):";
+            this.label1.Text = "Nastavenia spracovania záznamov (diskvalifikuje záznam):";
             // 
             // VerifyLogHashCheck
             // 
@@ -486,7 +486,7 @@ namespace ProcessLogs
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(329, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Nastavenie spracovania záznamov (diskvalifikuje súbor):";
+            this.label2.Text = "Nastavenia spracovania záznamov (diskvalifikuje súbor):";
             // 
             // maximumRecordSizeNumeric
             // 
@@ -500,7 +500,7 @@ namespace ProcessLogs
             this.maximumRecordSizeNumeric.Size = new System.Drawing.Size(60, 20);
             this.maximumRecordSizeNumeric.TabIndex = 3;
             this.maximumRecordSizeNumeric.Value = new decimal(new int[] {
-            1800,
+            2500,
             0,
             0,
             0});
@@ -517,7 +517,7 @@ namespace ProcessLogs
             this.minimumRecordSizeNumeric.Size = new System.Drawing.Size(60, 20);
             this.minimumRecordSizeNumeric.TabIndex = 1;
             this.minimumRecordSizeNumeric.Value = new decimal(new int[] {
-            850,
+            500,
             0,
             0,
             0});

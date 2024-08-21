@@ -103,7 +103,7 @@ namespace ProcessLogs.utilities
 
             //Sequences utilized to indicate that the user has altered contents of XML while parsing the file.
             internal static byte[] hashModifiedOnParse = Encoding.UTF8.GetBytes("<ModifiedOnParse>Broken hash permitted</ModifiedOnParse>");
-            internal static byte[] XMLModifiedOnParse = Encoding.UTF8.GetBytes("<ModifiedOnParse>XML structure outside Data element modified</ModifiedOnParse>");
+            internal static byte[] XMLModifiedOnParse = Encoding.UTF8.GetBytes("<ModifiedOnParse>XML structure was modified while the record was parsed.</ModifiedOnParse>");
 
 
 
